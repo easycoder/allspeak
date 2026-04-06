@@ -2,121 +2,90 @@
 
 ## What is AllSpeak
 
-AllSpeak is a high-level, English-like scripting language designed to make browser and desktop programming accessible to non-experts. Scripts use the `.as` extension. The language prioritises readability over brevity — code should read as close to plain English as possible.
+AllSpeak is a multilingual scripting engine forked from EasyCoder. Where EasyCoder uses English-like syntax, AllSpeak's goal is to let users write scripts in **any human language** — English, French, Japanese, Arabic, etc. — while sharing a single language-neutral runtime.
+
+Scripts use the `.as` extension. The name "AllSpeak" references the Marvel Comics Asgardian ability to communicate in any language.
+
+## Origin
+
+Forked from [EasyCoder](https://github.com/easycoder/easycoder.github.io) on 2026-04-06. The entire EasyCoder codebase was copied and globally renamed:
+- `EasyCoder` → `AllSpeak`, `easycoder` → `allspeak`, `ec_` → `as_`, `.ecs` → `.as`
+
+The original EasyCoder repo continues unchanged as the stable English-only product.
 
 ## Repository Structure
 
-This repo is the **JS implementation** and the **official website** (served via GitHub Pages).
-
 ```
-/js/allspeak/     Source files for the JS runtime (Core.js, Browser.js, etc.)
+/js/allspeak/      JS runtime source (Core.js, Browser.js, Compile.js, Run.js, etc.)
 /js/plugins/       JS plugin modules (ui, svg, gmap, mqtt, etc.)
 /dist/             Build output — do not edit directly
-/allspeak-py/     Python implementation (git submodule)
-/codex/            Web-based interactive IDE and 20-part tutorial
-/spec/             Canonical language and plugin contracts (source of truth for both impls)
+/allspeak-py/      Python implementation (not yet adapted for multilingual)
+/spec/             Language and plugin contracts
 /conformance/      Cross-implementation test suite (.as tests + expected JSON output)
-/resources/        Website assets (CSS, markdown docs, HTML fragments)
-/examples/         Demo apps (dice, imageswitcher, usercapture)
-/aidev/            AI development primers and project templates
-/scripts/          Utility scripts (sync JS spec/conformance to Python submodule)
 /vendor/           Third-party libraries (showdown, codemirror)
+/resources/        Website assets (carried over from EasyCoder, to be pruned)
+/codex/            Tutorial IDE (carried over, to be adapted)
+/examples/         Demo apps (carried over)
 ```
+
+## Architecture — The Multilingual Goal
+
+The key architectural challenge is separating **language-neutral runtime** from **language-specific front-ends**.
+
+### What is language-neutral (the engine)
+- Runtime execution: `Run.js`, `Value.js`, `Condition.js`, `Compare.js`
+- DOM/browser interaction: `Browser.js` (the runtime parts)
+- Data handling: `JSON.js`, `REST.js`, `MQTT.js`, `Webson.js`
+- Plugin execution logic
+
+### What must become language-specific (the front-ends)
+- Keyword definitions and grammar patterns in `Core.js` and `Browser.js`
+- The compiler/parser: `Compile.js`
+- Error messages
+- Plugin keyword definitions
+
+### Design direction
+- **Declarative language definitions** — each human language maps its keywords/grammar to the internal command set, likely via JSON or similar
+- **Table-driven compilation** — the compiler reads language definitions rather than hardcoding English keywords
+- **One runtime, many front-ends** — a French `.as` script and an English `.as` script compile to the same internal representation and run on the same engine
+
+This architecture is **not yet implemented** — the current code is still the English-only EasyCoder engine with names changed. The multilingual layer is the work to be done.
 
 ## Two Implementations
 
 | | JS | Python |
 |--|--|--|
-| Source | `/js/` | `/allspeak-py/` |
+| Source | `/js/allspeak/` | `/allspeak-py/allspeak/` |
 | Build output | `/dist/allspeak.js`, `/dist/allspeak-min.js` | pip package |
-| Runtime | Browser | CLI (`allspeak project.as`) |
+| Runtime | Browser | CLI |
 | Core files | `Core.js`, `Browser.js`, `Compile.js`, `Run.js`, `Main.js` | `as_core.py`, `as_compiler.py`, `as_program.py` |
 
-Both implementations live in the same repo — no submodule. Everything commits and pushes in one place.
-
-The `/spec/` and `/conformance/` directories are **canonical for both implementations**.
+The Python implementation has only been renamed, not adapted for multilingual yet. JS is the primary focus.
 
 ## Build System
 
 The build script is `./build-allspeak` (shell script). It:
 1. Clears `/dist/`
 2. Copies `/js/plugins/` to `/dist/plugins/`
-3. Fetches vendor assets (showdown, CodeMirror addons) from CDN if not in `/vendor/`
+3. Fetches vendor assets from CDN if not in `/vendor/`
 4. Concatenates all core JS files into `/dist/allspeak.js`
-5. Minifies using Google Closure Compiler → `/dist/allspeak-min.js`
+5. Minifies → `/dist/allspeak-min.js`
 
-**Bundle order** (from `build-allspeak`):
-`Core.js` → `Browser.js` → `MarkdownRenderer.js` → `Webson.js` → `JSON.js` → `MQTT.js` → `REST.js` → `Compare.js` → `Condition.js` → `Value.js` → `Run.js` → `Compile.js` → `Main.js` → `AllSpeak.js`
+**Bundle order:** `Core.js` → `Browser.js` → `MarkdownRenderer.js` → `Webson.js` → `JSON.js` → `MQTT.js` → `REST.js` → `Compare.js` → `Condition.js` → `Value.js` → `Run.js` → `Compile.js` → `Main.js` → `AllSpeak.js`
 
-**Never edit files in `/dist/` directly** — they are regenerated by the build script.
+**Never edit files in `/dist/` directly.**
 
 ## Versioning
 
-Version numbers are date-based (e.g. `250824` = 24 Aug 2025). The current version is set in `js/allspeak/AllSpeak.js` line 1.
+Date-based (e.g. `250824` = 24 Aug 2025). Set in `js/allspeak/AllSpeak.js` line 1.
 
 ## Key Conventions
 
-- AllSpeak scripts are embedded in HTML inside a `<pre id="allspeak-script">` element
-- The runtime is loaded as `allspeak.js` or `allspeak-min.js`
-- Plugins are loaded separately from `/dist/plugins/`
-- Language commands are defined in `Core.js` (general) and `Browser.js` (DOM/UI)
-- Each plugin follows the plugin contract defined in `/spec/allspeak-plugin-contract.md`
-
-## Error Handling
-
-AllSpeak supports two levels of error handling, available in both JS and Python implementations.
-
-### Per-command `or`
-
-Append `or` after a command to catch its failure. Follows with `begin ... end` or `go to Label`:
-
-```
-rest get Data from Url or begin
-  put the error message into Status
-end
-
-attach MyDiv to `missing-id` or go to Fallback
-open `data.txt` as DataFile for reading or go to NoFile
-```
-
-**Commands supporting `or`:** `attach`, `create`, `rest get`, `rest post`, `load`, `save`, `append`, `filter`, `sort`, `index`, `json` sub-commands (`set`, `sort`, `shuffle`, `format`, `delete`, `rename`, `add`, `replace`), `add`, `divide`, `multiply`, `open`, `read`, `write`, `pop`.
-
-### Block-scoped `try` / `or handle`
-
-Wraps multiple commands — catches errors from any command in the block:
-
-```
-try
-  divide Total by Count
-  put property `name` of Data into Name
-  rest get Items from Url
-or handle
-  put the error message into Status
-end
-```
-
-Blocks can be nested. On success, the handler is skipped. On error, execution jumps to `or handle`.
-
-### `the error` / `the error message`
-
-Returns the most recent error text. Available in both `or` handlers and `or handle` blocks. Both forms are equivalent.
-
-**Python additionally supports:** `the error code` (HTTP status) and `the error reason` (HTTP reason phrase).
-
-## Development Philosophy
-
-AllSpeak's primary development workflow is **AI-assisted**: the AI writes the `.as` code and the human reviews it. This has an important consequence for language design:
-
-- **Readability matters more than learnability.** A human reviewing AI-generated code needs to understand what each line does, but does not need to memorise the syntax well enough to write it from scratch.
-- **A richer syntax is acceptable.** Previously, new commands were added sparingly to avoid overwhelming beginners with documentation. With AI doing the writing, the language can offer more expressive constructs — the human only needs to recognise them, not recall them.
-- **When in doubt, favour clarity.** If a new construct reads naturally as English and reduces boilerplate, it is worth adding even if it increases the total command count. The cost of a larger language is low when the AI handles composition.
-
-Pending language enhancements are tracked in `/TODO.md`.
-
-## AI Development
-
-Use `/ecs-js` for JS dialect context and `/ecs-python` for Python dialect context before making substantive changes to either implementation. Use `/ecs-review` to check `.as` files for syntax correctness.
+- Scripts are embedded in HTML inside a `<pre id="allspeak-script">` element
+- Runtime loaded as `allspeak.js` or `allspeak-min.js`
+- Plugins loaded separately from `/dist/plugins/`
+- Each plugin follows the contract in `/spec/allspeak-plugin-contract.md`
 
 ## Commit Style
 
-Commits in this repo use date-based messages (e.g. `26031901`, `26031902`). Follow this pattern unless the user specifies otherwise.
+Date-based messages (e.g. `26040601`, `26040602`). Follow this pattern unless specified otherwise.
