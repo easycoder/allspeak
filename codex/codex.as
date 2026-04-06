@@ -1,0 +1,970 @@
+!	AllSpeak Codex
+
+    script Codex
+
+	div Body
+    div Screen
+    div CodePanel
+    div NonCodePanel
+    div RunPanel
+    div HelpOuter
+    div HelpInner
+    div HelpPanel
+    div ReferencePanel
+    div Container
+    div Controls
+    div Buttons
+    div HelpButtons
+    div ScriptName
+    div ContentDiv
+    div Clear
+!    div Tracer
+    input NameEditor
+    textarea ContentEditor
+    span Status
+    span Span
+    img New
+    img Open
+    img Save
+    img RunStop
+    img Delete
+    img Cycle
+    img Back
+    img Forward
+    img Banner
+    img Reference
+    img Tools
+    img Exit
+    img Contents
+    a Copy
+    a Next
+    a Link
+    a Index
+    module TestModule
+	module DocManModule
+  	callback DecoratorCallback
+    variable Args
+    variable Arg
+    variable Name
+    variable CallStack
+    variable CurrentName
+    variable Content
+    variable Current
+    variable Pages
+    variable Page
+    variable Script
+    variable List
+    variable Fragment
+    variable Mobile
+    variable Running
+    variable View
+    variable Step
+    variable Message
+    variable ShowRun
+    variable LinkCount
+    variable Data
+    variable Payload
+    variable ECPayload
+    variable Size
+    variable A
+    variable B
+    variable IA
+    variable IB
+    variable CopyDelay
+    variable V
+
+  ! The browser
+    div Overlay
+    div Scroller
+    div Media
+    div FileListing
+    div FileRow
+    div LowerPanel
+    button CloseButton
+    a FileName
+    variable Alpha
+    variable FileList
+    variable FileCount
+    variable File
+    variable Files
+    variable N
+    variable FileIsOpen
+    variable Item
+    variable Items
+
+!    debug step
+    
+    load showdown
+	rest get ECPayload from `/codex/fragments/ec.txt`
+	or put `<strong>AllSpeak</strong>` into ECPayload
+  	json parse url the location as Args
+
+    print `Static site`
+    put empty into CallStack
+    history set
+    on restore
+    begin
+        put the json count of CallStack into N
+        if N is less than 2 stop
+        take 1 from N
+        json delete element N of CallStack
+        take 1 from N
+        put element N of CallStack into Step
+        go to SHP2
+    end
+
+    if portrait
+    begin
+    	if mobile set Mobile else clear Mobile
+    end
+    set ShowRun
+    
+    require js `dist/plugins/gmap.js`
+    require js `dist/plugins/svg.js`
+    
+    codemirror init basic profile `/codex/plugins/codemirror-ecs.js`
+    require css `/dist/plugins/codemirror/addon/dialog/dialog.css`
+    require js `/dist/plugins/codemirror/addon/dialog/dialog.js`
+    require js `/dist/plugins/codemirror/addon/search/search.js`
+    require js `/dist/plugins/codemirror/addon/search/searchcursor.js`
+    require js `/dist/plugins/codemirror/addon/search/jump-to-line.js`
+    
+    rest get Pages from `/codex/pages.json`
+
+    get Step from storage as `.step`
+    if left 4 of Step is not `step`
+    begin
+    	put `step0` into Step
+        put Step into storage as `.step`
+    end
+    
+    create Body
+    if Mobile
+	    set the style of Body to `width:100%;height:100%`
+    else
+	    set the style of Body to `width:100%;height:100%;display:flex`
+
+    create Screen in Body    
+    create Container in Screen
+	set the style of Container to `width:100%;height:100%;display:flex;flex-direction: column`
+    
+    create Controls in Container
+    set the style of Controls to `flex:5em`
+
+    create Buttons in Controls
+    set the style of Buttons to `width:100%;padding:0.5em`
+
+    create Link in Buttons
+    create New in Link
+    set the style of New to `width:40px;margin-right:0.5em`
+    set attribute `src` of New to `codex/icon/new.png`
+    set attribute `title` of New to `New`
+    create Open in Link
+    set the style of Open to `width:40px;margin-right:0.5em`
+    set attribute `src` of Open to `codex/icon/open.png`
+    set attribute `title` of Open to `Open`
+    create Link in Buttons
+    create Save in Link
+    set the style of Save to `width:40px;margin-right:1.5em`
+    set attribute `src` of Save to `codex/icon/save.png`
+    set attribute `title` of Save to `Save`
+    create Link in Buttons
+    create Delete in Link
+    set the style of Delete to `width:40px;margin-right:1.5em`
+    set attribute `src` of Delete to `codex/icon/trash.png`
+    set attribute `title` of Delete to `Delete`
+    create Link in Buttons
+    create RunStop in Link
+    set the style of RunStop to `width:40px;margin-right:1.5em`
+    set attribute `src` of RunStop to `codex/icon/run.png`
+    set attribute `title` of RunStop to `Run`
+   	create Link in Buttons
+   	create Cycle in Link
+   	set the style of Cycle to `width:40px`
+   	set attribute `src` of Cycle to `codex/icon/cycle.png`
+   	set attribute `title` of Cycle to `Cycle screens`
+
+    create Status in Buttons
+    if Mobile set the style of Status to `height:1em;color:green`
+    else set the style of Status to `float:right;margin:0.5em 2em 0 0;color:green`
+
+    create ScriptName in Controls
+    set the style of ScriptName to `display:flex;margin:0.5em 0;padding:0.5em`
+    if Mobile set style `display` of ScriptName to `none`
+    create Span in ScriptName
+    set the style of Span to `flex:15`
+    set the content of Span to `Script&nbsp;name:&nbsp;`
+    create NameEditor in ScriptName
+    set the style of NameEditor to `flex:85;display:inline-block`
+
+	create ContentDiv in Container
+    set the style of ContentDiv to `flex:1`
+    if Mobile
+    begin
+    	set the style of ContentDiv to
+        	`position:relative;width:100%;height:100%;overflow-x:scroll;overflow-y:hidden`
+	end
+    else
+    begin
+    	set the style of ContentDiv to `width:100%;height:100%;overflow-x:scroll;overflow-y:hidden`
+	end
+
+   	create CodePanel in ContentDiv
+   	create ContentEditor in CodePanel
+	set the style of ContentEditor to `width:100%;height:100%;border:none`
+    
+	codemirror attach to ContentEditor
+    set FileIsOpen
+
+    if Mobile
+    begin
+        set the style of CodePanel to `display:none`
+        create NonCodePanel in ContentDiv
+	    create RunPanel in NonCodePanel
+    	set the style of RunPanel to `display:none`
+
+		create HelpOuter in NonCodePanel
+        set the style of HelpOuter to `width:100%;height:100%;overflow-y:scroll`
+    end
+    else
+    begin
+		set the style of Screen to `flex:50;height:100%;overflow:hidden;border:1px solid gray`
+	    create RunPanel in Body
+    	set the style of RunPanel to `display:none;flex:50;margin-left:1em;border:1px solid gray`
+
+		create HelpOuter in Body
+    	set the style of HelpOuter to
+        	`flex:50;margin-left:1em;`
+            cat `border:1px solid gray;padding:0 0.5em;overflow-y:scroll`
+    end
+
+    create Banner in HelpOuter
+    set the style of Banner to `width:100%`
+    set attribute `src` of Banner to `codex/images/banner.png`
+    
+    create HelpButtons in HelpOuter
+    set the style of HelpButtons to `text-align:center;height:40px`
+    create Link in HelpButtons
+    create Back in Link
+       set the style of Back to `width:40px`
+    set attribute `src` of Back to `codex/icon/arrow-back.png`
+    set attribute `title` of Back to `Previous step`
+    create Link in HelpButtons
+    create Forward in Link
+       set the style of Forward to `margin-left:1em;width:40px`
+    set attribute `src` of Forward to `codex/icon/arrow-forward.png`
+    set attribute `title` of Forward to `Next step`
+    create Contents in HelpButtons
+    create Contents in Link
+    set the style of Contents to `margin-left:1em;width:40px`
+    set attribute `src` of Contents to `codex/icon/list.png`
+    set attribute `title` of Contents to `Contents`
+    create Link in HelpButtons
+    create Reference in Link
+    set the style of Reference to `margin-left:1em;width:40px`
+    set attribute `src` of Reference to `codex/icon/book.png`
+    set attribute `title` of Reference to `Programmer's Reference`
+    create Link in HelpButtons
+    create Tools in Link
+    set the style of Tools to `margin-left:1em;width:40px`
+    set attribute `src` of Tools to `codex/icon/tools.png`
+    set attribute `title` of Tools to `Tools and Techniques`
+    create Link in HelpButtons
+    create Exit in Link
+    set the style of Exit to `margin-left:1em;width:40px`
+    set attribute `src` of Exit to `codex/icon/exit.png`
+    set attribute `title` of Exit to `Exit Codex`
+    
+    create HelpInner in HelpOuter
+    set the style of HelpInner to `width:100%;line-height:1.5em`
+
+	create HelpPanel in HelpInner
+	set the style of HelpPanel to `display:none;width:100%;height:100%`
+	create ReferencePanel in HelpInner
+	set the style of ReferencePanel to `display:none;width:100%;height:100%`
+
+	gosub to ShowHelpPage
+    rest get Script from `/resources/ecs/docman.as?v=` cat now
+	run Script with ReferencePanel as DocManModule
+	put empty into storage as `.ref`
+
+	get Item from storage as `.ref`
+    if Item
+    begin
+	    set style `display` of ReferencePanel to `block`
+        set style `display` of HelpButtons to `none`
+    end
+    else set style `display` of HelpPanel to `block`
+
+    on click Back go to StepBack
+    on click Forward go to StepForward
+    on click Contents go to ShowContents
+    on click Reference
+    begin
+	    set style `display` of ReferencePanel to `block`
+        set style `display` of HelpPanel to `none`
+        set style `display` of HelpButtons to `none`
+        put `y` into storage as `.ref`
+    end
+    on click Tools
+    begin
+    	put `tools` into Step
+		gosub to ShowHelpPage
+    end
+	on click Exit
+    begin
+		stop DocManModule
+    	remove element Body
+        send `restore` to parent
+        history set url `.`
+        exit
+    end
+    
+    on message
+    begin
+    	put the message into Message
+    	if Message is `next` go to StepForward
+        if Message is `tutorial`
+        begin
+		    	set style `display` of ReferencePanel to `none`
+	        set style `display` of HelpPanel to `block`
+	        set style `display` of HelpButtons to `block`
+	        put empty into storage as `.ref`
+        end
+    end
+    
+    on error
+    begin
+    	gosub to StopTestModule
+        clear Running
+        set attribute `src` of RunStop to `codex/icon/run.png`
+    end
+   
+    create Overlay in Body
+    set the style of Overlay to
+      `position:absolute;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.0);display:none`
+
+    create Media in Overlay
+    set style of Media to `display:none;width:100%;height:100%;text-align:center`
+
+    create FileListing in Media
+    set the style of FileListing to
+      `display:none;width:50%;height:75%;margin:auto;background-color:white;`
+      cat `padding:2em 2em 3em 2em;text-align:center;position: absolute;top: 50%;left: 50%;`
+      cat `transform: translateX(-50%) translateY(-50%)`
+
+    create Scroller in FileListing
+    set the style of Scroller to `height:100%;overflow:scroll;text-align:left`
+    
+    create LowerPanel in FileListing
+    
+    create CloseButton in LowerPanel
+    set the style of CloseButton to `margin-left:2em`
+    set the text of CloseButton to `Close`
+
+    put empty into Current
+    
+    on click New
+    begin
+    	gosub to StopTestModule
+    	if Mobile
+        begin
+	    	put `code` into View
+        	gosub to SetView
+		end
+        codemirror close ContentEditor
+    	put the content of ContentEditor into Content
+    	if Content is not Current
+    	begin
+			if confirm `Content has changed. Do you want to save it?`
+			begin
+      			put the content of NameEditor into Name
+      			if Name is empty
+      			begin
+        			set the content of Status to `No script name has been given`
+        			go to ResetStatus
+      			end
+    	  		put Content into storage as CurrentName
+            end
+    	end
+    	clear FileIsOpen
+        set the content of ContentEditor to empty
+      	codemirror attach to ContentEditor
+        set the content of NameEditor to empty
+        put empty into Content
+        put Content into Current
+	end
+
+    on click Save
+    begin
+        put the content of NameEditor into Name
+        if Name is empty
+        begin
+            set the content of Status to `No script name has been given`
+            go to ResetStatus
+        end
+        if the position of `.as` in Name is -1 put Name cat `.as` into Name
+        replace ` ` with `_` in Name
+        codemirror close ContentEditor
+        put the content of ContentEditor into Content
+        codemirror attach to ContentEditor
+        if Content is not Current
+        begin
+            put Content into storage as Name
+            put Content into Current
+            set the content of Status to `Script '` cat Name cat `' saved`
+            fork to ResetStatus
+        end
+        else
+        begin
+            set the content of Status to `Nothing has changed`
+            fork to ResetStatus
+        end
+    end
+    
+    on click Delete
+    begin
+        put the content of NameEditor into Name
+        if Name is empty
+        begin
+            alert `Nothing to delete.`
+            stop
+        end
+        if confirm `Are you sure you want to delete "` cat Name cat `"?`
+        begin
+            codemirror close ContentEditor
+            set the content of ContentEditor to empty
+            codemirror attach to ContentEditor
+            remove Name from storage
+            set the content of Status to `Script "` cat Name cat `" deleted`
+            set the content of NameEditor to empty
+            put empty into Content
+            put Content into Current
+            go to ResetStatus
+        end
+    end
+    
+    clear Running
+    put `help` into View
+
+    on click Open go to DoOpen
+    on click RunStop go to DoRunStop
+    
+    on click Cycle
+    begin
+    	if Mobile
+        begin
+    		if View is `help`
+            begin
+            	put `code` into View
+            end
+        	else if View is `code`
+        	begin
+        		if Running put `run` into View
+            	else put `help` into View
+        	end
+        	else if View is `run` put `help` into View
+        	goto SetView
+        end
+        else
+        begin
+    		if View is `help`
+            begin
+            	if Running
+                begin
+	            	set style `display` of RunPanel to `block`
+    	        	set style `display` of HelpOuter to `none`
+        	    	put `run` into View
+                end
+            end
+        	else
+            begin
+            	set style `display` of RunPanel to `none`
+            	set style `display` of HelpOuter to `block`
+            	put `help` into View
+            end
+        end
+    end
+
+    put property `arg` of Args into Arg
+    if Arg is not empty
+    begin
+    	put from 2 of Arg into Step
+        gosub to SHP2
+        history set url `.`
+    end
+    
+    set ready
+    stop
+
+DoOpen:
+	gosub to StopTestModule
+
+    if Mobile
+    begin
+    	put `code` into View
+    	gosub to SetView
+    end
+	codemirror close ContentEditor
+    clear FileIsOpen
+    put the content of ContentEditor into Content
+    if Content is not Current
+    begin
+      if confirm `Content has changed. Do you want to save it?`
+      begin
+      	put Content into storage as Name
+      end
+    end
+
+  ! Animate the background
+    set style `display` of Overlay to `block`
+    put 0 into Alpha
+    while Alpha is less than 8
+    begin
+      set style `background-color` of Overlay to `rgba(0,0,0,0.` cat Alpha cat `)`
+      wait 4 ticks
+      add 1 to Alpha
+    end
+    wait 10 ticks
+
+  ! Make the browser panel visible
+    set style `display` of Media to `block`
+    set style `display` of FileListing to `inline-block`
+
+  ! Fill the browser with content from the server
+    get Files from storage
+    put the json count of Files into FileCount
+    put empty into Content
+    put 0 into N
+    while N is less than FileCount
+    begin
+        put element N of Files into Item
+        if left 1 of Item is not `.` json add Item to Content
+        add 1 to N
+    end
+    json sort Content
+    put empty into FileList
+    put the json count of Content into FileCount
+    set the elements of File to FileCount
+    set the elements of FileName to FileCount
+  ! Add a row for each file
+    put 0 into N
+    while N is less than FileCount
+    begin
+      index File to N
+      index FileName to N
+      put `<div id="ec-file-row-INDEX" style="clear:both;padding:0.25em 0;">`
+        cat `<a id="ec-file-name-INDEX" href="#"></a></div>` into File
+      replace `INDEX` with N in File
+      if N is even replace `ODDEVEN` with `ec-even` in File
+      else replace `ODDEVEN` with `ec-odd` in File
+      put FileList cat File into FileList
+      add 1 to N
+    end
+
+    set the content of Scroller to FileList
+  ! Add the document names
+    put 0 into N
+    while N is less than FileCount
+    begin
+      index File to N
+      index FileName to N
+      put element N of Content into File
+      attach FileRow to `ec-file-row-` cat N
+      attach FileName to `ec-file-name-` cat N
+      set the content of FileName to File
+      if N is even set style `background` of FileRow to `lightgray`
+      on click FileName go to SelectFile
+      add 1 to N
+    end
+    on click CloseButton
+    begin
+      put Current into Content
+      go to CloseBrowser
+    end
+    stop
+    
+SelectFile:
+    index File to the index of FileName
+    set the content of NameEditor to File
+	get Content from storage as File
+    put Content into Current
+    set the content of Status to `Script '` cat File cat `' loaded`
+    fork to ResetStatus
+    set ShowRun
+
+CloseBrowser:
+    set style `background-color` of Overlay to `rgba(0,0,0,0.0)`
+    set style `display` of Overlay to `none`
+    set style `display` of Media to `none`
+    codemirror attach to ContentEditor
+    codemirror set content of ContentEditor to Content
+    stop
+
+SetView:
+	if View is `code`
+    begin
+    	set style `display` of CodePanel to `block`
+    	set style `display` of NonCodePanel to `none`
+        set style `display` of ScriptName to `block`
+        codemirror attach to ContentEditor
+    end
+	else if View is `run`
+    begin        
+    	set style `display` of CodePanel to `none`
+    	set style `display` of NonCodePanel to `block`
+    	set style `display` of RunPanel to `block`
+    	set style `display` of HelpOuter to `none`
+        set style `display` of ScriptName to `none`
+    end
+	else if View is `help`
+    begin     
+    	set style `display` of CodePanel to `none`
+    	set style `display` of NonCodePanel to `block`
+    	set style `display` of RunPanel to `none`
+    	set style `display` of HelpOuter to `block`
+        set style `display` of ScriptName to `none`
+    end
+	return
+
+ResetStatus:
+    wait 2
+    set the content of Status to ``
+    stop
+
+ShowContents:
+	put `contents` into Step
+	gosub to ShowHelpPage
+    stop
+
+ShowHelpPage:
+    append Step to CallStack
+SHP1:
+    history push url `codex.html?s=` cat Step
+SHP2:
+	put Step into storage as `.step`
+    put `/codex/code/` cat Step cat `.as` into Item
+    rest get Fragment from Item or put empty into storage as `.step`
+    put property Step of Pages into Page
+    if property `prev` of Page is empty set style `visibility` of Back to `hidden`
+    else set style `visibility` of Back to `visible`
+    if property `next` of Page is empty set style `visibility` of Forward to `hidden`
+    else set style `visibility` of Forward to `visible`
+
+    if Step is `contents`
+    begin
+    	put empty into List
+		put 0 into N
+		while N is less than 100
+		begin
+			put `step` cat N into Item
+			put property Item of Pages into Page
+			if Page is empty put 100 into N
+			else
+			begin
+				append Page to List
+				add 1 to N
+			end
+		end
+		put property `gap` of Pages into Page
+		if Page is not empty append Page to List
+        put the json keys of Pages into Items
+        put 0 into N
+        while N is less than the json count of Items
+        begin
+            put element N of Items into Item
+            if left 4 of Item is not `step`
+            begin
+                if Item is not `gap`
+                begin
+                    if Item is not `background`
+                    begin
+                        if Item is not `tools`
+                        begin
+                            if Item is not `contact`
+                            begin
+                                put property Item of Pages into Item
+                                if property `index` of Item is greater than 21 append Item to List
+                            end
+                        end
+                    end
+                end
+            end
+            add 1 to N
+        end
+		put property `background` of Pages into Page
+		if Page append Page to List
+		put property `tools` of Pages into Page
+		if Page append Page to List
+		put property `contact` of Pages into Page
+		if Page append Page to List
+    	put `<h1>Contents</h1>` into Script
+        put 0 into N
+        while N is less than the json count of List
+        begin
+        	put element N of List into Item
+            if property `title` of Item is `gap` put Script cat `<br>` into Script
+            else
+            begin
+	            put Script cat `<a id="list-` cat N cat `" href="#" data-file="` cat property `file` of Item into Script
+	            put Script cat `">` cat property `title` of Item into Script
+	            put Script cat `</a><br>` into Script
+            end
+            add 1 to N
+        end
+    end
+    else
+    begin
+		put `/codex/md/` cat Step cat `.md` into Item
+    	rest get Script from Item or
+        begin
+        	alert `The script '` cat Item cat `' could not be found`
+            put empty into Script
+        end
+      replace `<` with `&lt;` in Script
+      replace `>` with `&gt;` in Script
+	  put `<pre>` cat Fragment cat `</pre>` into Payload
+	  replace `~step~` with Payload in Script
+    end
+    gosub to ProcessMarkdown
+    if Step is `contents`
+    begin
+        set the elements of Index to the json count of List
+        put 0 into N
+        while N is less than the json count of List
+        begin
+        	index Index to N
+        	put element N of List into Item
+        	if property `title` of Item is not `gap` attach Index to `list-` cat N
+        	on click Index
+        	begin
+            	put attribute `data-file` of Index into Step
+            	goto ShowHelpPage
+        	end
+            add 1 to N
+        end
+    end
+    scroll HelpOuter to 0
+
+SHP3:
+    if Script is not empty
+    begin
+	   	attach Copy to `copy` or goto SHP4
+	   	set the style of Copy to
+       		`border:1px solid black;border-radius:0.5em;padding:0.3em;background:lightgray;text-decoration:none`
+	    on click Copy
+	    begin
+        	gosub to StopTestModule
+        	put `code` into View
+            codemirror close ContentEditor
+            set the content of ContentEditor to Fragment
+            if Mobile gosub to SetView
+            else codemirror attach to ContentEditor
+            codemirror set content of ContentEditor to Fragment
+            if Mobile
+            begin
+                put the length of Fragment into CopyDelay
+                multiply CopyDelay by 20 giving CopyDelay
+                divide CopyDelay by 1000
+                add 4 to CopyDelay
+                if CopyDelay is less than 6 put 6 into CopyDelay
+                if CopyDelay is greater than 24 put 24 into CopyDelay
+                wait CopyDelay ticks
+                codemirror set content of ContentEditor to Fragment
+            end
+            set the text of NameEditor to empty
+            attach Clear to `clear` or stop
+            clear ShowRun
+ 	   	end
+    end
+
+SHP4:
+    attach Next to `next` or return
+    on click Next
+    begin
+    	put property Step of Pages into Page
+        if property `next` of Page is not empty
+        begin
+	        put property `next` of Page into Step
+            goto ShowHelpPage
+        end
+    end
+	return
+
+ProcessMarkdown: ! TODO Count the links & set up listeners
+  on DecoratorCallback go to Decorate
+  put 0 into LinkCount
+  set the content of HelpPanel to showdown decode Script with DecoratorCallback
+  set the elements of Link to LinkCount
+  put 0 into N
+  while N is less than LinkCount
+  begin
+    index Link to N
+    attach Link to `ec-link-` cat N
+    add 1 to N
+  end
+  on click Link
+  begin
+    put attribute `data-codexid` of Link into Step
+    goto ShowHelpPage
+  end
+  return
+
+Decorate:
+  put the payload of DecoratorCallback into Payload
+  if Payload is `ec` put ECPayload into Payload
+  else if left 5 of Payload is `quot:`
+  begin
+  	put `<span style="font-family:mono;font-size:90%;color:darkred">`
+  	cat `&#96;` cat from 5 of Payload into Payload
+    put Payload cat `&#96;` cat `</span>` into Payload
+  end
+  else if left 5 of Payload is `code:`
+  begin
+  	put `<span style="font-family:Courier New;color:darkred">`
+  	cat from 5 of Payload into Payload
+    put Payload cat `</span>` into Payload
+  end
+  else if left 4 of Payload is `step`
+  begin
+  	put `<pre>` cat Fragment cat `</pre>` into Payload
+  end
+  else if left 4 of Payload is `pre:`
+  begin
+  	put `<pre>` cat from 4 of Payload into Payload
+    put Payload cat `</pre>` into Payload
+  end
+  else if left 4 of Payload is `copy`
+  begin
+  	put `<button id="copy">Copy to editor</button>` into Payload
+  end
+  else if left 5 of Payload is `icon:`
+  begin
+  	put from 5 of Payload into Payload
+    put the position of `:` in Payload into N
+    put left N of Payload into Name
+    add 1 to N
+    put from N of Payload into Payload
+    put the position of `:` in Payload into N
+    put left N of Payload into Size
+    add 1 to N
+    put from N of Payload into Payload
+    put `<img src="codex/icon/` cat Name
+    	cat `.png" style="width:` cat Size cat `;height:` cat Size
+        cat `" title="` cat Payload cat `" />` into Payload
+  end
+  else if left 5 of Payload is `link:`
+  begin
+  	put from 5 of Payload into Payload
+    put the position of `:` in Payload into N
+    put left N of Payload into Data
+    add 1 to N
+    put from N of Payload into Payload
+  	put `<b><a href="#" id="ec-link-` cat LinkCount cat `" data-codexid="` cat Data cat `">`
+    	cat Payload cat `</a></b>` into Payload
+  	add 1 to LinkCount
+  end
+  else if left 5 of Payload is `next:`
+  begin
+    put `<h2>Next: <a href="#" id="next">` cat from 5 of Payload into Payload
+    put Payload cat `</a></h2>` into Payload
+  end
+  set the payload of DecoratorCallback to Payload
+  stop
+
+ListSorter:
+    put arg `a` of List into A
+    put arg `b` of List into B
+    put property `index` of A into IA
+    put property `index` of B into IB
+    add 0 to IA
+    add 0 to IB
+    if IA is greater than IB put 1 into V
+    else if IA is less than IB put -1 into V
+    else put 0 into V
+    set arg `v` of List to V
+    stop
+
+StepBack:
+    put property Step of Pages into Page
+    if property `prev` of Page is not empty
+    begin
+        put property `prev` of Page into Step
+        goto ShowHelpPage
+    end
+	stop
+
+StepForward:
+    put property Step of Pages into Page
+    if property `next` of Page is not empty
+    begin
+        put property `next` of Page into Step
+        goto ShowHelpPage
+    end
+	stop
+    
+DoRunStop:
+    if Running
+    begin
+    	gosub to StopTestModule
+        if Mobile set style `display` of ScriptName to `block`
+        stop
+    end
+
+    codemirror close ContentEditor
+    put the content of ContentEditor into Script
+    codemirror attach to ContentEditor
+
+    if Script is empty
+    begin
+    	alert `Nothing to run`
+    	stop
+    end
+    
+	put `run` into View
+	if Mobile
+    begin
+    	gosub to SetView
+        set style `display` of ScriptName to `none`
+    end
+    else if ShowRun
+    begin
+    	set style `display` of HelpOuter to `none`
+        set style `display` of RunPanel to `block`
+	end
+
+    set attribute `src` of RunStop to `codex/icon/runstop.png`
+    set attribute `title` of RunStop to `Stop`
+    set Running
+    wait 10 ticks
+
+    run Script with RunPanel as TestModule nowait then
+    begin
+        clear Running
+    	set attribute `src` of RunStop to `codex/icon/run.png`
+    	set attribute `title` of RunStop to `Run`
+        set style `display` of RunPanel to `none`
+        set style `display` of HelpOuter to `block`
+        if Mobile set style `display` of ScriptName to `none`
+        put `help` into View
+	end
+    stop
+
+StopTestModule:
+	if TestModule is running
+    begin
+    	stop TestModule
+        clear Running
+        clear RunPanel
+        if Mobile
+        begin
+        	put `code` into View
+            gosub to SetView
+        	codemirror close ContentEditor
+    		codemirror attach to ContentEditor
+        end
+        else put `help` into View
+        set style `display` of HelpOuter to `block`
+        set attribute `src` of RunStop to `codex/icon/run.png`
+    end
+	return

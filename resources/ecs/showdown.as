@@ -1,0 +1,40 @@
+! Showdown
+
+  script Showdown
+  
+  import div Container
+
+  callback DecoratorCallback
+  variable Markup
+  variable Payload
+  variable ECPayload
+  variable Codex
+  
+  rest get ECPayload from `/resources/fragment/ec.txt`
+  rest get Codex from `/resources/fragment/codex.txt`
+  
+  load showdown
+  on DecoratorCallback go to Decorate
+  on message
+  begin
+  	put the message into Markup
+    set the content of Container to showdown decode Markup with DecoratorCallback
+  end
+  set ready
+  stop
+
+Decorate:
+  put the payload of DecoratorCallback into Payload
+  if Payload is `ec` put ECPayload into Payload
+  else if Payload is `codex` put Codex into Payload
+  else if left 5 of Payload is `code:`
+  begin
+  	put `<span style="font-family:mono;color:darkred">` cat from 5 of Payload into Payload
+    put Payload cat `</span>` into Payload
+  end
+  else if left 5 of Payload is `html:`
+  begin
+  	put from 5 of Payload into Payload
+  end
+  set the payload of DecoratorCallback to Payload
+  stop

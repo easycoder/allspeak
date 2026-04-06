@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AllSpeak Codex</title>
+  <script src="dist/allspeak-min.js"></script>
+</head>
+<body>
+  <pre id="allspeak-script" style="display:none">
+	require js `codex/showdown.js?v=` cat now
+	require js `codex/codemirror.js?v=` cat now
+	require js `codex/float.js?v=` cat now
+	require js `codex/vfx.js?v=` cat now
+	variable Script
+	rest get Script from `/codex/codex.as?v=` cat now
+	run Script
+  </pre>
+</body>
+</html>

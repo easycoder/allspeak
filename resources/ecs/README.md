@@ -1,0 +1,31 @@
+# Script editor
+
+The files here are for our color-coded script editor, 'scripted'. They comprise 5 files:
+scripted-server.as__
+scripted.html__
+scripted.as__
+scripted.json__
+README.md (this file)__
+Put all files in the same directory as the scripts you want to edit.
+
+Start up the server:
+
+`allspeak scripted-server.as {port}`
+
+where {port} is a port number such as 5500, then run
+
+● Linux:
+  chromium "file:///path/to/scripted/scripted.html?port={port}"  
+
+● Windows:  
+  start chromium "file:///C:/path/to/scripted/scripted.html?port={port}"
+                                                                                                  
+● Mac:__
+  open -a "Chromium" "file:///path/to/scripted/scripted.html?port={port}"  
+                                                                     
+  (Replace Chromium with Google Chrome or whatever browser is installed.)  
+
+This should start the editor.
+
+
+See the instructions in our [Primer](https://allspeak.github.io/primer.html).

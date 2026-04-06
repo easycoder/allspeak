@@ -1,0 +1,40 @@
+!	Intro
+
+	script Intro
+    
+	import module Showdown
+	
+	a RunCodex
+	variable Script
+	variable Codex
+	variable Message
+	variable Item
+	variable N
+	
+	rest get Script from `/resources/md/intro.md`
+	replace `/WP/` with `<a href="#">this page</a>` in Script
+	put 1 into N
+	while N is less than 4
+	begin
+		rest get Item from `/resources/fragment/intro/` cat N cat `.txt`
+		replace `<` with `&lt;` in Item
+		replace `>` with `&gt;` in Item
+		replace `/` cat N cat `/` with `<pre>` cat Item cat `</pre>` in Script
+		add 1 to N
+	end
+
+	on message
+	begin
+		put the message into Message
+		if Message is `restore` send Message to parent
+		else if Message is `pause` begin end
+		else go to Start
+	end
+	
+	set ready
+	stop
+
+Start:
+	scroll to 0
+	send Script to Showdown
+	stop

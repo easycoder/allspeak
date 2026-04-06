@@ -1,0 +1,106 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "AllSpeak",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#variables"
+    },
+    {
+      "include": "#operators"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.allspeak",
+          "match": "!.*$",
+          "comment": "Line comment starting with !"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.single.allspeak",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.allspeak",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.double.allspeak",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.allspeak",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.allspeak",
+          "match": "\\b([0-9]+\\.?[0-9]*|\\.[0-9]+)([eE][+-]?[0-9]+)?\\b"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.allspeak",
+          "match": "\\b(script|exit|variable|set|put|add|subtract|multiply|divide|append|clear|if|else|loop|repeat|while|until|break|continue|on|error|fork|go|gosub|return|assert|debug|log|print|read|write)\\b"
+        },
+        {
+          "name": "keyword.other.allspeak",
+          "match": "\\b(to|from|into|with|do|as|the|of|and|or|not|is|in|exists)\\b"
+        },
+        {
+          "name": "keyword.type.allspeak",
+          "match": "\\b(window|room|button|label|input|table|menu|dialog)\\b"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.allspeak",
+          "match": "\\b[A-Z][a-zA-Z0-9]*\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.allspeak",
+          "match": "[><=!]="
+        },
+        {
+          "name": "keyword.operator.allspeak",
+          "match": "[><=]"
+        }
+      ]
+    }
+  },
+  "scopeName": "source.allspeak"
+}
