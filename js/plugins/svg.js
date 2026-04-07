@@ -23,7 +23,7 @@ const AllSpeak_SVG = {
 				compiler.next();
 				switch (symbolRecord.keyword) {
 				case `svg`:
-					if (compiler.tokenIs(`in`)) {
+					if (compiler.isWord(`in`)) {
 						if (compiler.nextIsSymbol()) {
 							const parent = compiler.getToken();
 							compiler.next();
@@ -63,7 +63,7 @@ const AllSpeak_SVG = {
 					}
 					break;
 				case `group`:
-					if (compiler.tokenIs(`in`)) {
+					if (compiler.isWord(`in`)) {
 						if (compiler.nextIsSymbol()) {
 							const parentRecord = compiler.getSymbolRecord();
 							if (![`svg`, `group`].includes(parentRecord.keyword)) {
@@ -87,7 +87,7 @@ const AllSpeak_SVG = {
 				case `line`:
 				case `rect`:
 				case `svgtext`:
-					if (compiler.tokenIs(`in`)) {
+					if (compiler.isWord(`in`)) {
 						if (compiler.nextIsSymbol()) {
 							const parentRecord = compiler.getSymbolRecord();
 							if (![`svg`, `group`].includes(parentRecord.keyword)) {
@@ -249,7 +249,7 @@ const AllSpeak_SVG = {
 			const lino = compiler.getLino();
 			if (compiler.nextIsSymbol()) {
 				const symbolRecord = compiler.getSymbolRecord();
-				if (compiler.nextTokenIs(`to`)) {
+				if (compiler.nextIsWord(`to`)) {
 					const x = compiler.getNextValue();
 					const y = compiler.getValue();
 					compiler.addCommand({
@@ -455,12 +455,12 @@ const AllSpeak_SVG = {
 				token = compiler.nextToken();
 			}
 			if (token === `text`) {
-				if (compiler.nextTokenIs(`of`)) {
+				if (compiler.nextIsWord(`of`)) {
 					if (compiler.nextIsSymbol()) {
 						const symbol = compiler.getSymbolRecord();
 						switch (symbol.keyword) {
 						case `svgtext`:
-							if (compiler.nextTokenIs(`to`)) {
+							if (compiler.nextIsWord(`to`)) {
 								compiler.next();
 								const value = compiler.getValue();
 								compiler.addCommand({
@@ -573,11 +573,11 @@ const AllSpeak_SVG = {
 	value: {
 
 		compile: (compiler) => {
-			if (compiler.tokenIs(`the`)) {
+			if (compiler.isWord(`the`)) {
 				compiler.next();
 			}
-			if (compiler.tokenIs(`text`)) {
-				if (compiler.nextTokenIs(`of`)) {
+			if (compiler.isWord(`text`)) {
+				if (compiler.nextIsWord(`of`)) {
 					if (compiler.nextIsSymbol()) {
 						const symbolRecord = compiler.getSymbolRecord();
 						compiler.next();

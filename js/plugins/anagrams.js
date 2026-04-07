@@ -6,8 +6,8 @@ const AllSpeak_Anagrams = {
 	value: {
 
 		compile: (compiler) => {
-			if (compiler.tokenIs(`anagrams`)) {
-				if (compiler.nextTokenIs(`of`)) {
+			if (compiler.isWord(`anagrams`)) {
+				if (compiler.nextIsWord(`of`)) {
 					const value = compiler.getNextValue();
 					return {
 						domain: `anagrams`,

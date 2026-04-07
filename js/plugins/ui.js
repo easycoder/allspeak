@@ -85,7 +85,7 @@ const AllSpeak_UI = {
 				const symbolRecord = compiler.getSymbolRecord();
 				const type = symbolRecord.keyword;
 				if (type === `date`) {
-					if (compiler.nextTokenIs(`in`)) {
+					if (compiler.nextIsWord(`in`)) {
 						if (compiler.nextIsSymbol()) {
 							const holderRecord = compiler.getSymbolRecord();
 							compiler.next();
@@ -234,11 +234,11 @@ const AllSpeak_UI = {
 			const token = compiler.getToken();
 			switch (token) {
 			case `date`:
-				if (compiler.nextTokenIs(`of`)) {
+				if (compiler.nextIsWord(`of`)) {
 					if (compiler.nextIsSymbol()) {
 						const dateRecord = compiler.getSymbolRecord();
 						if (dateRecord.keyword === `date`) {
-							if (compiler.nextTokenIs(`to`)) {
+							if (compiler.nextIsWord(`to`)) {
 								const timestamp = compiler.getNextValue();
 								compiler.addCommand({
 									domain: `ui`,
@@ -309,12 +309,12 @@ const AllSpeak_UI = {
 				}
 				return null;
 			}
-			if (compiler.tokenIs(`the`)) {
+			if (compiler.isWord(`the`)) {
 				compiler.next();
 			}
 			const what = compiler.getToken();
 			if ([`date`, `timestamp`].includes(what)) {
-				if (compiler.nextTokenIs(`of`)) {
+				if (compiler.nextIsWord(`of`)) {
 					if (compiler.nextIsSymbol()) {
 						const symbolRecord = compiler.getSymbolRecord();
 						if (symbolRecord.keyword === `date`) {

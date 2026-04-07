@@ -196,10 +196,10 @@ const AllSpeak_Showdown = {
 
 		compile: compiler => {
 			if (compiler.tokenIs(`showdown`)) {
-				if (compiler.nextTokenIs(`decode`)) {
+				if (compiler.nextIsWord(`decode`)) {
 					const value = compiler.getNextValue();
 					let callback = null;
-					if (compiler.tokenIs(`with`)) {
+					if (compiler.isWord(`with`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbolRecord = compiler.getSymbolRecord();
 							if (symbolRecord.keyword === `callback`) {

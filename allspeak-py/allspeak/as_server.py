@@ -117,8 +117,8 @@ class Server(Handler):
             record = self.getSymbolRecord()
             self.checkObjectType(record, ECServer)
             command['server'] = record['name']
-            self.skip('on')
-            self.skip('port')
+            self.skipWord('on')
+            self.skipWord('port')
             command['port'] = self.nextValue()
             self.add(command)
             return True
@@ -135,7 +135,7 @@ class Server(Handler):
     def k_on(self, command):
         if self.nextIsSymbol():
             record = self.getSymbolRecord()
-            if self.isObjectType(record, ECServer) and self.peek() == 'request':
+            if self.isObjectType(record, ECServer) and language.reverse_word(self.peek()) == 'request':
                 self.nextToken()  # advance to 'request'
                 self.nextToken()  # advance past 'request' to handler body
                 command['server'] = record['name']
@@ -174,7 +174,7 @@ class Server(Handler):
         if self.nextIsSymbol():
             record = self.getSymbolRecord()
             varname = record['name']
-            if self.nextIs('from'):
+            if self.nextIsWord('from'):
                 if self.nextIsSymbol():
                     record2 = self.getSymbolRecord()
                     if self.isObjectType(record2, ECServer):
@@ -194,19 +194,19 @@ class Server(Handler):
     # return Content to MyServer [with status 200]
     def k_return(self, command):
         command['value'] = self.nextValue()
-        self.skip('to')
+        self.skipWord('to')
         if self.nextIsSymbol():
             record = self.getSymbolRecord()
             self.checkObjectType(record, ECServer)
             command['server'] = record['name']
             command['status'] = 200
             command['type'] = None
-            while self.peek() == 'with':
+            while language.reverse_word(self.peek()) == 'with':
                 self.nextToken()
-                if self.peek() == 'status':
+                if language.reverse_word(self.peek()) == 'status':
                     self.nextToken()
                     command['status'] = self.nextValue()
-                elif self.peek() == 'type':
+                elif language.reverse_word(self.peek()) == 'type':
                     self.nextToken()
                     command['type'] = self.nextValue()
             self.add(command)

@@ -307,10 +307,10 @@ class MQTT(Handler):
             record = self.getSymbolRecord()
             self.checkObjectType(record, ECTopic)
             command['topic'] = record['name']
-            self.skip('name')
+            self.skipWord('name')
             name =self.nextValue()
             command['name'] = name
-            self.skip('qos')
+            self.skipWord('qos')
             command['qos'] = self.nextValue()
             self.add(command)
             return True
@@ -352,17 +352,17 @@ class MQTT(Handler):
                     record = self.getSymbolRecord()
                     self.checkObjectType(record, ECTopic())
                     topics.append(record['name'])
-                    if self.peek() == 'and': self.nextToken()
+                    if language.reverse_word(self.peek()) == 'and': self.nextToken()
                     else:break
                 command['topics'] = topics
             elif token == 'action':
                 self.nextToken()
                 reqList = []
                 action = self.nextToken()
-                if self.nextIs('requires'):
+                if self.nextIsWord('requires'):
                     while True:
                         reqList.append(self.nextToken())
-                        if self.peek() == 'and':
+                        if language.reverse_word(self.peek()) == 'and':
                             self.nextToken()
                         else:
                             break
@@ -435,7 +435,7 @@ class MQTT(Handler):
 
     # send {message} to {topic}
     def k_send(self, command):
-        if self.nextIs('to'):
+        if self.nextIsWord('to'):
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 self.checkObjectType(record, ECTopic)
@@ -463,7 +463,7 @@ class MQTT(Handler):
                 return True
 
             command['message'] = self.nextValue()
-            self.skip('to')
+            self.skipWord('to')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 self.checkObjectType(record, MQTTClient)
@@ -475,7 +475,7 @@ class MQTT(Handler):
                         token = self.nextToken()
                         if token == 'qos':
                             command['qos'] = self.nextValue()
-                        if self.peek() == 'and':
+                        if language.reverse_word(self.peek()) == 'and':
                             self.nextToken()
                         else:
                             break

@@ -22,7 +22,7 @@ const AllSpeak_VFX = {
 				const symbolRecord = compiler.getSymbolRecord();
 				const keyword = symbolRecord.keyword;
 				if (keyword === `animation`) {
-					if (compiler.nextTokenIs(`in`)) {
+					if (compiler.nextIsWord(`in`)) {
 						if (compiler.nextIsSymbol()) {
 							const parentRecord = compiler.getSymbolRecord();
 							compiler.next();
@@ -121,14 +121,14 @@ const AllSpeak_VFX = {
 		compile: (compiler) => {
 			const lino = compiler.getLino();
 			let type = compiler.nextToken();
-			if (compiler.tokenIs(`the`)) {
+			if (compiler.isWord(`the`)) {
 				type = compiler.nextToken();
 			}
 			if ([`url`, `specification`, `spec`, `opacity`].includes(type)) {
-				if (compiler.nextTokenIs(`of`)) {
+				if (compiler.nextIsWord(`of`)) {
 					if (compiler.nextIsSymbol()) {
 						const symbolRecord = compiler.getSymbolRecord();
-						if (compiler.nextTokenIs(`to`)) {
+						if (compiler.nextIsWord(`to`)) {
 							const value = compiler.getNextValue();
 							compiler.addCommand({
 								domain: `vfx`,

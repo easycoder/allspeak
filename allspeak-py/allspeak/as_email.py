@@ -2,6 +2,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from .as_handler import Handler
+from .as_language import language
 from .as_classes import FatalError, RuntimeError
 
 class Email(Handler):
@@ -14,7 +15,7 @@ class Email(Handler):
 
     def processOr(self, command, orHere):
         self.add(command)
-        if self.peek() == 'or':
+        if language.reverse_word(self.peek()) == 'or':
             self.nextToken()
             self.nextToken()
             cmd = {}
@@ -43,43 +44,43 @@ class Email(Handler):
     #   [port {value}]
     #   [or ...]
     def k_send(self, command):
-        if self.nextIs('email'):
-            if self.nextIs('to'):
+        if self.nextIsWord('email'):
+            if self.nextIsWord('to'):
                 command['to'] = self.nextValue()
             else:
                 FatalError(self.compiler, '"send email" requires "to"')
-            if self.nextIs('from'):
+            if self.nextIsWord('from'):
                 command['from'] = self.nextValue()
             else:
                 FatalError(self.compiler, '"send email" requires "from"')
-            if self.nextIs('subject'):
+            if self.nextIsWord('subject'):
                 command['subject'] = self.nextValue()
             else:
                 FatalError(self.compiler, '"send email" requires "subject"')
-            if self.nextIs('body'):
+            if self.nextIsWord('body'):
                 command['body'] = self.nextValue()
             else:
                 FatalError(self.compiler, '"send email" requires "body"')
-            if self.nextIs('via'):
+            if self.nextIsWord('via'):
                 command['via'] = self.nextValue()
             else:
                 FatalError(self.compiler, '"send email" requires "via"')
-            if self.nextIs('user'):
+            if self.nextIsWord('user'):
                 command['user'] = self.nextValue()
             else:
                 FatalError(self.compiler, '"send email" requires "user"')
-            if self.nextIs('password'):
+            if self.nextIsWord('password'):
                 command['password'] = self.nextValue()
             else:
                 FatalError(self.compiler, '"send email" requires "password"')
             # Optional port (default 465 for SMTP_SSL)
-            if self.peek() == 'port':
+            if language.reverse_word(self.peek()) == 'port':
                 self.nextToken()
                 command['port'] = self.nextValue()
             else:
                 command['port'] = None
             # Optional html flag
-            if self.peek() == 'html':
+            if language.reverse_word(self.peek()) == 'html':
                 self.nextToken()
                 command['html'] = True
             else:

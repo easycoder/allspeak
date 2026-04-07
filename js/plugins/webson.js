@@ -8,7 +8,7 @@ const AllSpeak_Webson = {
 		compile: compiler => {
 			const lino = compiler.getLino();
             const script = compiler.getNextValue();
-            if (compiler.tokenIs(`in`)) {
+            if (compiler.isWord(`in`)) {
                 if (compiler.nextIsSymbol()) {
                     const parentRecord = compiler.getSymbolRecord();
                     if (parentRecord.extra === `dom`) {

@@ -17,7 +17,7 @@ class PSUtil(Handler):
     # Compile a value in this domain
     def compileValue(self):
         value = ECValue(domain=self.getName())
-        if self.tokenIs('the'):
+        if self.isWord('the'):
             self.nextToken()
         token = self.getToken()
         if token in ['mem', 'memory']:

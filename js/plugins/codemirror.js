@@ -11,7 +11,7 @@ const AllSpeak_CodeMirror = {
 			case `init`:
 				const mode = compiler.nextToken();
 				let profile = ``;
-				if (compiler.nextTokenIs(`profile`)) {
+				if (compiler.nextIsWord(`profile`)) {
 					profile = compiler.getNextValue();
 				}
 				compiler.addCommand({
@@ -24,11 +24,11 @@ const AllSpeak_CodeMirror = {
 				});
 				return true;
 			case `attach`:
-				if (compiler.nextTokenIs(`to`)) {
+				if (compiler.nextIsWord(`to`)) {
 					if (compiler.nextIsSymbol()) {
 						const editor = compiler.getToken();
 						let mode = `ecs`;
-						if (compiler.nextTokenIs(`mode`)) {
+						if (compiler.nextIsWord(`mode`)) {
 							mode = compiler.nextToken();
 							compiler.next();
 						}
@@ -45,11 +45,11 @@ const AllSpeak_CodeMirror = {
 				}
 				break;
 			case `set`:
-				if (compiler.nextTokenIs(`content`)) {
-					if (compiler.nextTokenIs(`of`)) {
+				if (compiler.nextIsWord(`content`)) {
+					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const editor = compiler.getSymbolRecord();
-							if (compiler.nextTokenIs(`to`)) {
+							if (compiler.nextIsWord(`to`)) {
 								const value = compiler.getNextValue();
 								compiler.addCommand({
 									domain: `codemirror`,
@@ -66,7 +66,7 @@ const AllSpeak_CodeMirror = {
 				}
 				break;
 			case `find`:
-				if (compiler.nextTokenIs(`in`)) {
+				if (compiler.nextIsWord(`in`)) {
 					if (compiler.nextIsSymbol()) {
 						const editor = compiler.getSymbolRecord();
 						compiler.next();
@@ -96,11 +96,11 @@ const AllSpeak_CodeMirror = {
 				}
 				return false;
 			case `get`:
-				if (compiler.nextTokenIs(`content`)) {
-					if (compiler.nextTokenIs(`of`)) {
+				if (compiler.nextIsWord(`content`)) {
+					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const editor = compiler.getSymbolRecord();
-							if (compiler.nextTokenIs(`into`)) {
+							if (compiler.nextIsWord(`into`)) {
 								if (compiler.nextIsSymbol()) {
 									const target = compiler.getSymbolRecord();
 									compiler.next();

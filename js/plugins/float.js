@@ -10,14 +10,14 @@ const AllSpeak_Float = {
 				compiler.next();
 				// Get the (first) value
 				const value1 = compiler.getValue();
-				if (compiler.tokenIs(`to`)) {
+				if (compiler.isWord(`to`)) {
 					compiler.next();
 					// Check if a value holder is next
 					if (compiler.isSymbol()) {
 						const symbol = compiler.getSymbol();
 						const variable = compiler.getCommandAt(symbol.pc);
 						if (variable.isVHolder) {
-							if (compiler.peek() === `giving`) {
+							if (compiler.peek() === AllSpeak_Language.word(`giving`)) {
 								// This variable must be treated as a second value
 								const value2 = compiler.getValue();
 								compiler.next();
@@ -49,7 +49,7 @@ const AllSpeak_Float = {
 					} else {
 						// Here we have 2 values so 'giving' must come next
 						const value2 = compiler.getValue();
-						if (compiler.tokenIs(`giving`)) {
+						if (compiler.isWord(`giving`)) {
 							compiler.next();
 							const target = compiler.getToken();
 							compiler.next();
@@ -118,13 +118,13 @@ const AllSpeak_Float = {
 				}
 				// Get the value even if we have a target
 				const value1 = compiler.getValue();
-				if (compiler.tokenIs(`by`)) {
+				if (compiler.isWord(`by`)) {
 					compiler.next();
 				}
 				// The next item is always a value
 				const value2 = compiler.getValue();
 				// If we now have 'giving' then the target follows
-				if (compiler.tokenIs(`giving`)) {
+				if (compiler.isWord(`giving`)) {
 					compiler.next();
 					// Get the target
 					if (compiler.isSymbol()) {
@@ -206,13 +206,13 @@ const AllSpeak_Float = {
 				}
 				// Get the value even if we have a target
 				const value1 = compiler.getValue();
-				if (compiler.tokenIs(`by`)) {
+				if (compiler.isWord(`by`)) {
 					compiler.next();
 				}
 				// The next item is always a value
 				const value2 = compiler.getValue();
 				// If we now have 'giving' then the target follows
-				if (compiler.tokenIs(`giving`)) {
+				if (compiler.isWord(`giving`)) {
 					compiler.next();
 					// Get the target
 					if (compiler.isSymbol()) {
@@ -289,13 +289,13 @@ const AllSpeak_Float = {
 				compiler.next();
 				// Get the (first) value
 				const value1 = compiler.getValue();
-				if (compiler.tokenIs(`from`)) {
+				if (compiler.isWord(`from`)) {
 					compiler.next();
 					if (compiler.isSymbol()) {
 						const symbol = compiler.getSymbol();
 						const variable = compiler.getCommandAt(symbol.pc);
 						if (variable.isVHolder) {
-							if (compiler.peek() === `giving`) {
+							if (compiler.peek() === AllSpeak_Language.word(`giving`)) {
 								// This variable must be treated as a second value
 								const value2 = compiler.getValue();
 								compiler.next();
@@ -328,7 +328,7 @@ const AllSpeak_Float = {
 					} else {
 						// Here we have 2 values so 'giving' must come next
 						const value2 = compiler.getValue();
-						if (compiler.tokenIs(`giving`)) {
+						if (compiler.isWord(`giving`)) {
 							compiler.next();
 							const target = compiler.getToken();
 							compiler.next();

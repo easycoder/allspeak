@@ -12,7 +12,7 @@ const AllSpeak_GMap = {
 				const type = symbolRecord.keyword;
 				switch (type) {
 				case `gmap`:
-					if (compiler.nextTokenIs(`in`)) {
+					if (compiler.nextIsWord(`in`)) {
 						if (compiler.nextIsSymbol()) {
 							const parentRecord = compiler.getSymbolRecord();
 							if (parentRecord.keyword === `div`) {
@@ -31,7 +31,7 @@ const AllSpeak_GMap = {
 					}
 					return false;
 				case `marker`:
-					if (compiler.nextTokenIs(`in`)) {
+					if (compiler.nextIsWord(`in`)) {
 						if (compiler.nextIsSymbol()) {
 							const parentRecord = compiler.getSymbolRecord();
 							if (parentRecord.keyword === `gmap`) {
@@ -173,7 +173,7 @@ const AllSpeak_GMap = {
 		compile: compiler => {
 			const lino = compiler.getLino();
 			if (compiler.nextTokenIs(`markers`)) {
-				if (compiler.nextTokenIs(`from`)) {
+				if (compiler.nextIsWord(`from`)) {
 					if (compiler.nextIsSymbol()) {
 						const symbolRecord = compiler.getSymbolRecord();
 						if (symbolRecord.keyword === `gmap`) {
@@ -210,11 +210,11 @@ const AllSpeak_GMap = {
 			compiler.skip(`the`);
 			const attribute = compiler.getToken();
 			if ([`key`, `latitude`, `longitude`, `type`, `zoom`].includes(attribute)) {
-				if (compiler.nextTokenIs(`of`)) {
+				if (compiler.nextIsWord(`of`)) {
 					if (compiler.nextIsSymbol()) {
 						const symbolRecord = compiler.getSymbolRecord();
 						if (symbolRecord.keyword === `gmap`) {
-							if (compiler.nextTokenIs(`to`)) {
+							if (compiler.nextIsWord(`to`)) {
 								const value = compiler.getNextValue();
 								compiler.addCommand({
 									domain: `gmap`,
@@ -230,11 +230,11 @@ const AllSpeak_GMap = {
 					}
 				}
 			} else if ([`label`, `title`, `position`, `color`].includes(attribute)) {
-				if (compiler.nextTokenIs(`of`)) {
+				if (compiler.nextIsWord(`of`)) {
 					if (compiler.nextIsSymbol()) {
 						const symbolRecord = compiler.getSymbolRecord();
 						if (symbolRecord.keyword === `marker`) {
-							if (compiler.nextTokenIs(`to`)) {
+							if (compiler.nextIsWord(`to`)) {
 								const value = compiler.getNextValue();
 								compiler.addCommand({
 									domain: `gmap`,
@@ -437,13 +437,13 @@ const AllSpeak_GMap = {
 	value: {
 
 		compile: compiler => {
-			if (compiler.tokenIs(`the`)) {
+			if (compiler.isWord(`the`)) {
 				compiler.next();
 			}
 			const type = compiler.getToken();
 			if (type === `click`) {
-				if (compiler.nextTokenIs(`position`)) {
-					if (compiler.nextTokenIs(`of`)) {
+				if (compiler.nextIsWord(`position`)) {
+					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const mapRecord = compiler.getSymbolRecord();
 							if (mapRecord.keyword === `gmap`) {
@@ -458,7 +458,7 @@ const AllSpeak_GMap = {
 					}
 				}
 			}
-			if (compiler.nextTokenIs(`of`)) {
+			if (compiler.nextIsWord(`of`)) {
 				if (compiler.nextIsSymbol()) {
 					const symbolRecord = compiler.getSymbolRecord();
 					if (symbolRecord.keyword === `gmap` && [`latitude`, `longitude`, `type`, `zoom`, `bounds`].includes(type) ||

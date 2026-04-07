@@ -6,15 +6,15 @@ const AllSpeak_Life = {
 	value: {
 
 		compile: (compiler) => {
-			if (compiler.tokenIs(`the`)) {
+			if (compiler.isWord(`the`)) {
 				compiler.nextToken();
 			}
-			if (compiler.tokenIs(`neighbours`)) {
-				if (compiler.nextTokenIs(`of`)) {
+			if (compiler.isWord(`neighbours`)) {
+				if (compiler.nextIsWord(`of`)) {
 					if (compiler.nextIsSymbol()) {
 						const symbolRecord = compiler.getSymbolRecord();
 						if (symbolRecord.keyword == `variable`) {
-							if (compiler.nextTokenIs(`cell`)) {
+							if (compiler.nextIsWord(`cell`)) {
 								const cell = compiler.getNextValue();
 								return {
 									domain: `life`,

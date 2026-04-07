@@ -1,5 +1,6 @@
 import sys
 from .as_handler import Handler
+from .as_language import language
 from .as_classes import (
     FatalError,
     RuntimeError,
@@ -266,7 +267,7 @@ class Graphics(Handler):
         if token == 'stretch':
             self.nextToken()
             # It's either (3) or (4)
-            if self.nextIs('to'):
+            if self.nextIsWord('to'):
                 # (4)
                 command['stretch'] = False
                 command['widget'] = 'stretch'
@@ -276,16 +277,16 @@ class Graphics(Handler):
                 record = self.getSymbolRecord()
                 command['widget'] = record['name']
                 command['stretch'] = True
-                if self.nextIs('to'):
+                if self.nextIsWord('to'):
                     return addToLayout()
             return False
         
         elif token == 'spacer':
             self.nextToken()
-            self.skip('size')
+            self.skipWord('size')
             command['widget'] = 'spacer'
             command['size'] = self.nextValue()
-            self.skip('to')
+            self.skipWord('to')
             return addToLayout()
 
         # Here it's either (1), (2) or (6)
@@ -294,7 +295,7 @@ class Graphics(Handler):
             if self.isObjectType(record, ECWidget):
                 # It's either (2), (6) or (1)
                 command['widget'] = record['name']
-                if self.peek() == 'to':
+                if language.reverse_word(self.peek()) == 'to':
                     # (2)
                     record = self.getSymbolRecord()
                     domainName = record['domain']
@@ -304,24 +305,24 @@ class Graphics(Handler):
                         return handler(command)
                     self.nextToken()
                     return addToLayout()
-                elif self.peek() == 'at':
+                elif language.reverse_word(self.peek()) == 'at':
                     # (6)
                     self.nextToken()
                     command['row'] = self.nextValue()
                     command['col'] = self.nextValue()
-                    self.skip('in')
+                    self.skipWord('in')
                     return addToLayout()
             else:
                 # It's (1) with a non-widget variable
                 command['value'] = self.getValue()
-                self.skip('to')
+                self.skipWord('to')
                 return addToLayout()
 
         # (1) with a value
         value = self.getValue()
         if value == None: return False
         command['value'] = value
-        self.skip('to')
+        self.skipWord('to')
         return addToLayout()
     
     def r_add(self, command):
@@ -398,7 +399,7 @@ class Graphics(Handler):
             record = self.getSymbolRecord()
             if self.isObjectType(record, ECWindow):
                 command['window2'] = record['name']
-                self.skip('on')
+                self.skipWord('on')
                 if self.nextIsSymbol():
                     record = self.getSymbolRecord()
                     if self.isObjectType(record, ECWindow):
@@ -548,13 +549,13 @@ class Graphics(Handler):
 
     # Create a widget
     def k_createLayout(self, command):
-        self.skip('type')
+        self.skipWord('type')
         command['type'] = self.nextToken()
         self.add(command)
         return True
 
     def k_createGroupBox(self, command):
-        if self.peek() == 'title':
+        if language.reverse_word(self.peek()) == 'title':
             self.nextToken()
             title = self.nextValue()
         else: title = ''
@@ -605,7 +606,7 @@ class Graphics(Handler):
         return True
 
     def k_createCheckBox(self, command):
-        if self.peek() == 'text':
+        if language.reverse_word(self.peek()) == 'text':
             self.nextToken()
             text = self.nextValue()
         else: text = self.compileConstant('')
@@ -669,27 +670,27 @@ class Graphics(Handler):
         return True
 
     def k_createDialog(self, command):
-        if self.peek() == 'on':
+        if language.reverse_word(self.peek()) == 'on':
             self.nextToken()
             if self.nextIsSymbol():
                 command['window'] = self.getSymbolRecord()['name']
         else: command['window'] = None
         while True:
-            if self.peek() == 'type':
+            if language.reverse_word(self.peek()) == 'type':
                 self.nextToken()
                 dialogType = self.nextToken()
                 if dialogType in self.dialogTypes(): command['type'] = dialogType
                 else: return False
-            elif self.peek() == 'title':
+            elif language.reverse_word(self.peek()) == 'title':
                 self.nextToken()
                 command['title'] = self.nextValue()
-            elif self.peek() == 'prompt':
+            elif language.reverse_word(self.peek()) == 'prompt':
                 self.nextToken()
                 command['prompt'] =  self.nextValue()
-            elif self.peek() == 'value':
+            elif language.reverse_word(self.peek()) == 'value':
                 self.nextToken()
                 command['value'] =  self.nextValue()
-            elif self.peek() == 'with':
+            elif language.reverse_word(self.peek()) == 'with':
                 self.nextToken()
                 command['layout'] =  self.nextToken()
             else: break
@@ -700,7 +701,7 @@ class Graphics(Handler):
         return True
 
     def k_createMessageBox(self, command):
-        if self.peek() == 'on':
+        if language.reverse_word(self.peek()) == 'on':
             self.nextToken()
             if self.nextIsSymbol():
                 command['window'] = self.getSymbolRecord()['name']
@@ -709,13 +710,13 @@ class Graphics(Handler):
         title = ''
         message = ''
         while True:
-            if self.peek() == 'style':
+            if language.reverse_word(self.peek()) == 'style':
                 self.nextToken()
                 style = self.nextToken()
-            elif self.peek() == 'title':
+            elif language.reverse_word(self.peek()) == 'title':
                 self.nextToken()
                 title = self.nextValue()
-            elif self.peek() == 'message':
+            elif language.reverse_word(self.peek()) == 'message':
                 self.nextToken()
                 message = self.nextValue()
             else: break
@@ -1033,7 +1034,7 @@ class Graphics(Handler):
 
     # Initialize the graphics environment
     def k_init(self, command):
-        if self.nextIs('graphics'):
+        if self.nextIsWord('graphics'):
             self.add(command)
             return True
         return False
@@ -1281,7 +1282,7 @@ class Graphics(Handler):
         command['variant'] = None
         self.skipArticles()  # Optional 'the', 'a', 'an' — syntactic sugar
         self.skip(['current', 'selected'])
-        self.skip('item')
+        self.skipWord('item')
         self.skip(['from', 'in'])
         if self.nextIsSymbol():
             record = self.getSymbolRecord()
@@ -1315,12 +1316,12 @@ class Graphics(Handler):
     # select index {n} [of] {combobox]}
     # select {name} [in] {combobox}
     def k_select(self, command):
-        if self.nextIs('index'):
+        if self.nextIsWord('index'):
             command['index'] = self.nextValue()
-            self.skip('of')
+            self.skipWord('of')
         else:
             command['name'] = self.getValue()
-            self.skip('in')
+            self.skipWord('in')
         if self.nextIsSymbol():
             record = self.getSymbolRecord()
             if self.isObjectType(record, ECComboBox):
@@ -1354,34 +1355,34 @@ class Graphics(Handler):
         token = self.nextToken()
         command['what'] = token
         if token in ['width', 'height']:
-            self.skip('of')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if self.isObjectType(record, ECCoreWidget):
                     command['domain'] = record['domain']
                     command['name'] = record['name']
-                    self.skip('to')
+                    self.skipWord('to')
                     command['value'] = self.nextValue()
                     self.add(command)
                     return True
         elif token == 'size':
-            self.skip('of')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if self.isObjectType(record, ECWindow):
                     command['name'] = record['name']
-                    self.skip('to')
+                    self.skipWord('to')
                     command['width'] = self.nextValue()
                     command['height'] = self.nextValue()
                     self.add(command)
                     return True
         elif token == 'layout':
-            self.skip('of')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if self.isObjectType(record, (ECWindow, ECGroup, ECPanel)):
                     command['name'] = record['name']
-                    self.skip('to')
+                    self.skipWord('to')
                     if self.nextIsSymbol():
                         record = self.getSymbolRecord()
                         if self.isObjectType(record, ECLayout):
@@ -1389,58 +1390,58 @@ class Graphics(Handler):
                             self.add(command)
                             return True
         elif token == 'spacing':
-            self.skip('of')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if self.isObjectType(record, ECLayout):
                     command['name'] = record['name']
-                    self.skip('to')
+                    self.skipWord('to')
                     command['value'] = self.nextValue()
                     self.add(command)
                     return True
         elif token == 'text':
-            self.skip('of')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if self.isObjectType(record, (ECLabel, ECPushButton, ECLineInput, ECMultiline, ECMDPanel)):
                     command['name'] = record['name']
-                    self.skip('to')
+                    self.skipWord('to')
                     command['value'] = self.nextValue()
                     self.add(command)
                     return True
         elif token == 'state':
-            self.skip('of')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if self.isObjectType(record, ECCheckBox):
                     command['name'] = record['name']
-                    self.skip('to')
-                    if self.peek() == 'checked':
+                    self.skipWord('to')
+                    if language.reverse_word(self.peek()) == 'checked':
                         command['value'] = self.compileConstant(True)
                         self.nextToken()
-                    elif self.peek() == 'unchecked':
+                    elif language.reverse_word(self.peek()) == 'unchecked':
                         command['value'] = self.compileConstant(False)
                         self.nextToken()
                     else: command['value'] = self.nextValue()
                     self.add(command)
                     return True
         elif token == 'style':
-            self.skip('of')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if self.isObjectType(record, ECWidget):
                     command['name'] = record['name']
-                    self.skip('to')
+                    self.skipWord('to')
                     command['value'] = self.nextValue()
                     self.add(command)
                     return True
         elif token == 'alignment':
-            self.skip('of')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if self.isObjectType(record, ECWidget):
                     command['name'] = record['name']
-                    self.skip('to')
+                    self.skipWord('to')
                     flags = []
                     while self.peek() in ['left', 'hcenter', 'right', 'top', 'vcenter', 'bottom', 'center']:
                         flags.append(self.nextToken())
@@ -1448,33 +1449,33 @@ class Graphics(Handler):
                     self.add(command)
                     return True
         elif token == 'style':
-            self.skip('of')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if self.isObjectType(record, ECLabel):
                     command['name'] = record['name']
-                    self.skip('to')
+                    self.skipWord('to')
                     command['value'] = self.nextValue()
                     self.add(command)
                     return True
         elif token == 'color':
-            self.skip('of')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if self.isObjectType(record, ECLabel):
                     command['name'] = record['name']
-                    self.skip('to')
+                    self.skipWord('to')
                     command['value'] = self.nextValue()
                     self.add(command)
                     return True
         elif token == 'background':
-            self.skip('color')
-            self.skip('of')
+            self.skipWord('color')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if self.isObjectType(record, (ECLabel, ECPushButton, ECLineInput, ECMultiline)):
                     command['name'] = record['name']
-                    self.skip('to')
+                    self.skipWord('to')
                     command['value'] = self.nextValue()
                     self.add(command)
                     return True
@@ -1486,7 +1487,7 @@ class Graphics(Handler):
             if self.isObjectType(record, ECListBox):
                 command['what'] = 'listbox'
                 command['name'] = record['name']
-                self.skip('to')
+                self.skipWord('to')
                 command['value'] = self.nextValue()
                 self.add(command)
                 return True
@@ -1595,7 +1596,7 @@ class Graphics(Handler):
                 return True
             elif self.isObjectType(record, ECMessageBox):
                 command['messagebox'] = record['name']
-                self.skip('giving')
+                self.skipWord('giving')
                 if self.nextIsSymbol():
                     command['result'] = self.getSymbolRecord()['name']
                     self.add(command)
@@ -1680,31 +1681,31 @@ class Graphics(Handler):
                 return value
             else: return None
         else:
-            if self.tokenIs('the'): token = self.nextToken()
+            if self.isWord('the'): token = self.nextToken()
             value.setType(token)
             if token in ['count', 'current', 'selected']:
                 value.setType(token)
                 if token == 'count':
-                    self.skip('of')
+                    self.skipWord('of')
                 elif token in ['current', 'selected']:
                     token = self.nextToken()
                     value.option = token
-                    if token == 'item': self.skip('in')
-                    elif token == 'index': self.skip('of')
+                    if token == 'item': self.skipWord('in')
+                    elif token == 'index': self.skipWord('of')
                 if self.nextIsSymbol():
                     record = self.getSymbolRecord()
                     if self.isObjectType(record, ECListBox) or self.isObjectType(record, ECComboBox): # type: ignore
                         value.setContent(ECValue(domain=self.getName(), type='object', name=record['name']))
                         return value
             elif token == 'count':
-                self.skip('of')
+                self.skipWord('of')
                 if self.nextIsSymbol():
                     record = self.getSymbolRecord()
                     if self.isObjectType(record, ECListBox) or self.isObjectType(record, ECComboBox): # type: ignore
                         value.setContent(ECValue(domain=self.getName(), type='object', name=record['name']))
                         return value
             elif token == 'text':
-                self.skip('of')
+                self.skipWord('of')
                 if self.nextIsSymbol():
                     record = self.getSymbolRecord()
                     if (
@@ -1713,7 +1714,7 @@ class Graphics(Handler):
                         value.setContent(ECValue(domain=self.getName(), type='object', name=record['name']))
                         return value
             elif token == 'index':
-                self.skip('of')
+                self.skipWord('of')
                 value.element = self.getValue()
                 if self.nextIsSymbol():
                     record = self.getSymbolRecord()
@@ -1721,7 +1722,7 @@ class Graphics(Handler):
                         value.setContent(ECValue(domain=self.getName(), type='object', name=record['name']))
                         return value
             elif token in ['width', 'height']:
-                self.skip('of')
+                self.skipWord('of')
                 if self.nextIsSymbol():
                     record = self.getSymbolRecord()
                     if self.isObjectType(record, ECWindow): # type: ignore
