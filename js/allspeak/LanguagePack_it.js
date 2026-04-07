@@ -1,6 +1,6 @@
 // Italian language pack for AllSpeak — auto-generated from languages/it.json
 // eslint-disable-next-line no-unused-vars
-const AllSpeak_LanguagePack_it = {
+var AllSpeak_LanguagePack_it = {
   "meta": {
     "language": "it",
     "label": "Italiano",
@@ -1105,7 +1105,24 @@ const AllSpeak_LanguagePack_it = {
     "window": "finestra",
     "viewport": "viewport",
     "item": "elemento",
-    "prompt": "prompt"
+    "prompt": "prompt",
+    "styles": "stili",
+    "fullscreen": "schermointero",
+    "exit": "esci",
+    "title": "titolo",
+    "default": "predefinito",
+    "tracer": "traccia",
+    "class": "classe",
+    "id": "id",
+    "attributes": "attributi",
+    "milli": "milli",
+    "millis": "millis",
+    "seconds": "secondi",
+    "minutes": "minuti",
+    "tick": "tick",
+    "ticks": "ticks",
+    "swipe": "scorri",
+    "language": "lingua"
   },
   "diagnostics": {
     "unknownCommand": "Non capisco '{token}' alla riga {line}.",

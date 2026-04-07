@@ -296,9 +296,9 @@ const AllSpeak_Compiler = {
 		AllSpeak.writeToDebugConsole(`No handler found`);
 		const lino = this.getLino() + 1;
 		if (/^[A-Za-z_][A-Za-z0-9_]*$/.test(token) && !(token in this.symbols)) {
-			throw new Error(`Unknown symbol or keyword '${token}' at line ${lino}`);
+			throw new Error(AllSpeak_Language.diagnostic(`unknownCommand`, {token, line: lino}));
 		}
-		throw new Error(`I don't understand '${token}...' at line ${lino}`);
+		throw new Error(AllSpeak_Language.diagnostic(`unknownCommand`, {token: token + `...`, line: lino}));
 	},
 
 	compileOne: function() {
@@ -339,6 +339,35 @@ const AllSpeak_Compiler = {
 		}
 	},
 
+	// Check for a language declaration at the start of the script.
+	// Syntax: "language <name>" e.g. "language italiano" or "language english"
+	// This must appear before any other code. It loads the named language pack
+	// and resets compile handler caches.
+	checkLanguageDirective: function() {
+		if (this.index >= this.tokens.length) return;
+		const token = this.tokens[this.index].token;
+		// Accept 'language' in any already-loaded language, or the English word
+		if (token === `language` || token === AllSpeak_Language.word(`language`)) {
+			this.index++;
+			if (this.index >= this.tokens.length) return;
+			const langName = this.tokens[this.index].token;
+			this.index++;
+			// Look for a global language pack variable: AllSpeak_LanguagePack_<name>
+			const packName = `AllSpeak_LanguagePack_${langName}`;
+			const pack = typeof window !== `undefined` ? window[packName] : null;
+			if (pack) {
+				AllSpeak_Language.init(pack);
+				// Reset cached compile handler tables
+				if (AllSpeak_Core._compileHandlers) AllSpeak_Core._compileHandlers = null;
+				if (AllSpeak_Browser._compileHandlers) AllSpeak_Browser._compileHandlers = null;
+				if (AllSpeak_REST._compileHandlers) AllSpeak_REST._compileHandlers = null;
+				if (AllSpeak_MQTT._compileHandlers) AllSpeak_MQTT._compileHandlers = null;
+			} else {
+				this.addWarning(`Language pack '${langName}' not found (looked for ${packName})`);
+			}
+		}
+	},
+
 	compile: function(tokens) {
 		this.tokens = tokens;
 		this.index = 0;
@@ -347,6 +376,7 @@ const AllSpeak_Compiler = {
 		this.program.symbols = {};
 		this.symbols = this.program.symbols;
 		this.warnings = [];
+		this.checkLanguageDirective();
 		this.compileFromHere([]);
 		this.addCommand({
 			domain: `core`,

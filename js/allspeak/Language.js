@@ -105,6 +105,33 @@ const AllSpeak_Language = {
 		return this._reverseWords[token] || token;
 	},
 
+	// Get a localized diagnostic message with placeholder substitution.
+	// e.g. diagnostic('unknownCommand', {token: 'xyz', line: 5})
+	diagnostic: function(key, params) {
+		let msg;
+		if (this.pack && this.pack.diagnostics && this.pack.diagnostics[key]) {
+			msg = this.pack.diagnostics[key];
+		} else {
+			// Fallback English messages
+			const fallbacks = {
+				unknownCommand: `I don't understand '{token}' at line {line}.`,
+				undeclaredVariable: `Variable '{name}' has not been declared.`,
+				unexpectedToken: `Expected '{expected}' but got '{actual}' at line {line}.`,
+				divisionByZero: `Division by zero at line {line}.`,
+				indexOutOfRange: `Index {index} is out of range at line {line}.`,
+				moduleNotFound: `Module '{name}' not found.`,
+				syntaxError: `Syntax error at line {line}: {detail}.`
+			};
+			msg = fallbacks[key] || key;
+		}
+		if (params) {
+			for (const p in params) {
+				msg = msg.replace(`{${p}}`, params[p]);
+			}
+		}
+		return msg;
+	},
+
 	// Check if a token is a known keyword in the active language
 	isKeyword: function(token) {
 		return this._keywordIndex && token in this._keywordIndex;

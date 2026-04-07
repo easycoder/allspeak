@@ -1168,6 +1168,23 @@
     "window": "window",
     "viewport": "viewport",
     "item": "item",
-    "prompt": "prompt"
+    "prompt": "prompt",
+    "styles": "styles",
+    "fullscreen": "fullscreen",
+    "exit": "exit",
+    "title": "title",
+    "default": "default",
+    "tracer": "tracer",
+    "class": "class",
+    "id": "id",
+    "attributes": "attributes",
+    "milli": "milli",
+    "millis": "millis",
+    "seconds": "seconds",
+    "minutes": "minutes",
+    "tick": "tick",
+    "ticks": "ticks",
+    "swipe": "swipe",
+    "language": "language"
   }
 }

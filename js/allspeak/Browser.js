@@ -314,7 +314,7 @@ const AllSpeak_Browser = {
 
 		compile: (compiler) => {
 			const lino = compiler.getLino();
-			const name = compiler.nextToken();
+			const name = AllSpeak_Language.reverseWord(compiler.nextToken());
 			if ([`body`, `styles`].includes(name)) {
 				compiler.next();
 				compiler.addCommand({
@@ -1015,11 +1015,11 @@ const AllSpeak_Browser = {
 				let title = ``;
 				while (true) {
 					const token = compiler.getToken();
-					if (token === `url`) {
+					if (token === AllSpeak_Language.word(`url`)) {
 						url = compiler.getNextValue();
-					} else if (token === `state`) {
+					} else if (token === AllSpeak_Language.word(`state`)) {
 						state = compiler.getNextValue();
-					} else if (token === `title`) {
+					} else if (token === AllSpeak_Language.word(`title`)) {
 						title = compiler.getNextValue();
 					} else {
 						break;
@@ -1328,8 +1328,8 @@ const AllSpeak_Browser = {
 				});
 				return compiler.completeHandler();
 			case `swipe`:
-				if ([`left`, `right`].includes(compiler.nextToken())) {
-					const direction = compiler.getToken();
+				if ([`left`, `right`].includes(AllSpeak_Language.reverseWord(compiler.nextToken()))) {
+					const direction = AllSpeak_Language.reverseWord(compiler.getToken());
 					compiler.next();
 					compiler.addCommand({
 						domain: `browser`,
@@ -1918,9 +1918,9 @@ const AllSpeak_Browser = {
 
 		compile: (compiler) => {
 			const lino = compiler.getLino();
-			if (compiler.nextToken() === `fullscreen`) {
+			if (AllSpeak_Language.reverseWord(compiler.nextToken()) === `fullscreen`) {
 				let option = ``;
-				if (compiler.nextToken() === `exit`) {
+				if (AllSpeak_Language.reverseWord(compiler.nextToken()) === `exit`) {
 					option = `exit`;
 					compiler.next();
 				}
@@ -2028,7 +2028,7 @@ const AllSpeak_Browser = {
 				const target = targetRecord.name;
 				if (targetRecord.extra === `dom`) {
 					const token = compiler.nextToken();
-					if (token === `from`) {
+					if (token === AllSpeak_Language.word(`from`)) {
 						if (compiler.nextIsSymbol()) {
 							if (targetRecord.keyword === `select`) {
 								const sourceRecord = compiler.getSymbolRecord();
@@ -2066,10 +2066,10 @@ const AllSpeak_Browser = {
 				}
 			} else {
 				let token = compiler.getToken();
-				if (token === `the`) {
+				if (token === AllSpeak_Language.word(`the`)) {
 					token = compiler.nextToken();
 				}
-				if (token === `title`) {
+				if (token === AllSpeak_Language.word(`title`)) {
 					if (compiler.nextIsWord(`to`)) {
 						const value = compiler.getNextValue();
 						compiler.addCommand({
@@ -2081,7 +2081,7 @@ const AllSpeak_Browser = {
 						});
 						return true;
 					}
-				} else if (token === `content`) {
+				} else if (token === AllSpeak_Language.word(`content`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const target = compiler.getToken();
@@ -2115,7 +2115,7 @@ const AllSpeak_Browser = {
 						}
 						throw new Error(`'${compiler.getToken()}' is not a symbol`);
 					}
-				} else if (token === `class`) {
+				} else if (token === AllSpeak_Language.word(`class`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbol = compiler.getSymbolRecord();
@@ -2135,7 +2135,7 @@ const AllSpeak_Browser = {
 							}
 						}
 					}
-				} else if (token === `id`) {
+				} else if (token === AllSpeak_Language.word(`id`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbol = compiler.getSymbolRecord();
@@ -2155,7 +2155,7 @@ const AllSpeak_Browser = {
 							}
 						}
 					}
-				} else if (token === `text`) {
+				} else if (token === AllSpeak_Language.word(`text`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbol = compiler.getSymbolRecord();
@@ -2184,7 +2184,7 @@ const AllSpeak_Browser = {
 							}
 						}
 					}
-				} else if (token === `size`) {
+				} else if (token === AllSpeak_Language.word(`size`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbol = compiler.getSymbolRecord();
@@ -2205,7 +2205,7 @@ const AllSpeak_Browser = {
 							}
 						}
 					}
-				} else if (token === `attribute`) {
+				} else if (token === AllSpeak_Language.word(`attribute`)) {
 					compiler.next();
 					const attributeName = compiler.getValue();
 					if (compiler.isWord(`of`)) {
@@ -2232,7 +2232,7 @@ const AllSpeak_Browser = {
 							return true;
 						}
 					}
-				} else if (token === `attributes`) {
+				} else if (token === AllSpeak_Language.word(`attributes`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbolRecord = compiler.getSymbolRecord();
@@ -2259,7 +2259,7 @@ const AllSpeak_Browser = {
 					}
 					compiler.warning(`'${compiler.getToken()}' is not a symbol`);
 					return false;
-				} else if (token === `style`) {
+				} else if (token === AllSpeak_Language.word(`style`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbolRecord = compiler.getSymbolRecord();
@@ -2290,8 +2290,8 @@ const AllSpeak_Browser = {
 					let type = `setStyle`;
 					let symbolName = ``;
 					token = compiler.getToken();
-					if (token === `of`) {
-						if (compiler.nextToken() === `body`) {
+					if (token === AllSpeak_Language.word(`of`)) {
+						if (AllSpeak_Language.reverseWord(compiler.nextToken()) === `body`) {
 							type = `setBodyStyle`;
 						} else if (compiler.isSymbol()) {
 							const symbolRecord = compiler.getSymbolRecord();
@@ -2318,7 +2318,7 @@ const AllSpeak_Browser = {
 							}
 						}
 					}
-					else if (token === `to`) {
+					else if (token === AllSpeak_Language.word(`to`)) {
 						const styleValue = compiler.getNextValue();
 						if (styleValue) {
 							compiler.addCommand({
@@ -2332,7 +2332,7 @@ const AllSpeak_Browser = {
 							return true;
 						}
 					}
-				} else if (token === `default`) {
+				} else if (token === AllSpeak_Language.word(`default`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbolRecord = compiler.getSymbolRecord();
@@ -2352,7 +2352,7 @@ const AllSpeak_Browser = {
 							}
 						}
 					}
-				} else if (token === `tracer`) {
+				} else if (token === AllSpeak_Language.word(`tracer`)) {
 					if (compiler.nextIsWord(`rows`)) {
 						if (compiler.nextIsWord(`to`)) {
 							const value = compiler.getNextValue();

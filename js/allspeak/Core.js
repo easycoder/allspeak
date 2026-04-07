@@ -604,14 +604,9 @@ const AllSpeak_Core = {
 		compile: compiler => {
 			const lino = compiler.getLino();
 			const rate = compiler.getNextValue();
-			const m = compiler.getToken();
+			const m = AllSpeak_Language.reverseWord(compiler.getToken());
 			let multiplier = 1000;
-			if ([`minute`,
-				`minutes`,
-				`second`,
-				`seconds`,
-				`tick`,
-				`ticks`].includes(m)) {
+			if ([`minute`, `minutes`, `second`, `seconds`, `tick`, `ticks`].includes(m)) {
 					switch (m) {
 						case `minute`:
 						case `minutes`:
@@ -2449,7 +2444,7 @@ const AllSpeak_Core = {
 			const lino = compiler.getLino();
 			compiler.next();
 			const value = compiler.getValue(compiler);
-			const scale = compiler.getToken();
+			const scale = AllSpeak_Language.reverseWord(compiler.getToken());
 			let multiplier = 1000;
 			switch (scale) {
 			case `milli`:
@@ -2756,7 +2751,7 @@ const AllSpeak_Core = {
 			if (token === AllSpeak_Language.word(`cos`)) {
 				compiler.next();
 				const angle_c = compiler.getValue();
-				compiler.skip(`radius`);
+				compiler.skipWord(`radius`);
 				const radius_c = compiler.getValue();
 				return {
 					domain: `core`,
@@ -2768,7 +2763,7 @@ const AllSpeak_Core = {
 			if (token === AllSpeak_Language.word(`sin`)) {
 				compiler.next();
 				const angle_s = compiler.getValue();
-				compiler.skip(`radius`);
+				compiler.skipWord(`radius`);
 				const radius_s = compiler.getValue();
 				return {
 					domain: `core`,
@@ -2780,7 +2775,7 @@ const AllSpeak_Core = {
 			if (token === AllSpeak_Language.word(`tan`)) {
 				compiler.next();
 				const angle_t = compiler.getValue();
-				compiler.skip(`radius`);
+				compiler.skipWord(`radius`);
 				const radius_t = compiler.getValue();
 				return {
 					domain: `core`,

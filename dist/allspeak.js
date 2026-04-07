@@ -604,14 +604,9 @@ const AllSpeak_Core = {
 		compile: compiler => {
 			const lino = compiler.getLino();
 			const rate = compiler.getNextValue();
-			const m = compiler.getToken();
+			const m = AllSpeak_Language.reverseWord(compiler.getToken());
 			let multiplier = 1000;
-			if ([`minute`,
-				`minutes`,
-				`second`,
-				`seconds`,
-				`tick`,
-				`ticks`].includes(m)) {
+			if ([`minute`, `minutes`, `second`, `seconds`, `tick`, `ticks`].includes(m)) {
 					switch (m) {
 						case `minute`:
 						case `minutes`:
@@ -2449,7 +2444,7 @@ const AllSpeak_Core = {
 			const lino = compiler.getLino();
 			compiler.next();
 			const value = compiler.getValue(compiler);
-			const scale = compiler.getToken();
+			const scale = AllSpeak_Language.reverseWord(compiler.getToken());
 			let multiplier = 1000;
 			switch (scale) {
 			case `milli`:
@@ -2756,7 +2751,7 @@ const AllSpeak_Core = {
 			if (token === AllSpeak_Language.word(`cos`)) {
 				compiler.next();
 				const angle_c = compiler.getValue();
-				compiler.skip(`radius`);
+				compiler.skipWord(`radius`);
 				const radius_c = compiler.getValue();
 				return {
 					domain: `core`,
@@ -2768,7 +2763,7 @@ const AllSpeak_Core = {
 			if (token === AllSpeak_Language.word(`sin`)) {
 				compiler.next();
 				const angle_s = compiler.getValue();
-				compiler.skip(`radius`);
+				compiler.skipWord(`radius`);
 				const radius_s = compiler.getValue();
 				return {
 					domain: `core`,
@@ -2780,7 +2775,7 @@ const AllSpeak_Core = {
 			if (token === AllSpeak_Language.word(`tan`)) {
 				compiler.next();
 				const angle_t = compiler.getValue();
-				compiler.skip(`radius`);
+				compiler.skipWord(`radius`);
 				const radius_t = compiler.getValue();
 				return {
 					domain: `core`,
@@ -4280,7 +4275,7 @@ const AllSpeak_Core = {
 
 		compile: (compiler) => {
 			const lino = compiler.getLino();
-			const name = compiler.nextToken();
+			const name = AllSpeak_Language.reverseWord(compiler.nextToken());
 			if ([`body`, `styles`].includes(name)) {
 				compiler.next();
 				compiler.addCommand({
@@ -4981,11 +4976,11 @@ const AllSpeak_Core = {
 				let title = ``;
 				while (true) {
 					const token = compiler.getToken();
-					if (token === `url`) {
+					if (token === AllSpeak_Language.word(`url`)) {
 						url = compiler.getNextValue();
-					} else if (token === `state`) {
+					} else if (token === AllSpeak_Language.word(`state`)) {
 						state = compiler.getNextValue();
-					} else if (token === `title`) {
+					} else if (token === AllSpeak_Language.word(`title`)) {
 						title = compiler.getNextValue();
 					} else {
 						break;
@@ -5294,8 +5289,8 @@ const AllSpeak_Core = {
 				});
 				return compiler.completeHandler();
 			case `swipe`:
-				if ([`left`, `right`].includes(compiler.nextToken())) {
-					const direction = compiler.getToken();
+				if ([`left`, `right`].includes(AllSpeak_Language.reverseWord(compiler.nextToken()))) {
+					const direction = AllSpeak_Language.reverseWord(compiler.getToken());
 					compiler.next();
 					compiler.addCommand({
 						domain: `browser`,
@@ -5884,9 +5879,9 @@ const AllSpeak_Core = {
 
 		compile: (compiler) => {
 			const lino = compiler.getLino();
-			if (compiler.nextToken() === `fullscreen`) {
+			if (AllSpeak_Language.reverseWord(compiler.nextToken()) === `fullscreen`) {
 				let option = ``;
-				if (compiler.nextToken() === `exit`) {
+				if (AllSpeak_Language.reverseWord(compiler.nextToken()) === `exit`) {
 					option = `exit`;
 					compiler.next();
 				}
@@ -5994,7 +5989,7 @@ const AllSpeak_Core = {
 				const target = targetRecord.name;
 				if (targetRecord.extra === `dom`) {
 					const token = compiler.nextToken();
-					if (token === `from`) {
+					if (token === AllSpeak_Language.word(`from`)) {
 						if (compiler.nextIsSymbol()) {
 							if (targetRecord.keyword === `select`) {
 								const sourceRecord = compiler.getSymbolRecord();
@@ -6032,10 +6027,10 @@ const AllSpeak_Core = {
 				}
 			} else {
 				let token = compiler.getToken();
-				if (token === `the`) {
+				if (token === AllSpeak_Language.word(`the`)) {
 					token = compiler.nextToken();
 				}
-				if (token === `title`) {
+				if (token === AllSpeak_Language.word(`title`)) {
 					if (compiler.nextIsWord(`to`)) {
 						const value = compiler.getNextValue();
 						compiler.addCommand({
@@ -6047,7 +6042,7 @@ const AllSpeak_Core = {
 						});
 						return true;
 					}
-				} else if (token === `content`) {
+				} else if (token === AllSpeak_Language.word(`content`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const target = compiler.getToken();
@@ -6081,7 +6076,7 @@ const AllSpeak_Core = {
 						}
 						throw new Error(`'${compiler.getToken()}' is not a symbol`);
 					}
-				} else if (token === `class`) {
+				} else if (token === AllSpeak_Language.word(`class`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbol = compiler.getSymbolRecord();
@@ -6101,7 +6096,7 @@ const AllSpeak_Core = {
 							}
 						}
 					}
-				} else if (token === `id`) {
+				} else if (token === AllSpeak_Language.word(`id`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbol = compiler.getSymbolRecord();
@@ -6121,7 +6116,7 @@ const AllSpeak_Core = {
 							}
 						}
 					}
-				} else if (token === `text`) {
+				} else if (token === AllSpeak_Language.word(`text`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbol = compiler.getSymbolRecord();
@@ -6150,7 +6145,7 @@ const AllSpeak_Core = {
 							}
 						}
 					}
-				} else if (token === `size`) {
+				} else if (token === AllSpeak_Language.word(`size`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbol = compiler.getSymbolRecord();
@@ -6171,7 +6166,7 @@ const AllSpeak_Core = {
 							}
 						}
 					}
-				} else if (token === `attribute`) {
+				} else if (token === AllSpeak_Language.word(`attribute`)) {
 					compiler.next();
 					const attributeName = compiler.getValue();
 					if (compiler.isWord(`of`)) {
@@ -6198,7 +6193,7 @@ const AllSpeak_Core = {
 							return true;
 						}
 					}
-				} else if (token === `attributes`) {
+				} else if (token === AllSpeak_Language.word(`attributes`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbolRecord = compiler.getSymbolRecord();
@@ -6225,7 +6220,7 @@ const AllSpeak_Core = {
 					}
 					compiler.warning(`'${compiler.getToken()}' is not a symbol`);
 					return false;
-				} else if (token === `style`) {
+				} else if (token === AllSpeak_Language.word(`style`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbolRecord = compiler.getSymbolRecord();
@@ -6256,8 +6251,8 @@ const AllSpeak_Core = {
 					let type = `setStyle`;
 					let symbolName = ``;
 					token = compiler.getToken();
-					if (token === `of`) {
-						if (compiler.nextToken() === `body`) {
+					if (token === AllSpeak_Language.word(`of`)) {
+						if (AllSpeak_Language.reverseWord(compiler.nextToken()) === `body`) {
 							type = `setBodyStyle`;
 						} else if (compiler.isSymbol()) {
 							const symbolRecord = compiler.getSymbolRecord();
@@ -6284,7 +6279,7 @@ const AllSpeak_Core = {
 							}
 						}
 					}
-					else if (token === `to`) {
+					else if (token === AllSpeak_Language.word(`to`)) {
 						const styleValue = compiler.getNextValue();
 						if (styleValue) {
 							compiler.addCommand({
@@ -6298,7 +6293,7 @@ const AllSpeak_Core = {
 							return true;
 						}
 					}
-				} else if (token === `default`) {
+				} else if (token === AllSpeak_Language.word(`default`)) {
 					if (compiler.nextIsWord(`of`)) {
 						if (compiler.nextIsSymbol()) {
 							const symbolRecord = compiler.getSymbolRecord();
@@ -6318,7 +6313,7 @@ const AllSpeak_Core = {
 							}
 						}
 					}
-				} else if (token === `tracer`) {
+				} else if (token === AllSpeak_Language.word(`tracer`)) {
 					if (compiler.nextIsWord(`rows`)) {
 						if (compiler.nextIsWord(`to`)) {
 							const value = compiler.getNextValue();
@@ -11424,6 +11419,33 @@ const AllSpeak_Language = {
 		return this._reverseWords[token] || token;
 	},
 
+	// Get a localized diagnostic message with placeholder substitution.
+	// e.g. diagnostic('unknownCommand', {token: 'xyz', line: 5})
+	diagnostic: function(key, params) {
+		let msg;
+		if (this.pack && this.pack.diagnostics && this.pack.diagnostics[key]) {
+			msg = this.pack.diagnostics[key];
+		} else {
+			// Fallback English messages
+			const fallbacks = {
+				unknownCommand: `I don't understand '{token}' at line {line}.`,
+				undeclaredVariable: `Variable '{name}' has not been declared.`,
+				unexpectedToken: `Expected '{expected}' but got '{actual}' at line {line}.`,
+				divisionByZero: `Division by zero at line {line}.`,
+				indexOutOfRange: `Index {index} is out of range at line {line}.`,
+				moduleNotFound: `Module '{name}' not found.`,
+				syntaxError: `Syntax error at line {line}: {detail}.`
+			};
+			msg = fallbacks[key] || key;
+		}
+		if (params) {
+			for (const p in params) {
+				msg = msg.replace(`{${p}}`, params[p]);
+			}
+		}
+		return msg;
+	},
+
 	// Check if a token is a known keyword in the active language
 	isKeyword: function(token) {
 		return this._keywordIndex && token in this._keywordIndex;
@@ -11437,7 +11459,7 @@ const AllSpeak_Language = {
 };
 // English language pack for AllSpeak — auto-generated from languages/en.json
 // eslint-disable-next-line no-unused-vars
-const AllSpeak_LanguagePack_en = {
+var AllSpeak_LanguagePack_en = {
   "meta": {
     "language": "en",
     "label": "English",
@@ -12607,7 +12629,24 @@ const AllSpeak_LanguagePack_en = {
     "window": "window",
     "viewport": "viewport",
     "item": "item",
-    "prompt": "prompt"
+    "prompt": "prompt",
+    "styles": "styles",
+    "fullscreen": "fullscreen",
+    "exit": "exit",
+    "title": "title",
+    "default": "default",
+    "tracer": "tracer",
+    "class": "class",
+    "id": "id",
+    "attributes": "attributes",
+    "milli": "milli",
+    "millis": "millis",
+    "seconds": "seconds",
+    "minutes": "minutes",
+    "tick": "tick",
+    "ticks": "ticks",
+    "swipe": "swipe",
+    "language": "language"
   }
 };
 // eslint-disable-next-line no-unused-vars
@@ -12908,9 +12947,9 @@ const AllSpeak_Compiler = {
 		AllSpeak.writeToDebugConsole(`No handler found`);
 		const lino = this.getLino() + 1;
 		if (/^[A-Za-z_][A-Za-z0-9_]*$/.test(token) && !(token in this.symbols)) {
-			throw new Error(`Unknown symbol or keyword '${token}' at line ${lino}`);
+			throw new Error(AllSpeak_Language.diagnostic(`unknownCommand`, {token, line: lino}));
 		}
-		throw new Error(`I don't understand '${token}...' at line ${lino}`);
+		throw new Error(AllSpeak_Language.diagnostic(`unknownCommand`, {token: token + `...`, line: lino}));
 	},
 
 	compileOne: function() {
@@ -12951,6 +12990,35 @@ const AllSpeak_Compiler = {
 		}
 	},
 
+	// Check for a language declaration at the start of the script.
+	// Syntax: "language <name>" e.g. "language italiano" or "language english"
+	// This must appear before any other code. It loads the named language pack
+	// and resets compile handler caches.
+	checkLanguageDirective: function() {
+		if (this.index >= this.tokens.length) return;
+		const token = this.tokens[this.index].token;
+		// Accept 'language' in any already-loaded language, or the English word
+		if (token === `language` || token === AllSpeak_Language.word(`language`)) {
+			this.index++;
+			if (this.index >= this.tokens.length) return;
+			const langName = this.tokens[this.index].token;
+			this.index++;
+			// Look for a global language pack variable: AllSpeak_LanguagePack_<name>
+			const packName = `AllSpeak_LanguagePack_${langName}`;
+			const pack = typeof window !== `undefined` ? window[packName] : null;
+			if (pack) {
+				AllSpeak_Language.init(pack);
+				// Reset cached compile handler tables
+				if (AllSpeak_Core._compileHandlers) AllSpeak_Core._compileHandlers = null;
+				if (AllSpeak_Browser._compileHandlers) AllSpeak_Browser._compileHandlers = null;
+				if (AllSpeak_REST._compileHandlers) AllSpeak_REST._compileHandlers = null;
+				if (AllSpeak_MQTT._compileHandlers) AllSpeak_MQTT._compileHandlers = null;
+			} else {
+				this.addWarning(`Language pack '${langName}' not found (looked for ${packName})`);
+			}
+		}
+	},
+
 	compile: function(tokens) {
 		this.tokens = tokens;
 		this.index = 0;
@@ -12959,6 +13027,7 @@ const AllSpeak_Compiler = {
 		this.program.symbols = {};
 		this.symbols = this.program.symbols;
 		this.warnings = [];
+		this.checkLanguageDirective();
 		this.compileFromHere([]);
 		this.addCommand({
 			domain: `core`,

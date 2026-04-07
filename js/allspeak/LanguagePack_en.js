@@ -1,6 +1,6 @@
 // English language pack for AllSpeak — auto-generated from languages/en.json
 // eslint-disable-next-line no-unused-vars
-const AllSpeak_LanguagePack_en = {
+var AllSpeak_LanguagePack_en = {
   "meta": {
     "language": "en",
     "label": "English",
@@ -1170,6 +1170,23 @@ const AllSpeak_LanguagePack_en = {
     "window": "window",
     "viewport": "viewport",
     "item": "item",
-    "prompt": "prompt"
+    "prompt": "prompt",
+    "styles": "styles",
+    "fullscreen": "fullscreen",
+    "exit": "exit",
+    "title": "title",
+    "default": "default",
+    "tracer": "tracer",
+    "class": "class",
+    "id": "id",
+    "attributes": "attributes",
+    "milli": "milli",
+    "millis": "millis",
+    "seconds": "seconds",
+    "minutes": "minutes",
+    "tick": "tick",
+    "ticks": "ticks",
+    "swipe": "swipe",
+    "language": "language"
   }
 };
