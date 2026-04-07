@@ -18,6 +18,8 @@ class Compiler:
 		self.program.compiler = self
 		self.compileConstant = self.value.compileConstant
 		self.debugCompile = False
+		self.index = 0
+		self.warnings = []
 		self.valueTypes = {}
 
 	# Get the current code size. Used during compilation
@@ -302,7 +304,7 @@ class Compiler:
 				if self.index == len(self.tokens) - 1:
 					return True
 				token = self.nextToken()
-				if token in stopOn:
+				if token in stopOn or language.reverse_word(token) in stopOn:
 					return True
 			else:
 				return False

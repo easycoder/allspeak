@@ -1,0 +1,21 @@
+{
+  "default": "en",
+  "languages": {
+    "en": {
+      "label": "English",
+      "flag": "gb",
+      "status": "public",
+      "tagline": "Code in your language",
+      "intro": "AllSpeak is a scripting language you can write in any human language. The same engine runs English, Italian, and more — each with its own natural syntax.",
+      "choose": "Choose your language:"
+    },
+    "it": {
+      "label": "Italiano",
+      "flag": "it",
+      "status": "public",
+      "tagline": "Programma nella tua lingua",
+      "intro": "AllSpeak è un linguaggio di scripting che puoi scrivere in qualsiasi lingua umana. Lo stesso motore esegue italiano, inglese e altro — ognuno con la propria sintassi naturale.",
+      "choose": "Scegli la tua lingua:"
+    }
+  }
+}

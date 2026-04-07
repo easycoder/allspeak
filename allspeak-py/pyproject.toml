@@ -22,7 +22,7 @@ dependencies = [
 ]
 
 [tool.flit.sdist]
-include = ["as_*.py", "*.png"]
+include = ["as_*.py", "*.png", "languages/*.json"]
 
 [project.scripts]
 allspeak = "allspeak:Main"

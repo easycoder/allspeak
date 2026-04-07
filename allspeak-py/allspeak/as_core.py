@@ -210,7 +210,7 @@ class Core(Handler):
 
     # Begin a block
     def k_begin(self, command):
-        if self.nextToken() == 'end':
+        if language.reverse_word(self.nextToken()) == 'end':
             cmd = {}
             cmd['domain'] = 'core'
             cmd['keyword'] = 'end'
@@ -3041,6 +3041,11 @@ class Core(Handler):
 
         condition.value1 = value # type: ignore
         token = self.peek()
+        # Handle natural word order: "X not is greater" (e.g. Italian "X non è maggiore")
+        if language.reverse_word(token) == 'not':
+            condition.negate = True # type: ignore
+            self.nextToken()
+            token = self.peek()
         condition.type = language.reverse_word(token) # type: ignore
 
         if language.reverse_word(token) == 'has':

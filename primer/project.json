@@ -42,7 +42,7 @@
     "$TitleLogo": {
       "#element": "img",
       "@id": "TitleLogo",
-      "@src": "https://allspeak.github.io/resources/icon/duckthink.jpg",
+      "@src": "resources/icon/duckthink.png",
       "width": "40px",
       "height": "40px",
       "border-radius": "8px"

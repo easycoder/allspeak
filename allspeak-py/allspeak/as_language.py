@@ -34,8 +34,8 @@ class Language:
         Searches the languages/ directory relative to the project root."""
         # Search in several likely locations
         candidates = [
-            os.path.join(os.path.dirname(__file__), '..', '..', 'languages', f'{name}.json'),
             os.path.join(os.path.dirname(__file__), 'languages', f'{name}.json'),
+            os.path.join(os.path.dirname(__file__), '..', '..', 'languages', f'{name}.json'),
             os.path.join('languages', f'{name}.json'),
         ]
         for path in candidates:

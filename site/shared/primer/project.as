@@ -47,14 +47,32 @@
     variable ManualChapterPath
     variable ActiveTab
     variable CurrentLocation
+    variable Strings
+    variable StrTitle
+    variable StrManualLoaded
+    variable StrManualLoading
+    variable StrManualFailed
+    variable StrChapterFailed
+    variable StrViewing
 
 !    debug step
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!   Load localised strings
+    rest get Strings from `primer/strings.json?v=` cat now
+        or go to AbandonShip
+    put property `title` of Strings into StrTitle
+    put property `manualLoaded` of Strings into StrManualLoaded
+    put property `manualLoading` of Strings into StrManualLoading
+    put property `manualFailed` of Strings into StrManualFailed
+    put property `chapterFailed` of Strings into StrChapterFailed
+    put property `viewing` of Strings into StrViewing
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !   Set up the main screen
 SetupScreen:
 
-    set the title to `AllSpeak Primer`
+    set the title to StrTitle
 
     clear Mobile
     if mobile
@@ -83,7 +101,7 @@ SetupScreen:
     set style `height` of Body to `calc(100vh - 1em)`
 
 !	Render the main screen layout
-    rest get MainScreenWebson from `../shared/primer/project.json?v=` cat now
+    rest get MainScreenWebson from `primer/project.json?v=` cat now
 		or go to AbandonShip
 	render MainScreenWebson in Body
 
@@ -263,26 +281,25 @@ EnsureExampleLoaded:
 EnsureManualLoaded:
     if ManualLoaded
     begin
-        set the content of ManualStatus to `AI manual loaded. Select a chapter.`
+        set the content of ManualStatus to StrManualLoaded
         set style `display` of RetryManualButton to `none`
         gosub to ShowManualOverview
         return
     end
-    set the content of ManualStatus to `Loading AI manual...`
+    set the content of ManualStatus to StrManualLoading
     set style `display` of RetryManualButton to `none`
     set style `display` of ManualBackButton to `none`
     set style `display` of ManualChapterList to `flex`
     rest get ManualMarkdown from `primer/tab3.md?v=` cat now
         or begin
-            set the content of ManualStatus to
-                `AI manual is not reachable from this server context.`
+            set the content of ManualStatus to StrManualFailed
             set style `display` of RetryManualButton to `block`
             return
         end
     put ManualMarkdown into ManualOverviewContent
     set the content of ManualBody to ManualOverviewContent
     set ManualLoaded
-    set the content of ManualStatus to `AI manual loaded. Select a chapter.`
+    set the content of ManualStatus to StrManualLoaded
     set style `display` of RetryManualButton to `none`
     return
 
@@ -291,7 +308,7 @@ ShowManualOverview:
     set style `display` of ManualBackButton to `none`
     if ManualOverviewContent is not empty
         set the content of ManualBody to ManualOverviewContent
-    set the content of ManualStatus to `AI manual loaded. Select a chapter.`
+    set the content of ManualStatus to StrManualLoaded
     return
 
 OpenManualChapter:
@@ -310,7 +327,7 @@ LoadManualChapter:
     rest get ManualChapterContent from ManualChapterPath cat `?v=` cat now
         or begin
             set the content of ManualStatus to
-                `Chapter could not be loaded: ` cat ManualChapterPath
+                StrChapterFailed cat ManualChapterPath
             set style `display` of RetryManualButton to `block`
             return
         end
@@ -318,7 +335,7 @@ LoadManualChapter:
     set style `display` of ManualBackButton to `block`
     set style `display` of RetryManualButton to `none`
     set the content of ManualBody to ManualChapterContent
-    set the content of ManualStatus to `Viewing ` cat ManualChapterPath
+    set the content of ManualStatus to StrViewing cat ManualChapterPath
     return
 
 RestoreFromLocation:
