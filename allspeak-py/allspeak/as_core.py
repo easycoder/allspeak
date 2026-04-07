@@ -23,6 +23,7 @@ from .as_classes import (
 )
 
 from .as_handler import Handler
+from .as_language import language
 
 class Core(Handler):
 
@@ -47,7 +48,7 @@ class Core(Handler):
     
     def processOr(self, command, orHere):
         self.add(command)
-        if self.peek() == 'or':
+        if language.reverse_word(self.peek()) == 'or':
             self.nextToken()
             self.nextToken()
             # Add a 'goto' to skip the 'or'
@@ -75,12 +76,12 @@ class Core(Handler):
         # Get the (first) value
         command['value1'] = self.nextValue()
         if command['value1'] == None: return False
-        self.skip('to')
+        self.skipWord('to')
         if self.nextIsSymbol():
             record = self.getSymbolRecord()
             if not isinstance(self.getObject(record), ECVariable): return False
             # If 'giving' comes next, this variable is the second value
-            if self.peek() == 'giving':
+            if language.reverse_word(self.peek()) == 'giving':
                 v2 = ECValue(type='symbol', name=record['name'])
                 command['value2'] = v2
                 self.nextToken()
@@ -136,10 +137,10 @@ class Core(Handler):
     # append {value} to {list/queue}
     def k_append(self, command):
         command['value'] = self.nextValue()
-        if self.nextIs('to'):
-            if self.peek() == 'json':
+        if self.nextIsWord('to'):
+            if language.reverse_word(self.peek()) == 'json':
                 self.nextToken()
-                if self.nextIs('file'):
+                if self.nextIsWord('file'):
                     command['file'] = self.nextValue()
                     command['jsonFile'] = True
                     command['or'] = None
@@ -193,7 +194,7 @@ class Core(Handler):
     #assert {condition} [with {message}]
     def k_assert(self, command):
         command['test'] = self.nextCondition()
-        if self.peek() == 'with':
+        if language.reverse_word(self.peek()) == 'with':
             self.nextToken()
             command['with'] = self.nextValue()
         else:
@@ -231,7 +232,7 @@ class Core(Handler):
             return True
         elif token == 'entry':
             command['key'] = self.nextValue()
-            self.skip('of')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 self.checkObjectType(self.getObject(record), ECDictionary)
@@ -240,7 +241,7 @@ class Core(Handler):
                 return True
         elif token == 'item':
             command['index'] = self.nextValue()
-            self.skip('of')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 self.checkObjectType(self.getObject(record), ECList)
@@ -303,7 +304,7 @@ class Core(Handler):
             sourceObject = self.getObject(record)
             if self.isObjectType(sourceObject, (ECVariable, ECDictionary, ECList)):
                 command['source'] = record['name']
-                self.skip('to')
+                self.skipWord('to')
                 if self.nextIsSymbol():
                     record = self.getSymbolRecord()
                     targetObject = self.getObject(record)
@@ -325,7 +326,7 @@ class Core(Handler):
     # Create directory
     # create directory {name}
     def k_create(self, command):
-        if self.nextIs('directory'):
+        if self.nextIsWord('directory'):
             command['item'] = 'directory'
             command['path'] = self.nextValue()
             self.add(command)
@@ -354,7 +355,7 @@ class Core(Handler):
             command['mode'] = self.nextToken()
             if (self.nextIsSymbol()):
                 command['stack'] = self.getToken()
-                if self.peek() == 'as':
+                if language.reverse_word(self.peek()) == 'as':
                     self.nextToken()
                     command['as'] = self.nextValue()
                 else:
@@ -420,7 +421,7 @@ class Core(Handler):
             return True
         elif token in ('entry', 'item', 'property', 'element'):
             command['key'] = self.nextValue()
-            self.skip('of')
+            self.skipWord('of')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 command['variable'] = record['name']
@@ -502,10 +503,10 @@ class Core(Handler):
             # Here we have a value
             value1 = self.getValue()
             variable1 = None
-        self.skip('by')
+        self.skipWord('by')
         command['value2'] = self.nextValue()
         # if 'giving' comes next, the target is the next value
-        if self.peek() == 'giving':
+        if language.reverse_word(self.peek()) == 'giving':
             self.nextToken()
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
@@ -546,12 +547,12 @@ class Core(Handler):
 
     # download [binary] {url} to {path}
     def k_download(self, command):
-        if self.nextIs('binary'):
+        if self.nextIsWord('binary'):
             command['binary'] = True
             self.nextToken()
         else: command['binary'] = False
         command['url'] = self.getValue()
-        self.skip('to')
+        self.skipWord('to')
         command['path'] = self.nextValue()
         self.add(command)
         return True
@@ -597,7 +598,7 @@ class Core(Handler):
     # Fork to a label
     # fork [to] {label}
     def k_fork(self, command):
-        self.skip('to')  # Optional 'to' (core-reserved keyword, plugin-safe)
+        self.skipWord('to')  # Optional 'to' (core-reserved keyword, plugin-safe)
         command['fork'] = self.nextToken()
         self.add(command)
         return True
@@ -621,14 +622,14 @@ class Core(Handler):
                 command['target'] = self.getToken()
             else:
                 NoValueError(self.compiler, record)
-        if self.nextIs('from'):
-            if self.nextIs('url'):
+        if self.nextIsWord('from'):
+            if self.nextIsWord('url'):
                 url = self.nextValue()
                 if url != None:
                     command['url'] = url
                     command['or'] = None
                     get = self.getCodeSize()
-                    if self.peek() == 'timeout':
+                    if language.reverse_word(self.peek()) == 'timeout':
                         self.nextToken()
                         command['timeout'] = self.nextValue()
                     else:
@@ -669,7 +670,7 @@ class Core(Handler):
     # Go to a label
     # go [to] {label}
     def k_go(self, command):
-        self.skip('to')  # Optional 'to' (core-reserved keyword, plugin-safe)
+        self.skipWord('to')  # Optional 'to' (core-reserved keyword, plugin-safe)
         return self.k_goto(command)
 
     def k_goto(self, command):
@@ -694,7 +695,7 @@ class Core(Handler):
     # Call a subroutine
     # gosub [to] {label}
     def k_gosub(self, command):
-        self.skip('to')  # Optional 'to' (core-reserved keyword, plugin-safe)
+        self.skipWord('to')  # Optional 'to' (core-reserved keyword, plugin-safe)
         command['gosub'] = self.nextToken()
         self.add(command)
         return True
@@ -723,7 +724,7 @@ class Core(Handler):
         self.add(cmd)
         # Get the 'then' code
         self.compileOne()
-        if self.peek() == 'else':
+        if language.reverse_word(self.peek()) == 'else':
             self.nextToken()
             # Add a 'goto' to skip the 'else'
             pcNext = self.getCodeSize()
@@ -841,7 +842,7 @@ class Core(Handler):
             command['target'] = self.getToken()
             value = ECValue(type=str, content=': ')
             command['prompt'] = value
-            if self.peek() == 'with':
+            if language.reverse_word(self.peek()) == 'with':
                 self.nextToken()
                 command['prompt'] = self.nextValue()
             self.add(command)
@@ -867,9 +868,9 @@ class Core(Handler):
     # 2 Load text from a file or ssh
     def k_load(self, command):
         self.nextToken()
-        if self.tokenIs('plugin'):
+        if self.isWord('plugin'):
             clazz = self.nextToken()
-            if self.nextIs('from'):
+            if self.nextIsWord('from'):
                 source = self.nextToken()
                 self.program.importPlugin(f'{source}:{clazz}')
                 return True
@@ -877,7 +878,7 @@ class Core(Handler):
             record = self.getSymbolRecord()
             if isinstance(self.getObject(record), (ECVariable, ECDictionary, ECList)):
                 command['target'] = record['name']
-                if self.nextIs('from'):
+                if self.nextIsWord('from'):
                     if self.nextIsSymbol():
                         record = self.getSymbolRecord()
                         if record['keyword'] == 'ssh':
@@ -980,10 +981,10 @@ class Core(Handler):
             # Here we have a value
             value1 = self.getValue()
             variable1 = None
-        self.skip('by')
+        self.skipWord('by')
         command['value2'] = self.nextValue()
         # if 'giving' comes next, the target is the next value
-        if self.peek() == 'giving':
+        if language.reverse_word(self.peek()) == 'giving':
             self.nextToken()
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
@@ -1081,13 +1082,13 @@ class Core(Handler):
     def k_open(self, command):
         # open <filename> as <file-variable> for reading/writing/appending
         command['path'] = self.nextValue()
-        if self.peek() == 'as':
+        if language.reverse_word(self.peek()) == 'as':
             self.nextToken()
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if record['keyword'] == 'file':
                     command['target'] = record['name']
-                    if self.peek() == 'for':
+                    if language.reverse_word(self.peek()) == 'for':
                         self.nextToken()
                         token = self.nextToken()
                         if token == 'appending':
@@ -1142,7 +1143,7 @@ class Core(Handler):
             record = self.getSymbolRecord()
             self.checkObjectType(record, ECObject)
             command['target'] = record['name']
-            if self.peek() == 'from':
+            if language.reverse_word(self.peek()) == 'from':
                 self.nextToken()
                 if self.nextIsSymbol():
                     record = self.getSymbolRecord()
@@ -1170,14 +1171,14 @@ class Core(Handler):
     # Perform an HTTP POST
     # post {value} to {url} [giving {variable}] [or {command}]
     def k_post(self, command):
-        if self.nextIs('to'):
+        if self.nextIsWord('to'):
             command['value'] = self.getConstant('')
             command['url'] = self.getValue()
         else:
             command['value'] = self.getValue()
-            if self.nextIs('to'):
+            if self.nextIsWord('to'):
                 command['url'] = self.nextValue()
-        if self.peek() == 'giving':
+        if language.reverse_word(self.peek()) == 'giving':
             self.nextToken()
             command['result'] = self.nextToken()
         else:
@@ -1267,7 +1268,7 @@ class Core(Handler):
         if value != None:
             command['value'] = value
             valueType = value.getType()
-            if self.nextIs('into'):
+            if self.nextIsWord('into'):
                 if self.nextIsSymbol():
                     record = self.getSymbolRecord()
                     command['target'] = record['name']
@@ -1299,7 +1300,7 @@ class Core(Handler):
     # Read from a file
     # read {variable} from {file}
     def k_read(self, command):
-        if self.peek() == 'line':
+        if language.reverse_word(self.peek()) == 'line':
             self.nextToken()
             command['line'] = True
         else:
@@ -1307,7 +1308,7 @@ class Core(Handler):
         if self.nextIsSymbol():
             record = self.getSymbolRecord()
             self.checkObjectType(self.getObject(record), ECVariable)
-            if self.peek() == 'from':
+            if language.reverse_word(self.peek()) == 'from':
                 self.nextToken()
                 if self.nextIsSymbol():
                     fileRecord = self.getSymbolRecord()
@@ -1344,7 +1345,7 @@ class Core(Handler):
 
     # Release the parent script
     def k_release(self, command):
-        if self.nextIs('parent'):
+        if self.nextIsWord('parent'):
             self.add(command)
             return True
         return False
@@ -1357,10 +1358,10 @@ class Core(Handler):
     #replace {value} with {value} in {variable}
     def k_replace(self, command):
         original = self.nextValue()
-        if self.peek() == 'with':
+        if language.reverse_word(self.peek()) == 'with':
             self.nextToken()
             replacement = self.nextValue()
-            if self.nextIs('in'):
+            if self.nextIsWord('in'):
                 if self.nextIsSymbol():
                     templateRecord = self.getSymbolRecord()
                     command['original'] = original
@@ -1418,7 +1419,7 @@ class Core(Handler):
         except Exception as e:
             self.warning(f'Core.run: Path expected')
             return False
-        if self.nextIs('as'):
+        if self.nextIsWord('as'):
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if record['keyword'] == 'module':
@@ -1428,7 +1429,7 @@ class Core(Handler):
             else: FatalError(self.compiler, 'Module name expected after \'as\'')
         else: FatalError(self.compiler, '\'as {module name}\' expected')
         exports = []
-        if self.peek() == 'with':
+        if language.reverse_word(self.peek()) == 'with':
             self.nextToken()
             while True:
                 name = self.nextToken()
@@ -1461,7 +1462,7 @@ class Core(Handler):
     # Save a value to a file
     def k_save(self, command):
         command['content'] = self.nextValue()
-        self.skip('to')
+        self.skipWord('to')
         if self.nextIsSymbol():
             record = self.getSymbolRecord()
             if record['keyword'] == 'ssh':
@@ -1526,8 +1527,8 @@ class Core(Handler):
     def k_send(self, command):
         command['message'] = self.nextValue()
         command['replyVar'] = None
-        if self.nextIs('to'):
-            self.skip('the')
+        if self.nextIsWord('to'):
+            self.skipWord('the')
             token = self.nextToken()
             if token in ('parent', 'sender'):
                 command['module'] = token
@@ -1539,7 +1540,7 @@ class Core(Handler):
                     return False
             else:
                 return False
-            if self.peek() == 'and':
+            if language.reverse_word(self.peek()) == 'and':
                 self.nextToken()  # consume 'and'
                 token = self.nextToken()
                 if token != 'assign':
@@ -1641,7 +1642,7 @@ class Core(Handler):
                 self.add(command)
                 return True
             elif self.isObjectType(record, (ECVariable, ECDictionary, ECList)):
-                if self.peek() == 'to':
+                if language.reverse_word(self.peek()) == 'to':
                     self.nextToken()
                     value = self.nextValue()
                     command['type'] = 'value'
@@ -1665,14 +1666,14 @@ class Core(Handler):
                 self.nextToken()
             if self.nextIsSymbol():
                 command['name'] = self.getToken()
-                if self.peek() == 'to':
+                if language.reverse_word(self.peek()) == 'to':
                     self.nextToken()
                 command['elements'] = self.nextValue()
                 self.add(command)
                 return True
 
         elif token == 'encoding':
-            if self.nextIs('to'):
+            if self.nextIsWord('to'):
                 command['encoding'] = self.nextValue()
                 self.add(command)
                 return True
@@ -1681,7 +1682,7 @@ class Core(Handler):
             command['key'] = self.nextValue()
             if command['key'] == None:
                 FatalError(self.compiler, f'No valid key found after \'{token}\'')
-            if self.nextIs('of'):
+            if self.nextIsWord('of'):
                 if self.nextIsSymbol():
                     record = self.getSymbolRecord()
                     if token == 'entry':
@@ -1689,7 +1690,7 @@ class Core(Handler):
                     elif token == 'item':
                         self.checkObjectType(self.getObject(record), ECList)
                     command['target'] = record['name']
-                    if self.peek() == 'to':
+                    if language.reverse_word(self.peek()) == 'to':
                         self.nextToken()
                         command['value'] = self.nextValue()
                         self.add(command)
@@ -1701,10 +1702,10 @@ class Core(Handler):
 
         elif token == 'item':
             command['index'] = self.nextValue()
-            if self.nextIs('of'):
+            if self.nextIsWord('of'):
                 if self.nextIsSymbol():
                     command['target'] = self.getSymbolRecord()['name']
-                    if self.nextIs('to'):
+                    if self.nextIsWord('to'):
                         command['value'] = self.nextValue()
                         self.add(command)
                         return True
@@ -1843,7 +1844,7 @@ class Core(Handler):
                 command['on'] = value
                 if self.peek() in ['on', 'by']:
                     self.nextToken()
-                    if self.peek() == 'tab':
+                    if language.reverse_word(self.peek()) == 'tab':
                         value.setContent('\t')
                         self.nextToken()
                     else:
@@ -1925,12 +1926,12 @@ class Core(Handler):
     def k_take(self, command):
         # Get the (first) value
         command['value1'] = self.nextValue()
-        self.skip('from')
+        self.skipWord('from')
         if self.nextIsSymbol():
             record = self.getSymbolRecord()
             self.checkObjectType(record, ECObject)
             # If 'giving' comes next, this variable is the second value
-            if self.peek() == 'giving':
+            if language.reverse_word(self.peek()) == 'giving':
                 v2 = ECValue(type='symbol', name=record['name'])
                 command['value2'] = v2
                 self.nextToken()
@@ -2046,11 +2047,11 @@ class Core(Handler):
     # use mqtt
     # use psutil
     def k_use(self, command):
-        if self.peek() == 'plugin':
+        if language.reverse_word(self.peek()) == 'plugin':
             # Import a plugin
             self.nextToken()
             clazz = self.nextToken()
-            if self.nextIs('from'):
+            if self.nextIsWord('from'):
                 source = self.nextToken()
                 self.program.importPlugin(f'{source}:{clazz}')
                 return True
@@ -2160,13 +2161,13 @@ class Core(Handler):
 
     # Write to a file
     def k_write(self, command):
-        if self.peek() == 'line':
+        if language.reverse_word(self.peek()) == 'line':
             self.nextToken()
             command['line'] = True
         else:
             command['line'] = False
         command['value'] = self.nextValue()
-        if self.peek() == 'to':
+        if language.reverse_word(self.peek()) == 'to':
             self.nextToken()
             if self.nextIsSymbol():
                 fileRecord = self.getSymbolRecord()
@@ -2300,7 +2301,7 @@ class Core(Handler):
             return value
 
         if token in ['stringify', 'prettify', 'json', 'lowercase', 'uppercase', 'hash', 'random', float, 'integer', 'encode', 'decode']:
-            if self.peek() == 'of':
+            if language.reverse_word(self.peek()) == 'of':
                 self.nextToken()
             value.setContent(self.nextValue())
             return value
@@ -2308,7 +2309,7 @@ class Core(Handler):
         if (token in ['datime', 'datetime']):
             value.setType('datime')
             value.timestamp = self.nextValue()
-            if self.peek() == 'format':
+            if language.reverse_word(self.peek()) == 'format':
                 self.nextToken()
                 value.format = self.nextValue()
             else:
@@ -2368,14 +2369,14 @@ class Core(Handler):
             return None
 
         if token == 'keys':
-            if self.nextIs('of'):
+            if self.nextIsWord('of'):
                 if self.nextIsSymbol():
                     value.name = self.getToken() # type: ignore
                     return value
             return None
 
         if token == 'count':
-            if self.nextIs('of'):
+            if self.nextIsWord('of'):
                 if self.nextIsSymbol():
                     record = self.getSymbolRecord()
                     object = record['object']
@@ -2385,10 +2386,10 @@ class Core(Handler):
             return None
 
         if token == 'index':
-            if self.nextIs('of'):
+            if self.nextIsWord('of'):
                 if self.nextIsSymbol():
                     value.variable = self.getSymbolRecord()['name'] # type: ignore
-                    if self.peek() == 'in':
+                    if language.reverse_word(self.peek()) == 'in':
                         value.value = None # type: ignore
                         value.setType('indexOf')
                         self.nextToken()
@@ -2400,7 +2401,7 @@ class Core(Handler):
                         return value
                 else:
                     value.value = self.getValue() # type: ignore
-                    if self.nextIs('in'):
+                    if self.nextIsWord('in'):
                         value.variable = None # type: ignore
                         value.setType('indexOf')
                         if self.nextIsSymbol():
@@ -2409,7 +2410,7 @@ class Core(Handler):
             return None
 
         if token == 'value':
-            if self.nextIs('of'):
+            if self.nextIsWord('of'):
                 v = self.nextValue()
                 if v !=None:
                     value.setValue(type='valueOf', content=v)
@@ -2418,7 +2419,7 @@ class Core(Handler):
 
         if token == 'length':
             value.setType('lengthOf')
-            if self.nextIs('of'):
+            if self.nextIsWord('of'):
                 value.setContent(self.nextValue())
                 return value
             return None
@@ -2428,9 +2429,9 @@ class Core(Handler):
             value.index = self.nextValue() # type: ignore
             if self.nextToken() == 'of':
                 value.setContent(self.nextValue())
-                if self.peek() == 'delimited':
+                if language.reverse_word(self.peek()) == 'delimited':
                     self.nextToken()
-                    self.skip('by')
+                    self.skipWord('by')
                     value.delimiter = self.nextValue() # type: ignore
                     return value
             return None
@@ -2446,7 +2447,7 @@ class Core(Handler):
         # from {n} to {m} of {value}
         if token == 'from':
             value.start = self.nextValue() # type: ignore
-            if self.peek() == 'to':
+            if language.reverse_word(self.peek()) == 'to':
                 self.nextToken()
                 value.to = self.nextValue() # type: ignore
             else:
@@ -2457,22 +2458,22 @@ class Core(Handler):
 
         # position of [the] [last] {needle} in {haystack}
         if token == 'position':
-            self.skip('of')
-            self.skip('the')
-            if self.peek() == 'last':
+            self.skipWord('of')
+            self.skipWord('the')
+            if language.reverse_word(self.peek()) == 'last':
                 value.last = True # type: ignore
                 self.nextToken()
             value.needle = self.nextValue() # type: ignore
-            self.skip('in')
+            self.skipWord('in')
             value.haystack = self.nextValue() # type: ignore
             return value
 
         if token == 'timestamp':
             value.format = None # type: ignore
-            if self.peek() == 'of':
+            if language.reverse_word(self.peek()) == 'of':
                 self.nextToken()
                 value.timestamp = self.nextValue() # type: ignore
-                if self.peek() == 'format':
+                if language.reverse_word(self.peek()) == 'format':
                     self.nextToken()
                     value.format = self.nextValue() # type: ignore
             return value
@@ -2481,8 +2482,8 @@ class Core(Handler):
             token = self.nextToken()
             if token in ['in', 'of']:
                 value.target = self.nextValue() # type: ignore
-                self.skip('of')
-                if self.peek() == 'type':
+                self.skipWord('of')
+                if language.reverse_word(self.peek()) == 'type':
                     self.nextToken()
                     value.filter = self.nextValue() # type: ignore
                 return value
@@ -2492,8 +2493,8 @@ class Core(Handler):
             token = self.nextToken()
             if token in ['in', 'of']:
                 value.target = self.nextValue() # type: ignore
-                self.skip('of')
-                if self.peek() == 'type':
+                self.skipWord('of')
+                if language.reverse_word(self.peek()) == 'type':
                     self.nextToken()
                     value.filter = self.nextValue() # type: ignore
                 return value
@@ -2526,14 +2527,14 @@ class Core(Handler):
             return value
 
         if token == 'type':
-            if self.nextIs('of'):
+            if self.nextIsWord('of'):
                 value.value = self.nextValue() # type: ignore
                 return value
             return None
 
         if token == 'modification':
-            if self.nextIs('time'):
-                if self.nextIs('of'):
+            if self.nextIsWord('time'):
+                if self.nextIsWord('of'):
                     value.fileName = self.nextValue() # type: ignore
                     return value
             return None
@@ -2550,7 +2551,7 @@ class Core(Handler):
     #############################################################################
     # Modify a value or leave it unchanged.
     def modifyValue(self, value):
-        if self.peek() == 'modulo':
+        if language.reverse_word(self.peek()) == 'modulo':
             self.nextToken()
             mv = ECValue(type='modulo', content=value)
             mv.modval = self.nextValue() # type: ignore
@@ -2975,9 +2976,9 @@ class Core(Handler):
 
         token = self.getToken()
 
-        if token == 'not':
+        if language.reverse_word(token) == 'not':
             # Check if this is 'not at end of <file>'
-            if self.peek() == 'at':
+            if language.reverse_word(self.peek()) == 'at':
                 self.nextToken()
                 condition.negate = True # type: ignore
                 token = 'at'
@@ -2986,10 +2987,10 @@ class Core(Handler):
                 condition.value = self.nextValue() # type: ignore
                 return condition
 
-        if token == 'at':
+        if language.reverse_word(token) == 'at':
             # at end of <file>
-            if self.nextIs('end'):
-                if self.nextIs('of'):
+            if self.nextIsWord('end'):
+                if self.nextIsWord('of'):
                     if self.nextIsSymbol():
                         record = self.getSymbolRecord()
                         if record['keyword'] == 'file':
@@ -2998,9 +2999,9 @@ class Core(Handler):
                             return condition
             return None
 
-        elif token == 'error':
+        elif language.reverse_word(token) == 'error':
             self.nextToken()
-            self.skip('in')
+            self.skipWord('in')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if record['keyword'] == 'ssh':
@@ -3009,11 +3010,11 @@ class Core(Handler):
                     return condition
             return None
 
-        elif token == 'file':
+        elif language.reverse_word(token) == 'file':
             path = self.nextValue()
             condition.path = path # type: ignore
             condition.type = 'exists' # type: ignore
-            self.skip('on')
+            self.skipWord('on')
             if self.nextIsSymbol():
                 record = self.getSymbolRecord()
                 if record['keyword'] == 'ssh':
@@ -3021,16 +3022,16 @@ class Core(Handler):
                     condition.target = record['name'] # type: ignore
                     token = self.nextToken()
             else: token = self.getToken()
-            if token == 'exists':
+            if language.reverse_word(token) == 'exists':
                 return condition
-            elif token == 'does':
-                if self.nextIs('not'):
-                    if self.nextIs('exist'):
+            elif language.reverse_word(token) == 'does':
+                if self.nextIsWord('not'):
+                    if self.nextIsWord('exist'):
                         condition.negate = not condition.negate # type: ignore
                         return condition
             return None
         
-        elif token == 'debugging':
+        elif language.reverse_word(token) == 'debugging':
             condition.type = 'debugging' # type: ignore
             return condition
 
@@ -3040,21 +3041,21 @@ class Core(Handler):
 
         condition.value1 = value # type: ignore
         token = self.peek()
-        condition.type = token # type: ignore
+        condition.type = language.reverse_word(token) # type: ignore
 
-        if token == 'has':
+        if language.reverse_word(token) == 'has':
             self.nextToken()
             token = self.nextToken()
             negate = False
-            if token == 'no':
+            if language.reverse_word(token) == 'no':
                 negate = True
                 token = self.nextToken()
-            if token in ('entry', 'property'):
+            if language.reverse_word(token) in ('entry', 'property'):
                 value = self.nextValue()
-                if token == 'entry':
+                if language.reverse_word(token) == 'entry':
                     condition.type = 'hasEntry' # type: ignore
                     condition.entry = value # type: ignore
-                elif token == 'property:':
+                elif language.reverse_word(token) == 'property:':
                     condition.type = 'hasProperty' # type: ignore
                     condition.property = value # type: ignore
                 if negate:
@@ -3062,23 +3063,23 @@ class Core(Handler):
                 return condition
             return None
 
-        if token == 'does':
+        if language.reverse_word(token) == 'does':
             self.nextToken()
-            if self.nextIs('not'):
+            if self.nextIsWord('not'):
                 token = self.nextToken()
-                if token == 'have':
+                if language.reverse_word(token) == 'have':
                     token = self.nextToken()
-                    if token in ('entry', 'property:'):
+                    if language.reverse_word(token) in ('entry', 'property:'):
                         value = self.nextValue()
-                        if token == 'entry':
+                        if language.reverse_word(token) == 'entry':
                             condition.type = 'hasEntry' # type: ignore
                             condition.entry = value # type: ignore
-                        elif token == 'property':
+                        elif language.reverse_word(token) == 'property':
                             condition.type = 'hasProperty' # type: ignore
                             condition.property = value # type: ignore
                         condition.negate = not condition.negate # type: ignore
                         return condition
-                elif token == 'include':
+                elif language.reverse_word(token) == 'include':
                     value = self.nextValue()
                     condition.type = 'includes' # type: ignore
                     condition.value2 = value # type: ignore
@@ -3086,28 +3087,28 @@ class Core(Handler):
                     return condition
             return None
 
-        if token in ['starts', 'ends']:
+        if language.reverse_word(token) in ['starts', 'ends']:
             self.nextToken()
-            if self.nextToken() == 'with':
+            if language.reverse_word(self.nextToken()) == 'with':
                 condition.value2 = self.nextValue() # type: ignore
                 return condition
 
-        if token == 'includes':
+        if language.reverse_word(token) == 'includes':
             self.nextToken()
             condition.value2 = self.nextValue() # type: ignore
             return condition
 
-        if token == 'is':
+        if language.reverse_word(token) == 'is':
             token = self.nextToken()
-            if self.peek() == 'not':
+            if language.reverse_word(self.peek()) == 'not':
                 self.nextToken()
                 condition.negate = True # type: ignore
             token = self.nextToken()
-            condition.type = token # type: ignore
-            if token in ['numeric', 'string', 'bool', 'boolean', 'none', 'list', 'object', 'even', 'odd', 'empty']:
+            condition.type = language.reverse_word(token) # type: ignore
+            if language.reverse_word(token) in ['numeric', 'string', 'bool', 'boolean', 'none', 'list', 'object', 'even', 'odd', 'empty']:
                 return condition
-            if token in ['greater', 'less']:
-                if self.nextToken() == 'than':
+            if language.reverse_word(token) in ['greater', 'less']:
+                if language.reverse_word(self.nextToken()) == 'than':
                     condition.value2 = self.nextValue() # type: ignore
                     return condition
             condition.type = 'is' # type: ignore
@@ -3124,7 +3125,7 @@ class Core(Handler):
 
     def isNegate(self):
         token = self.getToken()
-        if token == 'not':
+        if language.reverse_word(token) == 'not':
             self.nextToken()
             return True
         return False

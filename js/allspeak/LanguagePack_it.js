@@ -657,7 +657,7 @@ var AllSpeak_LanguagePack_it = {
       ]
     },
     "REST_GET": {
-      "keyword": "rest",
+      "keyword": "ottieni",
       "patterns": [
         "rest ottieni {variable} da {url}"
       ]
@@ -669,7 +669,7 @@ var AllSpeak_LanguagePack_it = {
       ]
     },
     "REST_POST": {
-      "keyword": "rest",
+      "keyword": "invia",
       "patterns": [
         "rest invia [a] {url} dando {variable}",
         "rest invia {value} a {url} dando {variable}"

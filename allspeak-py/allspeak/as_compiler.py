@@ -2,6 +2,7 @@ import sys
 from .as_classes import FatalError
 from .as_value import Value
 from .as_condition import Condition
+from .as_language import language
 
 class Compiler:
 
@@ -82,6 +83,25 @@ class Compiler:
 	def nextIs(self, value):
 		return self.nextToken() == value
 
+	# Language-aware token check: matches any form of a canonical word
+	# e.g. isWord('into') matches 'in' (Italian) or 'into' (English)
+	def isWord(self, canonical):
+		return language.matches_word(self.getToken(), canonical)
+
+	# Language-aware next token check
+	def nextIsWord(self, canonical):
+		self.index += 1
+		return self.isWord(canonical)
+
+	# Get the canonical form of the current token
+	def canonicalToken(self):
+		return language.reverse_word(self.getToken())
+
+	# Get the canonical form of the next token
+	def nextCanonicalToken(self):
+		self.index += 1
+		return language.reverse_word(self.getToken())
+
 	# Get the command at a given pc in the code list
 	def getCommandAt(self, pc):
 		return self.program.code[pc]
@@ -117,13 +137,19 @@ class Compiler:
 		elif next == token:
 			self.nextToken()
 
+	# Language-aware skip: skip next token if it matches any form of a canonical word
+	def skipWord(self, canonical):
+		next = self.peek()
+		if next and language.matches_word(next, canonical):
+			self.nextToken()
+
 	# Skip common articles (optional syntactic noise for readability/disambiguation)
-	# Consumes leading articles ('the', 'a', 'an') at the next position
+	# Language-aware: matches all forms of 'the', 'a', 'an' in the active language
 	def skipArticles(self):
-		# Consume leading articles at next position(s) — like skip() but for multiple
 		while True:
 			next_tok = self.peek()
-			if next_tok in ['the', 'a', 'an']:
+			if next_tok and (language.matches_word(next_tok, 'the')
+				or language.matches_word(next_tok, 'an')):
 				self.nextToken()
 			else:
 				break
@@ -240,7 +266,8 @@ class Compiler:
 				command = {}
 				command['domain'] = domain.getName()
 				command['lino'] = self.tokens[self.index].lino
-				command['keyword'] = token
+				# Store the canonical keyword, not the translated one
+				command['keyword'] = language.reverse_word(token)
 				result = handler(command)
 				if result:
 					return result
@@ -248,7 +275,8 @@ class Compiler:
 					self.rewindTo(mark)
 			else:
 				self.rewindTo(mark)
-		FatalError(self, f'Unable to compile this "{token}" command')
+		FatalError(self, language.diagnostic('unknownCommand',
+			{'token': token, 'line': self.getLino() + 1}))
 
 	# Compile a single command
 	def compileOne(self):
@@ -283,6 +311,20 @@ class Compiler:
 	def compileFromHere(self, stopOn):
 		return self.compileFrom(self.getIndex(), stopOn)
 
+	# Check for a language directive at the start of the script
+	# Syntax: "language <name>" e.g. "language it"
+	def checkLanguageDirective(self):
+		if len(self.tokens) < 2:
+			return
+		token = self.tokens[0].token
+		if token == 'language' or token == language.word('language'):
+			lang_name = self.tokens[1].token
+			if language.load_by_name(lang_name):
+				self.index = 2  # skip past the directive
+			else:
+				self.warning(f"Language pack '{lang_name}' not found")
+
 	# Compile from the start of the script
 	def compileFromStart(self):
-		return self.compileFrom(0, [])
+		self.checkLanguageDirective()
+		return self.compileFrom(self.index if hasattr(self, 'index') else 0, [])

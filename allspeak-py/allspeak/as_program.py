@@ -14,6 +14,7 @@ from .as_classes import (
 )
 from .as_compiler import Compiler
 from .as_core import Core
+from .as_language import language
 import importlib
 from importlib.metadata import PackageNotFoundError, version
 
@@ -81,6 +82,9 @@ class Program:
 		self.stack = []
 		self.script = Script(source)
 		self.compiler = Compiler(self)
+		# Load the default (English) language pack if none is loaded
+		if not language.pack:
+			language.load_by_name('en')
 		self.object = ECObject()
 		self.value = self.compiler.value
 		self.condition = self.compiler.condition

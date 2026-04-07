@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AllSpeak</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f1923;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2em;
+    }
+    h1 {
+      font-size: 3em;
+      color: #00d4ff;
+      margin-bottom: 0.2em;
+      letter-spacing: 0.05em;
+    }
+    .tagline {
+      font-size: 1.2em;
+      color: #8899aa;
+      margin-bottom: 2em;
+    }
+    .intro {
+      max-width: 600px;
+      text-align: center;
+      line-height: 1.6;
+      margin-bottom: 2.5em;
+      color: #b0b8c0;
+    }
+    .choose {
+      font-size: 1.1em;
+      color: #8899aa;
+      margin-bottom: 1em;
+    }
+    .flags {
+      display: flex;
+      gap: 1.5em;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .flag-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      padding: 1em 1.5em;
+      border-radius: 12px;
+      background: #1a2633;
+      border: 2px solid transparent;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .flag-link:hover {
+      border-color: #00d4ff;
+      transform: translateY(-2px);
+    }
+    .flag-link .flag {
+      font-size: 3em;
+      margin-bottom: 0.3em;
+    }
+    .flag-link .label {
+      color: #c0c8d0;
+      font-size: 0.95em;
+    }
+    .detected {
+      border-color: #00d4ff44;
+      background: #1a2d3d;
+    }
+    .detected .label::after {
+      content: ' *';
+      color: #00d4ff;
+    }
+    #loading { color: #556; }
+  </style>
+</head>
+<body>
+  <h1>AllSpeak</h1>
+  <p class="tagline">Code in your language</p>
+  <p class="intro" id="intro">
+    AllSpeak is a scripting language you can write in any human language.
+    The same engine runs English, Italian, and more &mdash;
+    each with its own natural syntax.
+  </p>
+  <p class="choose" id="choose">Choose your language:</p>
+  <div class="flags" id="flags">
+    <p id="loading">Loading...</p>
+  </div>
+
+  <script>
+    // Country code to flag emoji
+    function flagEmoji(cc) {
+      return cc.toUpperCase().replace(/./g,
+        c => String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65));
+    }
+
+    // Detect browser language (first 2 chars, e.g. 'it' from 'it-IT')
+    function detectLanguage() {
+      const lang = (navigator.language || navigator.userLanguage || 'en');
+      return lang.substring(0, 2).toLowerCase();
+    }
+
+    // Load config and build the page
+    fetch('config.json')
+      .then(r => r.json())
+      .then(config => {
+        const detected = detectLanguage();
+        const isDev = new URLSearchParams(window.location.search).has('dev');
+        const flagsEl = document.getElementById('flags');
+        flagsEl.innerHTML = '';
+
+        const langs = config.languages;
+        let hasDetected = false;
+
+        for (const code in langs) {
+          const lang = langs[code];
+          // Skip dev languages unless ?dev is set
+          if (lang.status === 'dev' && !isDev) continue;
+
+          const isDetected = (code === detected);
+          if (isDetected) hasDetected = true;
+
+          const a = document.createElement('a');
+          a.className = 'flag-link' + (isDetected ? ' detected' : '');
+          a.href = code + '/';
+          a.innerHTML =
+            '<span class="flag">' + flagEmoji(lang.flag) + '</span>' +
+            '<span class="label">' + lang.label + '</span>';
+          flagsEl.appendChild(a);
+        }
+
+        // If browser language matches a public language, auto-redirect
+        // (unless they've been here before or came back via explicit navigation)
+        if (hasDetected && !sessionStorage.getItem('allspeak-chose')) {
+          const lang = langs[detected];
+          if (lang && lang.status === 'public') {
+            // Short delay so the page is visible briefly
+            setTimeout(() => {
+              sessionStorage.setItem('allspeak-chose', detected);
+              window.location.href = detected + '/';
+            }, 800);
+          }
+        }
+      })
+      .catch(() => {
+        document.getElementById('flags').innerHTML =
+          '<a class="flag-link" href="en/">' +
+          '<span class="flag">' + flagEmoji('gb') + '</span>' +
+          '<span class="label">English</span></a>';
+      });
+  </script>
+</body>
+</html>

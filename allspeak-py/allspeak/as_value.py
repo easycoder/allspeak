@@ -1,4 +1,5 @@
 from typing import Optional, List
+from .as_language import language
 from .as_classes import ECObject, FatalError, ECValue
 
 # Create a constant
@@ -79,7 +80,7 @@ class Value:
 	def compileValue(self) -> Optional[ECValue]:
 		token = self.getToken()
 		# Special-case the plugin-safe full form: "the cat of ..."
-		if token == 'the' and self.peek() == 'cat':
+		if token == 'the' and language.reverse_word(self.peek()) == 'cat':
 			self.nextToken()  # move to 'cat'
 			self.skip('of')
 			self.nextToken()
@@ -100,7 +101,7 @@ class Value:
 			if not object.hasRuntimeValue(): return None
 			item.setContent(object.name)
 
-		if self.peek() == 'cat':
+		if language.reverse_word(self.peek()) == 'cat':
 			self.nextToken()  # consume 'cat'
 			self.nextToken()
 			items = self.getCatItems()

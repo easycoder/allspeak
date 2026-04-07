@@ -30,7 +30,7 @@ const AllSpeak_REST = {
 
 		compile: (compiler) => {
 			const lino = compiler.getLino();
-			const request = compiler.nextToken();
+			const request = AllSpeak_Language.reverseWord(compiler.nextToken());
 			return AllSpeak_REST.Rest.compileRequest(compiler, request, lino);
 		},
 

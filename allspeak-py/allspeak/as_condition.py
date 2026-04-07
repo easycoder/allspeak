@@ -1,4 +1,5 @@
 import types
+from .as_language import language
 
 class Condition:
 
@@ -29,7 +30,7 @@ class Condition:
 		left = self._parseConditionTerm()
 		if left is None:
 			return None
-		while self.peek() == 'and':
+		while language.reverse_word(self.peek()) == 'and':
 			self.nextToken()  # advance to 'and'
 			self.nextToken()  # advance past 'and' to first token of next term
 			right = self._parseConditionTerm()
@@ -44,7 +45,7 @@ class Condition:
 		left = self._parseAndExpression()
 		if left is None:
 			return None
-		while self.peek() == 'or':
+		while language.reverse_word(self.peek()) == 'or':
 			self.nextToken()  # advance to 'or'
 			self.nextToken()  # advance past 'or' to first token of next term
 			right = self._parseAndExpression()

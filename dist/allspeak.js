@@ -10161,7 +10161,7 @@ const AllSpeak_REST = {
 
 		compile: (compiler) => {
 			const lino = compiler.getLino();
-			const request = compiler.nextToken();
+			const request = AllSpeak_Language.reverseWord(compiler.nextToken());
 			return AllSpeak_REST.Rest.compileRequest(compiler, request, lino);
 		},
 
@@ -12111,7 +12111,7 @@ var AllSpeak_LanguagePack_en = {
       ]
     },
     "REST_GET": {
-      "keyword": "rest",
+      "keyword": "get",
       "patterns": [
         "rest get {variable} from {url}"
       ]
@@ -12123,7 +12123,7 @@ var AllSpeak_LanguagePack_en = {
       ]
     },
     "REST_POST": {
-      "keyword": "rest",
+      "keyword": "post",
       "patterns": [
         "rest post [to] {url} giving {variable}",
         "rest post {value} to {url} giving {variable}",

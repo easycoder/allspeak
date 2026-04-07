@@ -1,11 +1,13 @@
 import sys, json
 from .as_classes import normalize_type
+from .as_language import language
 
 class Handler:
 
 	def __init__(self, compiler):
 		self.compiler = compiler
 		self.program = compiler.program
+		self.language = language
 		self.getToken = compiler.getToken
 		self.nextToken = compiler.nextToken
 		self.skip = compiler.skip
@@ -31,6 +33,11 @@ class Handler:
 		self.compileOne = compiler.compileOne
 		self.compileFromHere = compiler.compileFromHere
 		self.compileConstant = compiler.compileConstant
+		self.isWord = compiler.isWord
+		self.nextIsWord = compiler.nextIsWord
+		self.skipWord = compiler.skipWord
+		self.canonicalToken = compiler.canonicalToken
+		self.nextCanonicalToken = compiler.nextCanonicalToken
 
 		self.code = self.program.code
 		self.checkObjectType = self.program.checkObjectType
@@ -56,10 +63,16 @@ class Handler:
 	def nextPC(self):
 		return self.program.pc + 1
 
-	# Get a compile handler (raises an Exception if none)
+	# Get a compile handler — translates via language pack if active.
+	# e.g. Italian 'metti' → canonical 'put' → method k_put
 	def keywordHandler(self, name):
+		# Try the token directly first (works for English or untranslated)
 		if hasattr(self, f'k_{name}'):
 			return getattr(self, f'k_{name}')
+		# Try reverse lookup through language pack
+		canonical = language.reverse_word(name)
+		if canonical != name and hasattr(self, f'k_{canonical}'):
+			return getattr(self, f'k_{canonical}')
 		return None
 
 	# Get a run handler
