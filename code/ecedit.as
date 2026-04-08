@@ -82,14 +82,13 @@
 
 !   -- Detect language and set strings --
     div LangDiv
-    attach LangDiv to `editor-lang` or begin
-        put `en` into Lang
-    end
-    if LangDiv is not empty
-        put the text of LangDiv into Lang
+    put `en` into Lang
+    attach LangDiv to `editor-lang` or go to SetStrings
+    put the text of LangDiv into Lang
     replace ` ` with `` in Lang
     replace newline with `` in Lang
     if Lang is empty put `en` into Lang
+SetStrings:
 
     if Lang is `it`
     begin
