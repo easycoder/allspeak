@@ -33,7 +33,7 @@ Il percorso più veloce è **AllSpeak + Claude Code**. Claude Code è un agente 
 Ecco cosa devi fare:
 
 1. Crea una cartella vuota per il tuo progetto.
-2. Scarica [code.zip](https://allspeak.github.io/code.zip) e decomprimilo in quella cartella.
+2. Scarica [code.zip](https://allspeak.ai/code.zip) e decomprimilo in quella cartella.
 3. Installa AllSpeak: `pip install -U allspeak`
 4. Installa Claude Code (vedi [claude.ai/code](https://claude.ai/code)).
 5. Apri un terminale in quella cartella e digita `claude`.
@@ -45,7 +45,7 @@ Claude ti farà un paio di domande, creerà i file del progetto e ti guiderà at
 
 - **Scheda Esempio** — una guida passo-passo per vedere il flusso di lavoro in azione.
 - **Scheda Manuale AI** — la spiegazione completa dello sviluppo strutturato con AI vs vibe coding.
-- **[Codex](https://allspeak.github.io/codex.html)** — un tutorial interattivo, riferimento e ambiente di prova per il linguaggio AllSpeak.
+- **[Codex](https://allspeak.ai/codex.html)** — un tutorial interattivo, riferimento e ambiente di prova per il linguaggio AllSpeak.
 
 ## Domande?
 
