@@ -23,6 +23,21 @@
     pre UIPre
 
 !   -- State --
+    variable Lang
+    variable StrOpen
+    variable StrFind
+    variable StrClose
+    variable StrSaved
+    variable StrSaveFailed
+    variable StrReloaded
+    variable StrExtChange
+    variable StrNoConnect
+    variable StrSaveAs
+    variable StrEmpty
+    variable StrUpLevel
+    variable StrRoot
+    variable StrUpdated
+    variable StrRestart
     variable TabPath       ! array: full file path per tab (relative to project root)
     variable TabName       ! array: display name (basename) per tab
     variable TabSaved      ! array: last content saved to server per tab
@@ -65,14 +80,63 @@
     put 0 into ActiveTab
     put `` into CurrentPath
 
+!   -- Detect language and set strings --
+    div LangDiv
+    attach LangDiv to `editor-lang` or begin
+        put `en` into Lang
+    end
+    if LangDiv is not empty
+        put the text of LangDiv into Lang
+    replace ` ` with `` in Lang
+    replace newline with `` in Lang
+    if Lang is empty put `en` into Lang
+
+    if Lang is `it`
+    begin
+        put `Apri` into StrOpen
+        put `Cerca` into StrFind
+        put `Chiudi` into StrClose
+        put `Salvato` into StrSaved
+        put `Salvataggio fallito` into StrSaveFailed
+        put `Ricaricato` into StrReloaded
+        put `Modifica esterna rilevata` into StrExtChange
+        put `Impossibile connettersi al server` into StrNoConnect
+        put `Salva come (nome file senza .as):` into StrSaveAs
+        put `(cartella vuota)` into StrEmpty
+        put `.. (livello superiore)` into StrUpLevel
+        put `/ (radice progetto)` into StrRoot
+        put `L'editor è stato aggiornato. Riavviare?` into StrUpdated
+        put `Riavvia il server manualmente.` into StrRestart
+    end
+    else
+    begin
+        put `Open` into StrOpen
+        put `Find` into StrFind
+        put `Close` into StrClose
+        put `Saved` into StrSaved
+        put `Save failed` into StrSaveFailed
+        put `Reloaded` into StrReloaded
+        put `External change detected` into StrExtChange
+        put `Cannot connect to server` into StrNoConnect
+        put `Save as (filename without .as):` into StrSaveAs
+        put `(empty directory)` into StrEmpty
+        put `.. (up one level)` into StrUpLevel
+        put `/ (project root)` into StrRoot
+        put `ecedit has been updated. Restart to apply changes?` into StrUpdated
+        put `Please restart the server manually.` into StrRestart
+    end
+    set the content of OpenBtn to StrOpen
+    set the content of FindBtn to StrFind
+    set the content of CloseBtn to StrClose
+
 !   -- Check for updates --
     rest get VersionResult from `/version` or go VersionDone
     if VersionResult is `updated`
     begin
-        if confirm `ecedit has been updated. Restart to apply changes?`
+        if confirm StrUpdated
         begin
             rest get VersionResult from `/restart` or begin
-                alert `Please restart the server manually.`
+                alert StrRestart
                 go VersionDone
             end
             wait 3 seconds
@@ -130,7 +194,7 @@ AutoSave:
                 fork to AutoSave
                 stop
             end
-            put prompt `Save as (filename without .as):` into File
+            put prompt StrSaveAs into File
             if File is empty
             begin
                 fork to AutoSave
@@ -149,14 +213,14 @@ AutoSave:
         rest post Content to `/write/` cat TabPath or go SaveFailed
         index TabSaved to ActiveTab
         put Content into TabSaved
-        set the content of StatusSpan to `Saved`
+        set the content of StatusSpan to StrSaved
         fork to ClearStatus
     end
     fork to AutoSave
     stop
 
 SaveFailed:
-    set the content of StatusSpan to `Save failed`
+    set the content of StatusSpan to StrSaveFailed
     fork to ClearStatus
     fork to AutoSave
     stop
@@ -181,12 +245,12 @@ PollFile:
             ! Editor is clean -- silently reload
             put FileContent into TabSaved
             codemirror set content of ContentEditor to FileContent
-            set the content of StatusSpan to `Reloaded`
+            set the content of StatusSpan to StrReloaded
             fork to ClearStatus
         end
         else
         begin
-            set the content of StatusSpan to `External change detected`
+            set the content of StatusSpan to StrExtChange
         end
     end
 PollNext:
@@ -205,7 +269,7 @@ ShowBrowser:
     create FileRow in Scroller
     set the style of FileRow to `padding:4px 8px;font-size:0.85em;color:#666;border-bottom:1px solid #ddd`
     if CurrentPath is empty
-        set the content of FileRow to `/ (project root)`
+        set the content of FileRow to StrRoot
     else
         set the content of FileRow to `/` cat CurrentPath
 
@@ -214,7 +278,7 @@ ShowBrowser:
     begin
         create FileRow in Scroller
         set the style of FileRow to `padding:4px 8px;cursor:pointer;background:#f0f0ff`
-        set the content of FileRow to `.. (up one level)`
+        set the content of FileRow to StrUpLevel
         on click FileRow go to GoUp
     end
 
@@ -222,7 +286,7 @@ ShowBrowser:
     begin
         create FileRow in Scroller
         set the style of FileRow to `padding:4px 8px;color:#999`
-        set the content of FileRow to `(empty directory)`
+        set the content of FileRow to StrEmpty
     end
 
     put 0 into N
@@ -262,7 +326,7 @@ GoUp:
     go to ShowBrowser
 
 BrowserError:
-    set the content of StatusSpan to `Cannot connect to server`
+    set the content of StatusSpan to StrNoConnect
     fork to ClearStatus
     stop
 
@@ -407,7 +471,7 @@ RebuildTabBar:
         on click TabLabel go to SwitchTab
         index TabClose to N
         create TabClose in TabBtn
-        set attribute `src` of TabClose to `https://allspeak.ai/resources/icon/stop.png`
+        set attribute `src` of TabClose to `https://allspeak.ai/icon/stop.png`
         set the style of TabClose to `width:12px;height:12px;opacity:0.6;cursor:pointer`
         on click TabClose go to CloseTab
         add 1 to N
