@@ -66,3 +66,6 @@ cat js/allspeak/Core.js js/allspeak/Browser.js js/allspeak/MarkdownRenderer.js j
 echo "Minimise with closure"
 npx google-closure-compiler --js=dist/allspeak.js --js_output_file=dist/allspeak-min.js --language_in ECMASCRIPT_2021
 echo "Closure finished"
+
+echo "Copy language packs to dist"
+cp js/allspeak/LanguagePack_it.js dist/
