@@ -2,5 +2,5 @@
 
 Here are some ~ec~ contact options:
 
-1. Email to [allspeak.ai@gmail.com](mailto:allspeak.ai@gmail.com)
+1. Email to [info@allspeak.ai](mailto:info@allspeak.ai)
 

@@ -434,4 +434,4 @@ Together, they represent a practical middle path: not the complexity of full-sta
 **Get in touch:**
 
 - [Discord](https://discord.gg/AhaJkJHr) — join the AllSpeak community
-- Email: allspeak.ai@gmail.com
+- Email: info@allspeak.ai

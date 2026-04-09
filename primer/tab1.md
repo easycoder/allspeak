@@ -47,4 +47,4 @@ Claude will ask you a couple of questions, create your project files, and walk y
 
 ## Questions?
 
-Contact us at [allspeak.ai@gmail.com](mailto:allspeak.ai@gmail.com).
+Contact us at [info@allspeak.ai](mailto:info@allspeak.ai).

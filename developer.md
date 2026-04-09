@@ -110,4 +110,4 @@ Both versions of AllSpeak have a minimal debugger; a built-in tracer that lets y
 ## Teach yourself AllSpeak 
 You can get some familiarity with many features of AllSpeak by starting with our [Codex](https://allspeak.ai/codex.html). This is an integrated tutorial, reference manual and programmer's playground for the scripting language.
 
-And that's it! If you have questions you can email us at [allspeak.ai@gmail.com](mailto:allspeak.ai@gmail.com). 
+And that's it! If you have questions you can email us at [info@allspeak.ai](mailto:info@allspeak.ai). 

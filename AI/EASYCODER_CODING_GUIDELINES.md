@@ -57,7 +57,7 @@ This is a live document and must be read by any agent preparing to work on AllSp
 ## Reporting and contribution
 
 - If you find an AllSpeak defect or want to propose syntax changes, report it with clear details.
-- Contact: `allspeak.ai@gmail.com`.
+- Contact: `info@allspeak.ai`.
 
 ## Readability rule
 

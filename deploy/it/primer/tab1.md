@@ -49,4 +49,4 @@ Claude ti farà un paio di domande, creerà i file del progetto e ti guiderà at
 
 ## Domande?
 
-Contattaci a [allspeak.ai@gmail.com](mailto:allspeak.ai@gmail.com).
+Contattaci a [info@allspeak.ai](mailto:info@allspeak.ai).
