@@ -278,6 +278,9 @@ alert `message`         ! browser dialog
 get Var from url `https://example.com/api`
 put json StringVar into DictVar
 put entry `key` of DictVar into Var
+input Var                              ! read user input (default prompt ': ')
+input Var with `Enter value: `         ! with custom prompt
+! NOTE: input is a standalone command, NOT a value. Do not use 'put input into Var'
 exit
 ```
 

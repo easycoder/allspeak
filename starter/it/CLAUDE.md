@@ -308,6 +308,9 @@ avviso `messaggio`           ! dialogo del browser
 ottieni Var da url `https://example.com/api`
 metti json StringaVar in DictVar
 metti voce `chiave` di DictVar in Var
+input Var                              ! legge input dall'utente (prompt predefinito ': ')
+input Var with `Inserisci valore: `    ! con prompt personalizzato
+! NOTA: input è un comando autonomo, NON un valore. Non usare 'metti input in Var'
 esci
 ```
 
