@@ -69,7 +69,6 @@
         if RemoteVersion is not LocalVersion
         begin
             print `Updating from version ` cat LocalVersion cat ` to ` cat RemoteVersion
-            download RepoBase cat `edit.html` to BaseDir cat `/edit.html`
             download RepoBase cat `allspeak.as` to BaseDir cat `/allspeak.as`
             download RepoBase cat `asedit.json` to BaseDir cat `/asedit.json`
             download RepoBase cat `asedit.as` to BaseDir cat `/asedit.as`
