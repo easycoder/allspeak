@@ -1,4 +1,4 @@
-!   ecedit.as
+!   asedit.as
 !   Tabbed script editor with auto-save and external change detection.
 !   Served by allspeak.as locally, or any web server with /list, /read, /write routes.
 
@@ -60,7 +60,7 @@
 
 !   -- Build UI --
     attach Body to body
-    attach UIPre to `ecedit-ui`
+    attach UIPre to `asedit-ui`
     put the content of UIPre into UIWebson
     render UIWebson in Body
     attach TabBar to `se-tabbar`
@@ -121,7 +121,7 @@ SetStrings:
         put `(empty directory)` into StrEmpty
         put `.. (up one level)` into StrUpLevel
         put `/ (project root)` into StrRoot
-        put `ecedit has been updated. Restart to apply changes?` into StrUpdated
+        put `asedit has been updated. Restart to apply changes?` into StrUpdated
         put `Please restart the server manually.` into StrRestart
     end
     set the content of OpenBtn to StrOpen

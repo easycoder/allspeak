@@ -6,8 +6,8 @@ The files here make up the AllSpeak starter pack, distributed as `code.zip`.
 
 - `allspeak.as` — development server (file serving + editor API)
 - `edit.html` — browser-based script editor with syntax highlighting
-- `ecedit.as` — editor logic (fetched from repo at runtime)
-- `ecedit.json` — editor UI layout (fetched from repo at runtime)
+- `asedit.as` — editor logic (fetched from repo at runtime)
+- `asedit.json` — editor UI layout (fetched from repo at runtime)
 - `CLAUDE.md` — AI bootstrap file for Claude Code
 - `version` — version tracking for auto-updates
 

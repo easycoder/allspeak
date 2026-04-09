@@ -311,7 +311,7 @@ Ask Claude Code to add filtering, CSV parsing, summary statistics, or output to 
 
 For writing and editing AllSpeak scripts, there is a dedicated web-based editor included in the starter pack. It provides syntax highlighting, a file browser with directory navigation, multiple tabs, and auto-save — all running in your browser against a local file server.
 
-![ecedit editor with a file open and the file browser popup displayed](/ai-article/3%20scripted.png)
+![asedit editor with a file open and the file browser popup displayed](/ai-article/3%20scripted.png)
 
 The screenshot above shows a script open in the editor — note the syntax highlighting — with the file browser popup in front, listing the available files in the project.
 
