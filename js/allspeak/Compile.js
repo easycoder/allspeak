@@ -360,6 +360,7 @@ const AllSpeak_Compiler = {
 				// Reset cached compile handler tables
 				if (AllSpeak_Core._compileHandlers) AllSpeak_Core._compileHandlers = null;
 				if (AllSpeak_Browser._compileHandlers) AllSpeak_Browser._compileHandlers = null;
+				if (AllSpeak_Browser.elementHandlerMap) AllSpeak_Browser.elementHandlerMap = null;
 				if (AllSpeak_REST._compileHandlers) AllSpeak_REST._compileHandlers = null;
 				if (AllSpeak_MQTT._compileHandlers) AllSpeak_MQTT._compileHandlers = null;
 			} else {
