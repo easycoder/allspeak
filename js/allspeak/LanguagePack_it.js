@@ -981,7 +981,7 @@ var AllSpeak_LanguagePack_it =
     "of": "di",
     "offset": "offset",
     "on": "su",
-    "or": "oppure",
+    "or": "o|oppure",
     "path": "percorso",
     "position": "posizione",
     "program": "programma",
