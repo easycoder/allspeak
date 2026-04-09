@@ -223,6 +223,10 @@ take 1 from V
 multiply V by 2
 put `hello` into V
 
+! Concatenation with cat — ALWAYS goes between values
+log `Value: ` cat V               ! CORRECT
+! log cat `Value: ` V             ! WRONG — cat does not go before the first value
+
 if V is 3 begin ... end
 while V is less than 10 begin ... end
 

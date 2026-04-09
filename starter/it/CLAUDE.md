@@ -253,6 +253,10 @@ togli 1 da V
 moltiplica V per 2
 metti `ciao` in V
 
+! Concatenazione con cat — va SEMPRE tra i valori
+registra `Valore: ` cat V         ! CORRETTO
+! registra cat `Valore: ` V       ! SBAGLIATO — cat non va prima del primo valore
+
 se V è 3 inizio ... fine
 mentre V è minore di 10 inizio ... fine
 
