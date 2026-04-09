@@ -10,6 +10,21 @@ AllSpeak è un linguaggio di scripting progettato per essere letto come una ling
 
 AllSpeak usa un flusso di lavoro **l'AI scrive, l'umano controlla**. L'AI genera il codice `.as`; l'utente verifica che sia leggibile e chiede chiarimenti su ciò che non è chiaro. Usa il linguaggio completo — non evitare un comando perché potrebbe essere poco familiare. L'utente deve solo leggerlo, non scriverlo a memoria.
 
+## Nota sull'interfaccia di Claude Code
+
+Claude Code è uno strumento creato da Anthropic. La sua interfaccia (i messaggi di sistema, le richieste di conferma, i pulsanti) è in inglese. Ecco cosa significano i messaggi più comuni:
+
+| Messaggio inglese | Significato |
+|---|---|
+| **Allow** / **Deny** | Permetti / Nega — Claude chiede il permesso di eseguire un'azione |
+| **Do you want to proceed?** | Vuoi procedere? |
+| **Press Enter to continue** | Premi Invio per continuare |
+| **Yes / No** | Sì / No |
+| **Retry** | Riprova |
+| **Tool blocked** | Strumento bloccato — un'azione è stata negata |
+
+Le risposte dell'AI (spiegazioni, domande, commenti nel codice) saranno in italiano.
+
 ## Prima configurazione
 
 > **Suggerimento:** Se non succede nulla quando avvii Claude, digita **go**.
