@@ -15,7 +15,7 @@
 
 <script>
 (async function() {
-	const repoBase = 'https://raw.githubusercontent.com/easycoder/allspeak.ai/master/code/';
+	const repoBase = 'https://allspeak.ai/code/';
 	const ui = await fetch(repoBase + 'ecedit.json').then(r => r.text());
 	document.getElementById('ecedit-ui').textContent = ui;
 	const ecs = await fetch(repoBase + 'ecedit.as').then(r => r.text());
@@ -25,7 +25,7 @@
 		'https://allspeak.ai/dist/allspeak-min.js',
 		'https://allspeak.ai/dist/plugins/codemirror.js',
 		'https://allspeak.ai/dist/plugins/codemirror/codemirror.js',
-		'https://cdn.jsdelivr.net/gh/easycoder/allspeak.ai/dist/plugins/codemirror-ecs.js',
+		'https://allspeak.ai/dist/plugins/codemirror-ecs.js',
 		'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/addon/dialog/dialog.js',
 		'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/addon/search/search.js',
 		'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/addon/search/searchcursor.js',

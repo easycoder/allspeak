@@ -32,7 +32,7 @@
     variable LocalVersion
     server Files
 
-    put `https://raw.githubusercontent.com/easycoder/allspeak.ai/master/code/` into RepoBase
+    put `https://allspeak.ai/code/` into RepoBase
 
     put cwd into BaseDir
     variable ArgCount
