@@ -711,11 +711,14 @@ const AllSpeak_Core = {
 			const func = program.getSymbolRecord(command.func).pc;
 			try {
 				const array = JSON.parse(value);
+				const savedRunningQueue = program.runningQueue;
+				program.runningQueue = false;
 				const result = array.filter(function (a) {
 					variable.a = a;
 					program.run(func);
 					return variable.v;
 				});
+				program.runningQueue = savedRunningQueue;
 				variable.value[variable.index].content = JSON.stringify(result);
 			} catch (err) {
 				if (command.onError) {
@@ -2074,12 +2077,15 @@ const AllSpeak_Core = {
 			const func = program.getSymbolRecord(command.func).pc;
 			try {
 				const array = JSON.parse(value);
+				const savedRunningQueue = program.runningQueue;
+				program.runningQueue = false;
 				array.sort(function (a, b) {
 					variable.a = a;
 					variable.b = b;
 					program.run(func);
 					return variable.v;
 				});
+				program.runningQueue = savedRunningQueue;
 				variable.value[variable.index].content = JSON.stringify(array);
 			} catch (err) {
 				if (command.onError) {

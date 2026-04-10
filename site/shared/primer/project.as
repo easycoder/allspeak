@@ -22,6 +22,7 @@
     button TabStart
     button TabExample
     button TabManual
+    button TabCodex
     div ManualStatus
     div ManualBody
     button RetryManualButton
@@ -54,6 +55,7 @@
     variable StrManualFailed
     variable StrChapterFailed
     variable StrViewing
+    variable StrLang
 
 !    debug step
 
@@ -67,6 +69,7 @@
     put property `manualFailed` of Strings into StrManualFailed
     put property `chapterFailed` of Strings into StrChapterFailed
     put property `viewing` of Strings into StrViewing
+    put property `lang` of Strings into StrLang
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !   Set up the main screen
@@ -110,6 +113,7 @@ SetupScreen:
     attach TabStart to `TabStart` or go to AbandonShip
     attach TabExample to `TabExample` or go to AbandonShip
     attach TabManual to `TabManual` or go to AbandonShip
+    attach TabCodex to `TabCodex` or go to AbandonShip
     attach ManualStatus to `ManualStatus` or go to AbandonShip
     attach ManualBody to `ManualBody` or go to AbandonShip
     attach RetryManualButton to `RetryManualButton` or go to AbandonShip
@@ -149,6 +153,11 @@ SetupScreen:
         gosub to ShowManualTab
         history push url `#manual/overview`
         gosub to EnsureManualLoaded
+    end
+
+    on click TabCodex
+    begin
+        location `../codex.html?lang=` cat StrLang
     end
 
     on click ManualBackButton
@@ -225,6 +234,7 @@ ShowStartTab:
     set style `background` of TabStart to `#1e3450`
     set style `background` of TabExample to `#0b1018`
     set style `background` of TabManual to `#0b1018`
+    set style `background` of TabCodex to `#0b1018`
     set style `display` of RetryManualButton to `none`
     gosub to EnsureStartLoaded
     return
@@ -237,6 +247,7 @@ ShowExampleTab:
     set style `background` of TabStart to `#0b1018`
     set style `background` of TabExample to `#1e3450`
     set style `background` of TabManual to `#0b1018`
+    set style `background` of TabCodex to `#0b1018`
     set style `display` of RetryManualButton to `none`
     gosub to EnsureExampleLoaded
     return
@@ -249,6 +260,7 @@ ShowManualTab:
     set style `background` of TabStart to `#0b1018`
     set style `background` of TabExample to `#0b1018`
     set style `background` of TabManual to `#1e3450`
+    set style `background` of TabCodex to `#0b1018`
     return
 
 EnsureStartLoaded:

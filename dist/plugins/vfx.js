@@ -275,6 +275,7 @@ const AllSpeak_VFX = {
 		run: (program) => {
 			const command = program[program.pc];
 			const targetRecord = program.getSymbolRecord(command.target);
+			const triggers = [];
 			for (targetRecord.index = 0; targetRecord.index < targetRecord.elements; targetRecord.index++) {
 				const animation = targetRecord.animation[targetRecord.index];
 				if (animation.step < animation.spec.steps) {
@@ -288,9 +289,13 @@ const AllSpeak_VFX = {
 					image.style.top = `-${animation.top}px`;
 					image.style.width = `${animation.width}px`;
 					if (animation.step === animation.spec.trigger) {
-						program.run(targetRecord.onTrigger);
+						triggers.push(targetRecord.index);
 					}
 				}
+			}
+			for (const triggerIndex of triggers) {
+				targetRecord.index = triggerIndex;
+				program.run(targetRecord.onTrigger);
 			}
 			return command.pc + 1;
 		}

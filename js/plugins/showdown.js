@@ -157,19 +157,24 @@ const AllSpeak_Showdown = {
 				if (!converter.callback) {
 					return text;
 				}
-				const callback = program.getSymbolRecord(converter.callback);
+				const p = AllSpeak_Showdown.runtimeProgram || program;
+				const callback = p.getSymbolRecord(converter.callback);
 				if (!callback) {
 					return text;
 				}
-				return text.replace(/~([^~]+)~/g, function (match, group) {
+				const savedRunningQueue = p.runningQueue;
+				p.runningQueue = false;
+				const result = text.replace(/~([^~]+)~/g, function (match, group) {
 					callback.payload = group;
-					program.run(callback.cb);
+					p.run(callback.cb);
 					if (callback.payload !== group) {
 						return callback.payload;
 					}
 					// If callback execution is queued, apply immediate fallback transform.
-					return AllSpeak_Showdown.fallbackTransform(program, group);
+					return AllSpeak_Showdown.fallbackTransform(p, group);
 				});
+				p.runningQueue = savedRunningQueue;
+				return result;
 			}
 		});
 	},
@@ -220,6 +225,7 @@ const AllSpeak_Showdown = {
 		},
 
 		get: (program, value) => {
+			AllSpeak_Showdown.runtimeProgram = program;
 			const converter = new showdown.Converter({
 				extensions: [`Extension`],
 				tables: true
