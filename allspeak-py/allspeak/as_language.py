@@ -14,35 +14,64 @@ class Language:
     def __init__(self):
         self.pack = None
         self._reverse_words = None
-        self._keyword_to_canonical = None
+        self._keyword_index = None
 
     def init(self, pack_data):
         """Initialize with a language pack dictionary."""
         self.pack = pack_data
         self._reverse_words = None
-        self._keyword_to_canonical = None
-        self._build_reverse_words()
-        self._build_keyword_map()
+        self._build_keyword_index()
 
     def load_file(self, path):
         """Load a language pack from a JSON file path."""
         with open(path, 'r', encoding='utf-8') as f:
             self.init(json.load(f))
 
-    def load_by_name(self, name):
-        """Load a language pack by language code (e.g. 'en', 'it').
-        Searches the languages/ directory relative to the project root."""
-        # Search in several likely locations
-        candidates = [
-            os.path.join(os.path.dirname(__file__), 'languages', f'{name}.json'),
-            os.path.join(os.path.dirname(__file__), '..', '..', 'languages', f'{name}.json'),
-            os.path.join('languages', f'{name}.json'),
+    def _language_dirs(self):
+        """Return the list of directories to search for language pack files."""
+        return [
+            os.path.join(os.path.dirname(__file__), 'languages'),
+            os.path.join(os.path.dirname(__file__), '..', '..', 'languages'),
+            os.path.join('languages'),
         ]
-        for path in candidates:
+
+    def load_by_name(self, name):
+        """Load a language pack by name or language code (e.g. 'en', 'it', 'italiano').
+        First tries a direct filename match, then scans all packs for a
+        matching meta.label or meta.language (case-insensitive)."""
+        # Try direct filename match first
+        for lang_dir in self._language_dirs():
+            path = os.path.join(lang_dir, f'{name}.json')
             if os.path.exists(path):
                 self.load_file(path)
                 return True
+        # Scan language packs for a matching meta.label or meta.language
+        lower_name = name.lower()
+        for lang_dir in self._language_dirs():
+            if not os.path.isdir(lang_dir):
+                continue
+            for filename in os.listdir(lang_dir):
+                if not filename.endswith('.json'):
+                    continue
+                path = os.path.join(lang_dir, filename)
+                with open(path, 'r', encoding='utf-8') as f:
+                    pack = json.load(f)
+                meta = pack.get('meta', {})
+                if (meta.get('label', '').lower() == lower_name or
+                        meta.get('language', '') == lower_name):
+                    self.init(pack)
+                    return True
         return False
+
+    def _build_keyword_index(self):
+        """Build reverse lookup: from each opcode's keyword, map back to opcode list."""
+        self._keyword_index = {}
+        if self.pack and 'opcodes' in self.pack:
+            for opcode, entry in self.pack['opcodes'].items():
+                for kw in entry['keyword'].split('|'):
+                    if kw not in self._keyword_index:
+                        self._keyword_index[kw] = []
+                    self._keyword_index[kw].append(opcode)
 
     def _build_reverse_words(self):
         """Build reverse lookup: translated word -> canonical name."""
@@ -53,14 +82,33 @@ class Language:
                 for form in translated.split('|'):
                     self._reverse_words[form] = canonical
 
-    def _build_keyword_map(self):
-        """Build reverse lookup: translated opcode keyword -> canonical keyword."""
-        self._keyword_to_canonical = {}
-        if self.pack and 'opcodes' in self.pack:
-            for opcode, entry in self.pack['opcodes'].items():
-                for kw in entry['keyword'].split('|'):
-                    if kw not in self._keyword_to_canonical:
-                        self._keyword_to_canonical[kw] = kw  # store original for now
+    def connector(self, canonical):
+        """Look up a canonical connector word.
+        e.g. connector('into') -> 'dans' (French)"""
+        if not self.pack or 'connectors' not in self.pack:
+            return canonical
+        return self.pack['connectors'].get(canonical, canonical)
+
+    def literal(self, canonical):
+        """Look up a canonical literal.
+        e.g. literal('body') -> 'corps' (French)"""
+        if not self.pack or 'literals' not in self.pack:
+            return canonical
+        return self.pack['literals'].get(canonical, canonical)
+
+    def time_unit(self, canonical):
+        """Look up a canonical time unit.
+        e.g. time_unit('seconds') -> 'secondi' (Italian)"""
+        if not self.pack or 'timeUnits' not in self.pack:
+            return canonical
+        return self.pack['timeUnits'].get(canonical, canonical)
+
+    def condition(self, canonical):
+        """Look up a canonical condition keyword.
+        e.g. condition('greater') -> 'maggiore' (Italian)"""
+        if not self.pack or 'conditions' not in self.pack:
+            return canonical
+        return self.pack['conditions'].get(canonical, canonical)
 
     def word(self, canonical):
         """Look up the primary translated form of a canonical word.
@@ -90,12 +138,25 @@ class Language:
             self._build_reverse_words()
         return self._reverse_words.get(token, token)
 
+    def is_keyword(self, token):
+        """Check if a token is a known keyword in the active language."""
+        return self._keyword_index is not None and token in self._keyword_index
+
+    def get_opcodes_for_keyword(self, keyword):
+        """Get opcodes that start with a given keyword."""
+        if not self._keyword_index:
+            return []
+        return self._keyword_index.get(keyword, [])
+
     def diagnostic(self, key, params=None):
         """Get a localized diagnostic message with placeholder substitution."""
         fallbacks = {
             'unknownCommand': "I don't understand '{token}' at line {line}.",
             'undeclaredVariable': "Variable '{name}' has not been declared.",
             'unexpectedToken': "Expected '{expected}' but got '{actual}' at line {line}.",
+            'divisionByZero': "Division by zero at line {line}.",
+            'indexOutOfRange': "Index {index} is out of range at line {line}.",
+            'moduleNotFound': "Module '{name}' not found.",
             'syntaxError': "Syntax error at line {line}: {detail}.",
         }
         msg = None

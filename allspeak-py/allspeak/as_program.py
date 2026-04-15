@@ -1,4 +1,4 @@
-import time, sys, json, traceback, threading
+import time, sys, json, traceback, threading, os, glob as globmod
 from copy import deepcopy
 from collections import deque
 
@@ -6,8 +6,8 @@ from .as_classes import (
 	Script,
 	Token,
 	FatalError,
-	RuntimeError, 
-	NoValueRuntimeError, 
+	RuntimeError,
+	NoValueRuntimeError,
 	ECObject,
 	ECValue,
 	normalize_type
@@ -654,10 +654,102 @@ class Program:
 		if self.onMessagePC:
 			self.run(self.onMessagePC)
 
+# List all .as files in the current directory
+def listScripts():
+	files = sorted(globmod.glob('*.as'))
+	if files:
+		print('AllSpeak scripts in current directory:')
+		for f in files:
+			print(f'  {f}')
+	else:
+		print('No .as files found in current directory.')
+
+# Extract and display the info text from a script file
+def showScriptInfo(name):
+	if not name.endswith('.as'):
+		name += '.as'
+	if not os.path.exists(name):
+		print(f"Script '{name}' not found.")
+		return
+	with open(name, 'r', encoding='utf-8') as f:
+		source = f.read()
+	# Tokenise the script and look for an 'info' token
+	script = Script(source)
+	token = ''
+	literal = False
+	for lino in range(len(script.lines)):
+		line = script.lines[lino]
+		length = len(line)
+		if length == 0:
+			if literal:
+				token += '\n'
+			continue
+		n = 0
+		while n < length and line[n].isspace():
+			n += 1
+		if n == length:
+			if literal:
+				token += '\n'
+			continue
+		if literal:
+			if line[n] != '`':
+				if len(token) > 0:
+					script.tokens.append(Token(lino, token))
+					token = ''
+					literal = False
+			n += 1
+		for n in range(n, length):
+			c = line[n]
+			if not literal:
+				if c.isspace():
+					if len(token) > 0:
+						script.tokens.append(Token(lino, token))
+						token = ''
+					continue
+				elif c == '!':
+					break
+			if c == '`':
+				if literal:
+					token += c
+					literal = False
+				else:
+					token += c
+					literal = True
+					continue
+			else:
+				token += c
+		if len(token) > 0:
+			if literal:
+				token += '\n'
+			else:
+				script.tokens.append(Token(lino, token))
+				token = ''
+	# Find the 'info' token and grab the next token as its text
+	for i, tok in enumerate(script.tokens):
+		if tok.token == 'info' and i + 1 < len(script.tokens):
+			text = script.tokens[i + 1].token
+			# Strip surrounding backticks if present
+			if text.startswith('`') and text.endswith('`'):
+				text = text[1:-1]
+			# If it's valid JSON, pretty-print it
+			try:
+				parsed = json.loads(text)
+				print(json.dumps(parsed, indent=2, ensure_ascii=False))
+			except (json.JSONDecodeError, ValueError):
+				print(text)
+			return
+	print(f"No 'info' command found in '{name}'.")
+
 # This is the program launcher
 def Main():
-	if (len(sys.argv) > 1):
-		Program(' '.join(sys.argv[1:])).start()
+	if len(sys.argv) > 1:
+		if sys.argv[1] == 'info':
+			if len(sys.argv) > 2:
+				showScriptInfo(sys.argv[2])
+			else:
+				listScripts()
+		else:
+			Program(' '.join(sys.argv[1:])).start()
 	else:
 		Program('-v')
 

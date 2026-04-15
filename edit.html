@@ -4,27 +4,28 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>EC Editor</title>
-	<link rel="stylesheet" href="https://easycoder.github.io/dist/plugins/codemirror/codemirror.css">
+	<link rel="stylesheet" href="https://allspeak.ai/dist/plugins/codemirror/codemirror.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/addon/dialog/dialog.css">
 </head>
 
 <body>
+<div id="editor-lang" style="display:none">en</div>
 <pre id="asedit-ui" style="display:none"></pre>
-<pre id="easycoder-script" style="display:none"></pre>
+<pre id="allspeak-script" style="display:none"></pre>
 
 <script>
 (async function() {
-	const repoBase = 'https://raw.githubusercontent.com/easycoder/easycoder.github.io/master/code/';
-	const ui = await fetch(repoBase + 'asedit.json').then(r => r.text());
+	const ui = await fetch('asedit.json').then(r => r.text());
 	document.getElementById('asedit-ui').textContent = ui;
-	const ecs = await fetch(repoBase + 'asedit.ecs').then(r => r.text());
-	document.getElementById('easycoder-script').textContent = ecs;
+	const ecs = await fetch('asedit.as').then(r => r.text());
+	document.getElementById('allspeak-script').textContent = ecs;
 
+	const t = Date.now();
 	const scripts = [
-		'https://easycoder.github.io/dist/easycoder-min.js',
-		'https://easycoder.github.io/dist/plugins/codemirror.js',
-		'https://easycoder.github.io/dist/plugins/codemirror/codemirror.js',
-		'https://cdn.jsdelivr.net/gh/easycoder/easycoder.github.io/dist/plugins/codemirror-ecs.js',
+		'https://allspeak.ai/dist/allspeak-min.js?v=' + t,
+		'https://allspeak.ai/dist/plugins/codemirror.js?v=' + t,
+		'https://allspeak.ai/dist/plugins/codemirror/codemirror.js?v=' + t,
+		'https://allspeak.ai/dist/plugins/codemirror-ecs.js?v=' + t,
 		'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/addon/dialog/dialog.js',
 		'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/addon/search/search.js',
 		'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/addon/search/searchcursor.js',
@@ -39,7 +40,7 @@
 			document.head.appendChild(s);
 		});
 	}
-	EasyCoder_Startup();
+	AllSpeak_Startup();
 })();
 </script>
 </body>

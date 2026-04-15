@@ -286,6 +286,10 @@ class Compiler:
 		if not keyword:
 			return False
 #		print(f'Compile keyword "{keyword}"')
+		# Skip the 'info' directive (used by 'allspeak info <script>')
+		if keyword == 'info' or keyword == language.word('info'):
+			self.nextToken()  # skip the info text
+			return True
 		if keyword.endswith(':'):
 			command = {}
 			command['domain'] = None
