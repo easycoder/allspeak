@@ -3302,7 +3302,7 @@ const AllSpeak_Core = {
 				};
 			case `format`:
 				const fmtRecord = program.getSymbolRecord(value.name);
-				const fmtValue = program.getValue(fmtRecord.value[fmtRecord.index]) * 1000;
+				const fmtValue = program.getValue(fmtRecord.value[fmtRecord.index]);
 				try {
 					const spec = JSON.parse(program.getValue(value.value));
 					switch (spec.mode) {
@@ -3336,30 +3336,11 @@ const AllSpeak_Core = {
 					content: ``
 				};
 			case `now`:
-                const d = new Date();
-                const jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();
-                const jul = new Date(d.getFullYear(), 6, 1).getTimezoneOffset();
-                const isDST = Math.max(jan, jul) !== d.getTimezoneOffset();  
-                let now = Math.floor(Date.now() / 1000)
-				if (isDST) {
-					now += 3600
-				}
-				return {
-					type: `constant`,
-					numeric: true,
-					content: now
-				};
 			case `timestamp`:
 				return {
 					type: `constant`,
 					numeric: true,
-					content: Math.floor(Date.now() / 1000)
-				};
-			case `millisecond`:
-				return {
-					type: `constant`,
-					numeric: true,
-					content: Math.floor(Date.now())
+					content: Date.now()
 				};
 			case `time`:
 				let date = new Date()
@@ -3368,7 +3349,7 @@ const AllSpeak_Core = {
 				return {
 					type: `constant`,
 					numeric: true,
-					content: Math.floor((date.getTime() - date2.getTime())/1000)
+					content: date.getTime() - date2.getTime()
 				};
 			case `today`:
 				date = new Date()
@@ -3376,10 +3357,10 @@ const AllSpeak_Core = {
 				return {
 					type: `constant`,
 					numeric: true,
-					content: Math.floor(date.getTime() / 1000)
+					content: date.getTime()
 				};
 			case `date`:
-				content = Date.parse(program.getValue(value.value)) / 1000;
+				content = Date.parse(program.getValue(value.value));
 				if (isNaN(content)) {
 					program.runtimeError(program[program.pc].lino, `Invalid date format; expecting 'yyyy-mm-dd'`);
 					return null;

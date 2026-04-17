@@ -61,10 +61,14 @@
   variable Data
   variable Versions
   variable LinkCount
+  variable Lang
   variable N
   variable P
-  
+
   rest path `.`
+
+  get Lang from storage as `.docman-lang`
+  if Lang is empty put `en` into Lang
   
   create Tracer in Parent
   set attribute `id` of Tracer to `allspeak-tracer`
@@ -121,11 +125,11 @@
 
 Restart:
   clear Container
-  rest get Package from `/resources/doc/` cat PackageName cat `.json`
+  rest get Package from `/resources/doc/` cat Lang cat `/` cat PackageName cat `.json`
   or begin
   	put `core` into PackageName
   	put PackageName into storage as `.docman-package`
-  	rest get Package from `/resources/doc/core.json`
+  	rest get Package from `/resources/doc/` cat Lang cat `/core.json`
   	or alert `Fatal error; can't load package '` cat PackageName cat `'`
     put decode Package into Package
   end
@@ -478,7 +482,7 @@ SelectPackage:
   get Keyword from storage as `.docman-` cat PackageName cat `-` cat Group cat `-keyword`
   go to Restart
 
-  rest get Package from `/resources/doc/` cat PackageName cat `.json`
+  rest get Package from `/resources/doc/` cat Lang cat `/` cat PackageName cat `.json`
   if Package is empty
   begin
     put `` into Package

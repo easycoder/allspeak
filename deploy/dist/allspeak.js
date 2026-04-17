@@ -3302,7 +3302,7 @@ const AllSpeak_Core = {
 				};
 			case `format`:
 				const fmtRecord = program.getSymbolRecord(value.name);
-				const fmtValue = program.getValue(fmtRecord.value[fmtRecord.index]) * 1000;
+				const fmtValue = program.getValue(fmtRecord.value[fmtRecord.index]);
 				try {
 					const spec = JSON.parse(program.getValue(value.value));
 					switch (spec.mode) {
@@ -3336,30 +3336,11 @@ const AllSpeak_Core = {
 					content: ``
 				};
 			case `now`:
-                const d = new Date();
-                const jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();
-                const jul = new Date(d.getFullYear(), 6, 1).getTimezoneOffset();
-                const isDST = Math.max(jan, jul) !== d.getTimezoneOffset();  
-                let now = Math.floor(Date.now() / 1000)
-				if (isDST) {
-					now += 3600
-				}
-				return {
-					type: `constant`,
-					numeric: true,
-					content: now
-				};
 			case `timestamp`:
 				return {
 					type: `constant`,
 					numeric: true,
-					content: Math.floor(Date.now() / 1000)
-				};
-			case `millisecond`:
-				return {
-					type: `constant`,
-					numeric: true,
-					content: Math.floor(Date.now())
+					content: Date.now()
 				};
 			case `time`:
 				let date = new Date()
@@ -3368,7 +3349,7 @@ const AllSpeak_Core = {
 				return {
 					type: `constant`,
 					numeric: true,
-					content: Math.floor((date.getTime() - date2.getTime())/1000)
+					content: date.getTime() - date2.getTime()
 				};
 			case `today`:
 				date = new Date()
@@ -3376,10 +3357,10 @@ const AllSpeak_Core = {
 				return {
 					type: `constant`,
 					numeric: true,
-					content: Math.floor(date.getTime() / 1000)
+					content: date.getTime()
 				};
 			case `date`:
-				content = Date.parse(program.getValue(value.value)) / 1000;
+				content = Date.parse(program.getValue(value.value));
 				if (isNaN(content)) {
 					program.runtimeError(program[program.pc].lino, `Invalid date format; expecting 'yyyy-mm-dd'`);
 					return null;
@@ -9255,25 +9236,21 @@ const AllSpeak_MQTT = {
                 clientId: this.clientID
             };
 
-            if (this.broker === 'mqtt.flespi.io') {
-                const wsPort = this.port === 8883 ? 443 : this.port;
+            if (this.token && typeof this.token === 'object') {
+                options.username = this.token.username;
+                options.password = this.token.password;
+            }
+
+            const isLocal = this.broker === 'localhost' || this.broker === '127.0.0.1'
+                || this.broker.startsWith('192.168.') || this.broker.startsWith('10.');
+            if (isLocal) {
                 url = isBrowser
-                    ? `wss://${this.broker}:${wsPort}`
-                    : `mqtts://${this.broker}:${this.port}`;
-                options.username = this.token;
-                options.password = '';
-            } else if (this.broker === 'test.mosquitto.org') {
-                url = isBrowser
-                    ? `wss://${this.broker}:8081`
+                    ? `ws://${this.broker}:${this.port}`
                     : `mqtt://${this.broker}:${this.port}`;
             } else {
                 url = isBrowser
                     ? (this.port === 443 ? `wss://${this.broker}/mqtt` : `wss://${this.broker}:${this.port}`)
                     : `mqtts://${this.broker}:${this.port}`;
-                if (this.token && typeof this.token === 'object') {
-                    options.username = this.token.username;
-                    options.password = this.token.password;
-                }
             }
 
             this.client = mqtt.connect(url, options);
@@ -9907,7 +9884,11 @@ const AllSpeak_MQTT = {
 
             if (command.sender) {
                 const senderRecord = program.getSymbolRecord(command.sender);
-                payload.sender = senderRecord.object.textify();
+                const topic = senderRecord.object;
+                payload.sender = {
+                    name: topic.getName(),
+                    qos: topic.getQoS()
+                };
             }
 
             payload.action = command.action ? program.getValue(command.action) : null;
@@ -10111,6 +10092,7 @@ const AllSpeak_MQTT = {
         }
         // MQTT 'init' is used at compile time but aliases to MQTT handler
         handlers['init'] = this.Init;
+        handlers['topic'] = this.Topic;
         this._compileHandlers = handlers;
     },
 
@@ -10141,7 +10123,8 @@ const AllSpeak_MQTT = {
     getOpcodeMap: function() {
         if (this.opcodeMap) return this.opcodeMap;
         this.opcodeMap = {
-            MQTT_INIT: this.MQTT,
+            MQTT_TOPIC_INIT: this.Init,
+            MQTT_CONNECT: this.MQTT,
             MQTT_SUBSCRIBE: this.Topic,
             MQTT_SEND: this.Send,
             MQTT_ON_CONNECT: this.On,
@@ -11328,8 +11311,8 @@ const AllSpeak_Opcodes = {
 	resolveMqtt: function(command) {
 		const keyword = command.keyword;
 		switch (keyword) {
-		case `init`:  return `MQTT_INIT`;
-		case `mqtt`:  return `MQTT_INIT`;
+		case `init`:  return `MQTT_TOPIC_INIT`;
+		case `mqtt`:  return `MQTT_CONNECT`;
 		case `topic`: return `MQTT_SUBSCRIBE`;
 		case `send`:  return `MQTT_SEND`;
 		case `on`:
@@ -11922,10 +11905,16 @@ var AllSpeak_LanguagePack_en = {
         "mail to {email} [subject {subject}] [body|message {body}]"
       ]
     },
-    "MQTT_INIT": {
+    "MQTT_TOPIC_INIT": {
+      "keyword": "init",
+      "patterns": [
+        "init {topic} name {name} qos {qos}"
+      ]
+    },
+    "MQTT_CONNECT": {
       "keyword": "mqtt",
       "patterns": [
-        "mqtt init {topic} name {name} qos {qos}"
+        "mqtt token {token} [{secretKey}] id {clientID} broker {broker} port {port} subscribe {topic} [and {topic} ...]"
       ]
     },
     "MQTT_ON_CONNECT": {

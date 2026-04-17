@@ -35,15 +35,10 @@ class MQTTClient():
             client_id=self.clientID,
             callback_api_version=mqtt.CallbackAPIVersion.VERSION2 # type: ignore
         )
-        if broker == 'mqtt.flespi.io':
-            self.client.username_pw_set(self.token, "")
-            self.client.tls_set()  # Enable TLS for port 8883
-        elif broker == 'test.mosquitto.org':
-            pass
-        else:
-            if isinstance(self.token, dict):
-                self.client.username_pw_set(self.token['username'], self.token['password'])
-            self.client.tls_set()  # Enable TLS
+        if isinstance(self.token, dict):
+            self.client.username_pw_set(self.token['username'], self.token['password'])
+        if broker not in ('localhost', '127.0.0.1'):
+            self.client.tls_set()
     
         # Setup callbacks
         self.client.on_connect = self.on_connect

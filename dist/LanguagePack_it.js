@@ -439,10 +439,16 @@ var AllSpeak_LanguagePack_it =
         "email a {email} [oggetto {subject}] [corpo|messaggio {body}]"
       ]
     },
-    "MQTT_INIT": {
+    "MQTT_TOPIC_INIT": {
+      "keyword": "inizializza",
+      "patterns": [
+        "inizializza {topic} nome {name} qos {qos}"
+      ]
+    },
+    "MQTT_CONNECT": {
       "keyword": "mqtt",
       "patterns": [
-        "mqtt inizializza {topic} nome {name} qos {qos}"
+        "mqtt token {token} [{secretKey}] id {clientID} broker {broker} porta {port} sottoscrivi {topic} [e {topic} ...]"
       ]
     },
     "MQTT_ON_CONNECT": {

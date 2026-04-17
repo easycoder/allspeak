@@ -110,6 +110,7 @@
         if N is greater than -1 put left N of Lang into Lang
     end
     else put `en` into Lang
+    put Lang into storage as `.docman-lang`
     put `/codex/` cat Lang into BasePath
 
     rest get Strings from BasePath cat `/strings.json`

@@ -2912,17 +2912,17 @@ class Core(Handler):
         value = ECValue(type=int)
         fmt = v.format
         if fmt == None:
-            value.setContent(int(time.time()))
+            value.setContent(int(time.time() * 1000))
         else:
             fmt = self.textify(fmt)
             dt = self.textify(v.timestamp)
             spec = datetime.strptime(dt, fmt)
             t = datetime.now().replace(hour=spec.hour, minute=spec.minute, second=spec.second, microsecond=0)
-            value.setContent(int(t.timestamp()))
+            value.setContent(int(t.timestamp() * 1000))
         return value
 
     def v_today(self, v):
-        return ECValue(type=int, content=int(datetime.combine(datetime.now().date(),datetime.min.time()).timestamp()) * 1000)
+        return ECValue(type=int, content=int(datetime.combine(datetime.now().date(),datetime.min.time()).timestamp() * 1000))
 
     def v_trim(self, v):
         content = v.getContent()

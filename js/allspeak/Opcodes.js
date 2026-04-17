@@ -299,8 +299,8 @@ const AllSpeak_Opcodes = {
 	resolveMqtt: function(command) {
 		const keyword = command.keyword;
 		switch (keyword) {
-		case `init`:  return `MQTT_INIT`;
-		case `mqtt`:  return `MQTT_INIT`;
+		case `init`:  return `MQTT_TOPIC_INIT`;
+		case `mqtt`:  return `MQTT_CONNECT`;
 		case `topic`: return `MQTT_SUBSCRIBE`;
 		case `send`:  return `MQTT_SEND`;
 		case `on`:

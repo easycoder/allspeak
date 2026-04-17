@@ -33,7 +33,13 @@ if [ -d "$PREV" ]; then
     failed=0
     for f in $files; do
         echo "  $f"
-        scp "deploy/$f" "allspeak@allspeak.ai:allspeak.ai/$f" || { failed=1; break; }
+        if [ -d "deploy/$f" ]; then
+            ssh "allspeak@allspeak.ai" "mkdir -p allspeak.ai/$f"
+            scp -r "deploy/$f/" "allspeak@allspeak.ai:allspeak.ai/$f/" || { failed=1; break; }
+        else
+            ssh "allspeak@allspeak.ai" "mkdir -p allspeak.ai/$(dirname $f)"
+            scp "deploy/$f" "allspeak@allspeak.ai:allspeak.ai/$f" || { failed=1; break; }
+        fi
     done
     if [ $failed -ne 0 ]; then
         echo "Upload failed — snapshot NOT updated."

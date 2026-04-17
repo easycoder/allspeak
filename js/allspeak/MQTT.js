@@ -146,25 +146,21 @@ const AllSpeak_MQTT = {
                 clientId: this.clientID
             };
 
-            if (this.broker === 'mqtt.flespi.io') {
-                const wsPort = this.port === 8883 ? 443 : this.port;
+            if (this.token && typeof this.token === 'object') {
+                options.username = this.token.username;
+                options.password = this.token.password;
+            }
+
+            const isLocal = this.broker === 'localhost' || this.broker === '127.0.0.1'
+                || this.broker.startsWith('192.168.') || this.broker.startsWith('10.');
+            if (isLocal) {
                 url = isBrowser
-                    ? `wss://${this.broker}:${wsPort}`
-                    : `mqtts://${this.broker}:${this.port}`;
-                options.username = this.token;
-                options.password = '';
-            } else if (this.broker === 'test.mosquitto.org') {
-                url = isBrowser
-                    ? `wss://${this.broker}:8081`
+                    ? `ws://${this.broker}:${this.port}`
                     : `mqtt://${this.broker}:${this.port}`;
             } else {
                 url = isBrowser
                     ? (this.port === 443 ? `wss://${this.broker}/mqtt` : `wss://${this.broker}:${this.port}`)
                     : `mqtts://${this.broker}:${this.port}`;
-                if (this.token && typeof this.token === 'object') {
-                    options.username = this.token.username;
-                    options.password = this.token.password;
-                }
             }
 
             this.client = mqtt.connect(url, options);
@@ -798,7 +794,11 @@ const AllSpeak_MQTT = {
 
             if (command.sender) {
                 const senderRecord = program.getSymbolRecord(command.sender);
-                payload.sender = senderRecord.object.textify();
+                const topic = senderRecord.object;
+                payload.sender = {
+                    name: topic.getName(),
+                    qos: topic.getQoS()
+                };
             }
 
             payload.action = command.action ? program.getValue(command.action) : null;
@@ -1002,6 +1002,7 @@ const AllSpeak_MQTT = {
         }
         // MQTT 'init' is used at compile time but aliases to MQTT handler
         handlers['init'] = this.Init;
+        handlers['topic'] = this.Topic;
         this._compileHandlers = handlers;
     },
 
@@ -1032,7 +1033,8 @@ const AllSpeak_MQTT = {
     getOpcodeMap: function() {
         if (this.opcodeMap) return this.opcodeMap;
         this.opcodeMap = {
-            MQTT_INIT: this.MQTT,
+            MQTT_TOPIC_INIT: this.Init,
+            MQTT_CONNECT: this.MQTT,
             MQTT_SUBSCRIBE: this.Topic,
             MQTT_SEND: this.Send,
             MQTT_ON_CONNECT: this.On,
