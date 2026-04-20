@@ -45,7 +45,7 @@ class Program:
 	def __init__(self, arg):
 		global queue
 		try:
-			allspeak_version = version("allspeak")
+			allspeak_version = version("allspeak-ai")
 		except PackageNotFoundError:
 			from . import __version__ as allspeak_version
 		print(f'AllSpeak version {allspeak_version}')

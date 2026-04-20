@@ -1,7 +1,12 @@
 from bottle import Bottle, request as bottle_request, response as bottle_response, run, static_file
+from wsgiref.simple_server import WSGIRequestHandler
 import threading
 from allspeak import Handler, ECObject, ECValue, RuntimeError
 from .as_language import language
+
+class QuietWSGIRequestHandler(WSGIRequestHandler):
+    def log_message(self, format, *args):
+        pass
 
 ###############################################################################
 # An HTTP server object
@@ -72,7 +77,7 @@ class ECServer(ECObject):
 
         t = threading.Thread(
             target=run,
-            kwargs={'app': self.app, 'host': '0.0.0.0', 'port': self.port, 'quiet': True},
+            kwargs={'app': self.app, 'host': '0.0.0.0', 'port': self.port, 'quiet': True, 'handler_class': QuietWSGIRequestHandler},
             daemon=True,
         )
         t.start()

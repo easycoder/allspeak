@@ -204,7 +204,7 @@ const AllSpeak_REST = {
 				break;
 			case `post`:
 				const postValue = program.getValue(command.value);
-				AllSpeak.writeToDebugConsole(`POST to ${path}`);
+				// AllSpeak.writeToDebugConsole(`POST to ${path}`);
 				const headers = {
 					'Content-type': `application/json; charset=UTF-8`
 				};

@@ -512,7 +512,7 @@ class MQTT(Handler):
                 if not hasattr(client, 'pending_confirms'):
                     client.pending_confirms = {}
                 client.pending_confirms[confirm_id] = confirmed
-            client.sendMessage(topicName, json.dumps(payload), qos, chunk_size=1024)
+            client.sendMessage(topicName, json.dumps(payload), qos, chunk_size=0)
             # Wait up to 5 seconds for confirmation
             if not confirmed.wait(timeout=5.0):
                 print(f'Warning: confirmation timeout for {action} to {topicName}')
@@ -523,7 +523,7 @@ class MQTT(Handler):
             with client.confirmation_lock:
                 client.pending_confirms.pop(confirm_id, None)
         else:
-            self.program.mqttClient.sendMessage(topicName, json.dumps(payload), qos, chunk_size=1024)
+            self.program.mqttClient.sendMessage(topicName, json.dumps(payload), qos, chunk_size=0)
 
         if self.program.mqttClient.timeout:
             return 0
