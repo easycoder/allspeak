@@ -4,6 +4,7 @@
     "en": {
       "label": "English",
       "flag": "gb",
+      "flagImage": "icon/en-flag.svg",
       "status": "public",
       "tagline": "Code in your language",
       "intro": "AllSpeak is a scripting language you can write in any human language. The same engine runs English, Italian, and more — each with its own natural syntax.",

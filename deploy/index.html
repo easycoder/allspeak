@@ -64,6 +64,17 @@
     .flag-link .flag {
       font-size: 3em;
       margin-bottom: 0.3em;
+      line-height: 1;
+      height: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .flag-link .flag img {
+      height: 0.8em;
+      width: auto;
+      display: block;
+      border-radius: 4px;
     }
     .flag-link .label {
       color: #c0c8d0;
@@ -160,8 +171,11 @@
           a.onclick = function() {
             sessionStorage.setItem('allspeak-chose', code);
           };
+          const flagMarkup = lang.flagImage
+            ? '<img src="' + lang.flagImage + '" alt="">'
+            : flagEmoji(lang.flag);
           let inner =
-            '<span class="flag">' + flagEmoji(lang.flag) + '</span>' +
+            '<span class="flag">' + flagMarkup + '</span>' +
             '<span class="label">' + lang.label + '</span>';
           if (lang.status === 'dev') {
             inner += '<span class="dev-badge">under development</span>';
