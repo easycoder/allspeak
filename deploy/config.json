@@ -16,6 +16,14 @@
       "tagline": "Programma nella tua lingua",
       "intro": "AllSpeak è un linguaggio di scripting che puoi scrivere in qualsiasi lingua umana. Lo stesso motore esegue italiano, inglese e altro — ognuno con la propria sintassi naturale.",
       "choose": "Scegli la tua lingua:"
+    },
+    "fr": {
+      "label": "Français",
+      "flag": "fr",
+      "status": "dev",
+      "tagline": "Codez dans votre langue",
+      "intro": "AllSpeak est un langage de script que vous pouvez écrire dans n'importe quelle langue humaine. Le même moteur exécute le français, l'anglais, l'italien et d'autres — chacun avec sa propre syntaxe naturelle.",
+      "choose": "Choisissez votre langue :"
     }
   }
 }

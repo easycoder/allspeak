@@ -77,6 +77,16 @@
       content: ' *';
       color: #00d4ff;
     }
+    .flag-link .dev-badge {
+      margin-top: 0.3em;
+      font-size: 0.7em;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #d8a24a;
+      border: 1px solid #d8a24a66;
+      border-radius: 6px;
+      padding: 0.1em 0.4em;
+    }
     #loading { color: #556; }
   </style>
 </head>
@@ -119,7 +129,11 @@
       .then(config => {
         const detected = detectLanguage();
         const uiLang = chooserLanguage();
-        const isDev = new URLSearchParams(window.location.search).has('dev');
+        if (new URLSearchParams(window.location.search).has('dev')) {
+          try { localStorage.setItem('allspeak-dev', '1'); } catch (e) {}
+        }
+        let isDev = false;
+        try { isDev = localStorage.getItem('allspeak-dev') === '1'; } catch (e) {}
         const flagsEl = document.getElementById('flags');
         flagsEl.innerHTML = '';
 
@@ -146,9 +160,13 @@
           a.onclick = function() {
             sessionStorage.setItem('allspeak-chose', code);
           };
-          a.innerHTML =
+          let inner =
             '<span class="flag">' + flagEmoji(lang.flag) + '</span>' +
             '<span class="label">' + lang.label + '</span>';
+          if (lang.status === 'dev') {
+            inner += '<span class="dev-badge">under development</span>';
+          }
+          a.innerHTML = inner;
           flagsEl.appendChild(a);
         }
 
