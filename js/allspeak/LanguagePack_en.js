@@ -431,16 +431,10 @@ var AllSpeak_LanguagePack_en = {
         "mail to {email} [subject {subject}] [body|message {body}]"
       ]
     },
-    "MQTT_TOPIC_INIT": {
-      "keyword": "init",
-      "patterns": [
-        "init {topic} name {name} qos {qos}"
-      ]
-    },
-    "MQTT_CONNECT": {
+    "MQTT_INIT": {
       "keyword": "mqtt",
       "patterns": [
-        "mqtt token {token} [{secretKey}] id {clientID} broker {broker} port {port} subscribe {topic} [and {topic} ...]"
+        "mqtt init {topic} name {name} qos {qos}"
       ]
     },
     "MQTT_ON_CONNECT": {
@@ -1172,6 +1166,12 @@ var AllSpeak_LanguagePack_en = {
     "history": "history",
     "pick": "pick",
     "drag": "drag",
+    "drop": "drop",
+    "change": "change",
+    "leave": "leave",
+    "restore": "restore",
+    "resume": "resume",
+    "that": "that",
     "click": "click",
     "window": "window",
     "viewport": "viewport",

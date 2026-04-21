@@ -2501,6 +2501,9 @@ const AllSpeak_Core = {
 		compile: compiler => {
 			const lino = compiler.getLino();
 			compiler.next();
+			// Optional joiner word (e.g. French 'que' in 'tant que X'); the canonical
+			// is 'that', which language packs can map to their natural form.
+			if (compiler.isWord(`that`)) compiler.next();
 			const condition = compiler.getCondition();
 			const pc = compiler.getPc();
 			compiler.addCommand({
@@ -2568,14 +2571,14 @@ const AllSpeak_Core = {
 		handlers[lang.word(`begin`)] = this.Begin;
 		handlers[lang.word(`end`)] = this.End;
 		handlers[lang.word(`script`)] = this.Script;
-		handlers[`log`] = this.Log;           // compiles to PRINT with log flag
-		handlers[`release`] = this.Release;   // compiles to SET_READY
-		handlers[`continue`] = this.Continue; // sets compiler flag
-		handlers[`no`] = this.No;             // no cache directive
-		handlers[`test`] = this.Test;
-		handlers[`goto`] = this.Go;           // alias for go
-		handlers[`subtract`] = this.Take;     // alias for take
-		handlers[`endTry`] = this.EndTry;     // internal
+		handlers[lang.word(`log`)] = this.Log;           // compiles to PRINT with log flag
+		handlers[lang.word(`release`)] = this.Release;   // compiles to SET_READY
+		handlers[lang.word(`continue`)] = this.Continue; // sets compiler flag
+		handlers[lang.word(`no`)] = this.No;             // no cache directive
+		handlers[lang.word(`test`)] = this.Test;
+		handlers[lang.word(`goto`)] = this.Go;           // alias for go
+		handlers[lang.word(`subtract`)] = this.Take;     // alias for take
+		handlers[lang.word(`endTry`)] = this.EndTry;     // internal
 		this._compileHandlers = handlers;
 	},
 

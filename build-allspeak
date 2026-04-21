@@ -69,3 +69,5 @@ echo "Closure finished"
 
 echo "Copy language packs to dist"
 cp js/allspeak/LanguagePack_it.js dist/
+cp js/allspeak/LanguagePack_fr.js dist/
+cp js/allspeak/LanguagePack_de.js dist/
