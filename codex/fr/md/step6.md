@@ -1,30 +1,30 @@
-# Adding images #
+# Ajouter des images #
 
-> ⚠ *Traduction en cours — le contenu ci-dessous est encore en anglais.*
+> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
 
-Web pages are often highly visual, with plenty of images, so before continuing with more traditional programming topics I'll show you how to create a page with an image and a title.
+Les pages web sont souvent très visuelles, avec beaucoup d'images, donc avant de continuer avec des sujets de programmation plus traditionnels, je vais te montrer comment créer une page avec une image et un titre.
 
-When you look at the HTML for a web page you never see any pictures; it's just a text document. So how do images get onto the page?
+Quand tu regardes le HTML d'une page web, tu ne vois jamais d'images ; ce n'est qu'un document texte. Alors comment les images arrivent-elles sur la page ?
 
-When we need an image we give information that tells the browser how to find it, somewhere out there on the Internet where it's stored on a computer somewhere. We give this information in the form of a URL, which stands for _Uniform Resource Locator_. This is otherwise referred to as the "address" of the image.
+Quand nous avons besoin d'une image, nous fournissons des informations qui indiquent au navigateur comment la trouver, quelque part sur Internet où elle est stockée sur un ordinateur. Nous donnons ces informations sous la forme d'une URL, ce qui signifie _Uniform Resource Locator_ (Localisateur uniforme de ressource). On l'appelle aussi "l'adresse" de l'image.
 
-The code that follows fetches an image from our own webserver, scales it so it occupies 70% of the page width and places it centrally aligned with a title underneath.
+Le code qui suit récupère une image depuis notre propre serveur web, la met à l'échelle pour qu'elle occupe 70 % de la largeur de la page et la place centrée avec un titre en dessous.
 
 ~step~
 ~copy~
 
-The script starts not with program code but with a comment. Comments are for the benefit of human readers; you can put them anywhere you feel the need to explain - to someone else or to your future self - what is going on in your code. Comments start with an exclamation mark and continue to the end of the same line, so you can either place them in their own line (as here) or after - and on the same line as - a script command.
+Le script ne commence pas par du code de programme mais par un commentaire. Les commentaires sont destinés aux lecteurs humains ; tu peux les mettre partout où tu ressens le besoin d'expliquer — à quelqu'un d'autre ou à ton toi futur — ce qui se passe dans ton code. Les commentaires commencent par un point d'exclamation et continuent jusqu'à la fin de la même ligne, tu peux donc les placer sur leur propre ligne (comme ici) ou bien après — et sur la même ligne que — une commande du script.
 
-Comments are the subject of many an argument between programmers. Some don't like writing comments, claiming the code itself should be self-explanatory, while others feel the need to add some to explain the intention behind the code, which is otherwise often missing. We will leave you to do as you prefer.
+Les commentaires sont le sujet de bien des débats entre programmeurs. Certains n'aiment pas écrire de commentaires, affirmant que le code lui-même devrait être auto-explicatif, tandis que d'autres ressentent le besoin d'en ajouter pour expliquer l'intention derrière le code, qui fait souvent défaut autrement. Nous te laissons faire comme tu préfères.
 
-Next we have 3 variables of different types. A ~code:div~ is a division of a page; a container inside which other elements can be placed. Many web pages consist of many divs within other divs, most of them invisible and just providing the overall structure.
+Ensuite, nous avons 3 variables de types différents. Un ~code:div~ est une division d'une page ; un conteneur à l'intérieur duquel d'autres éléments peuvent être placés. Beaucoup de pages web sont composées de nombreux divs à l'intérieur d'autres divs, la plupart invisibles et ne fournissant que la structure globale.
 
-The ~code:img~ variable is where we'll place our image, and the ~code:p~ variable is for the title that sits underneath it.
+La variable ~code:img~ est l'endroit où nous placerons notre image, et la variable ~code:p~ est pour le titre qui se trouve en dessous.
 
-First we create the container, giving it center alignment, a margin around itself, a gray border, some padding inside to keep its contents away from the border and a background color. As explained in the previous step, all these are standard CSS attributes that you can look up. The list of styles is quite long, so to keep the line from wrapping in the editor I've broken it into 2 parts with a ~code:cat~ between them. "Cat" is short for "catenate", which simply joins 2 pieces of text together.
+D'abord, nous créons le conteneur, en lui donnant un alignement centré, une marge autour, une bordure grise, un peu de rembourrage à l'intérieur pour tenir son contenu à l'écart de la bordure et une couleur d'arrière-plan. Comme expliqué à l'étape précédente, ce sont tous des attributs CSS standard que tu peux rechercher. La liste des styles est assez longue, donc pour éviter que la ligne ne passe à la ligne dans l'éditeur, je l'ai divisée en 2 parties avec un ~code:cat~ entre elles. "Cat" est l'abréviation de "catenate" (concaténer), qui joint simplement 2 morceaux de texte ensemble.
 
-The image element is then created. Note that the command requests it to be created inside the container; the default would be for it to sit underneath. The image width is set to 70% of its containing element and by default the height will adjust itself so as to maintainthe same aspect ratio. Then we request the image itself from our server. When resources such as graphics are located on the same server as the code that uses them it's common for the URL not to begin with the usual ~code:http://~; here we have a relative path that refers to a folder on the server. As the programmer you obviously will know where your images are kept.
+L'élément image est ensuite créé. Note que la commande demande qu'il soit créé à l'intérieur du conteneur ; par défaut, il se placerait en dessous. La largeur de l'image est définie à 70 % de son élément contenant et par défaut la hauteur s'ajustera pour maintenir les mêmes proportions. Puis nous demandons l'image elle-même à notre serveur. Lorsque des ressources telles que des graphiques se trouvent sur le même serveur que le code qui les utilise, il est courant que l'URL ne commence pas par le ~code:http://~ habituel ; ici nous avons un chemin relatif qui se réfère à un dossier sur le serveur. En tant que programmeur, tu sauras évidemment où sont stockées tes images.
 
-The title text comprises several lines. In a web page a line break is requested by using the word ~code:break~, and to keep things tidy here the whole string is divided into lines and catenated together.
+Le texte du titre comprend plusieurs lignes. Dans une page web, un saut de ligne se demande en utilisant le mot ~code:break~, et pour garder les choses bien rangées ici, la chaîne entière est divisée en lignes et concaténée ensemble.
 
-~next:Animation~
+~next:Animation simple~

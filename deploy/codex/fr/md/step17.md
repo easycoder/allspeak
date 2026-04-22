@@ -1,21 +1,21 @@
-# Pick, Drag and Drop #
+# Sélectionner, glisser et déposer #
 
-> ⚠ *Traduction en cours — le contenu ci-dessous est encore en anglais.*
+> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
 
-Interactive graphical interfaces frequently offer the user the ability to move items around the screen, as an alternative to copy and paste. Under the hood the implementation can be rather complex as there are usually many things to consider; things that are specific to the particular application.
+Les interfaces graphiques interactives offrent fréquemment à l'utilisateur la possibilité de déplacer des éléments à l'écran, comme alternative au copier-coller. Sous le capot, l'implémentation peut être plutôt complexe car il y a généralement beaucoup de choses à considérer ; des choses spécifiques à l'application particulière.
 
-In ~ec~ the basic drag-drop feature provides a solid foundation for you to build much more complex functionality on top. The example we present here is about as simple as it can be; on the next page is a more complex example.
+Dans ~ec~, la fonctionnalité de base glisser-déposer fournit une base solide sur laquelle construire des fonctionnalités bien plus complexes. L'exemple présenté ici est aussi simple que possible ; sur la page suivante il y a un exemple plus complexe.
 
 ~copy~
 
-The script builds a simple screen containing a single component that can be picked up and moved around. The component can be almost any element; the only thing that needs special attention is text, which usually displays an i-beam cursor as the pointer moves over it. In this example the cursor is forced to the default arrow.
+Le script construit un écran simple contenant un seul composant qui peut être saisi et déplacé. Le composant peut être presque n'importe quel élément ; la seule chose qui nécessite une attention particulière est le texte, qui affiche normalement un curseur en forme de I lorsque le pointeur passe dessus. Dans cet exemple, le curseur est forcé à la flèche par défaut.
 
-The script has 2 elements and a handful of variables. The Container element exists only to take the CSS style ~code:position:relative~, which allows elements inside it to have absolute positioning. (It's not very intuitive but that's the way it works.) The ~code:Component~ is the thing we're going to drag around; it's just a string of text.
+Le script a 2 éléments et une poignée de variables. L'élément Container n'existe que pour porter le style CSS ~code:position:relative~, qui permet aux éléments à l'intérieur d'avoir un positionnement absolu. (Ce n'est pas très intuitif mais c'est comme ça que ça marche.) Le ~code:Component~ est l'objet que nous allons faire glisser ; c'est simplement une chaîne de texte.
 
-The script is interested in 2 events; one when the user clicks inside the component, the other when the element is then dragged. For the first of these we need to know where the "pick" occurred relative to the top left of the window. It also needs to know where the component currently is located relative to its parent (so we can change that value).
+Le script s'intéresse à 2 événements : l'un lorsque l'utilisateur clique à l'intérieur du composant, l'autre lorsque l'élément est ensuite glissé. Pour le premier, nous devons savoir où la « prise » s'est produite par rapport au coin supérieur gauche de la fenêtre. Il faut aussi savoir où le composant se trouve actuellement par rapport à son parent (pour pouvoir changer cette valeur).
 
-When a drag event occurs the script gets the location of the pointer (or the finger on a mobile screen) and computes how much it has moved from the "pick" position. It adds to this the previous position of the component in its container and the result is used to set a new position.
+Lorsqu'un événement de glissement se produit, le script obtient la position du pointeur (ou du doigt sur un écran mobile) et calcule de combien il s'est déplacé depuis la position de « prise ». Il ajoute à cela la position précédente du composant dans son conteneur et le résultat est utilisé pour définir une nouvelle position.
 
-The system also lets you specify what happens when the component is released. Here we use the default action, which is simply to stop dragging the component.
+Le système te permet aussi de spécifier ce qui se passe lorsque le composant est relâché. Ici, nous utilisons l'action par défaut, qui est simplement d'arrêter le glissement du composant.
 
 ~next:Solitaire~

@@ -1,22 +1,21 @@
-# The Ken Burns Effect #
+# L'effet Ken Burns #
 
-> ⚠ *Traduction en cours — le contenu ci-dessous est encore en anglais.*
+> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
 
-
-In this tutorial step we'll complete the Ken Burns Effect by adding some more images and a dissolve between them. Each of the images will animate according to its own set of rules so the overall effect is one of continuous movement. On TV this gives an impression of watching a video rather than a slide show, which is why the effect is so popular.
+Dans cette étape du tutoriel, nous allons compléter l'effet Ken Burns en ajoutant quelques images supplémentaires ainsi qu'un fondu enchaîné entre elles. Chacune des images s'animera selon son propre jeu de règles, de sorte que l'effet global est celui d'un mouvement continu. À la télévision, cela donne l'impression de regarder une vidéo plutôt qu'un diaporama, et c'est pour cela que l'effet est si populaire.
 
 ~copy~
 
-Most of the code is the specifications for each of 9 images. (The images are all of arbitrary scenes in northern Italy). The code does much the same as for the pan/zoom example except that it repeats itself in a loop, once for each of the images. This is all handled by making ~code:Anim~ and ~code:Spec~ arrays of 9 elements each.
+La majeure partie du code consiste en les spécifications de chacune des 9 images. (Les images représentent toutes des scènes arbitraires dans le nord de l'Italie). Le code fait à peu près la même chose que l'exemple panoramique/zoom, sauf qu'il se répète dans une boucle, une fois pour chaque image. Tout cela est géré en faisant de ~code:Anim~ et ~code:Spec~ des tableaux de 9 éléments chacun.
 
-The key to the effect is in the transitions. At the top we define the style that will cause an image to fade in or out from one level of opacity to another. The code arranges for the current image to fade out while the next image fades in, creating a dissolve. We set a trigger on each image to be one second before the end of its zoom/pan so the dissolve happens at the end of one image and the start of the next. The zoom/pan for the 2 images run concurrently and the images are set up as a circular list so the effect runs forever.
+La clé de l'effet réside dans les transitions. En haut, nous définissons le style qui fera apparaître ou disparaître une image en fondu d'un niveau d'opacité à un autre. Le code fait en sorte que l'image courante s'estompe tandis que l'image suivante apparaît, créant ainsi un fondu enchaîné. Nous réglons un déclencheur sur chaque image, une seconde avant la fin de son zoom/panoramique, de sorte que le fondu a lieu à la fin d'une image et au début de la suivante. Le zoom/panoramique des 2 images s'exécute simultanément et les images sont organisées en liste circulaire, de sorte que l'effet se répète indéfiniment.
 
 ---
 
-## That's a wrap!
+## C'est terminé !
 
-Congratulations — you've completed the ~ec~ Codex tutorial. Along the way you've covered variables, arithmetic, string handling, the DOM, styling, images, animation, user interaction, games, lists, sorting, filtering, Google Maps, drag and drop, and visual effects. That's a solid foundation for building real websites.
+Félicitations — tu as complété le tutoriel Codex de ~ec~. En chemin, tu as abordé les variables, l'arithmétique, la manipulation de chaînes, le DOM, les styles, les images, l'animation, l'interaction avec l'utilisateur, les jeux, les listes, le tri, le filtrage, Google Maps, le glisser-déposer et les effets visuels. C'est une base solide pour construire de vrais sites web.
 
-Everything you've learned here transfers directly to building complete web applications. The ~link:background:Background~ page has more about the philosophy behind ~ec~, and the Programmer's Reference (click the book icon above) is your go-to for looking up any command.
+Tout ce que tu as appris ici se transfère directement à la construction d'applications web complètes. La page ~link:background:Informations générales~ contient davantage d'informations sur la philosophie derrière ~ec~, et le Manuel du Programmeur (clique sur l'icône du livre ci-dessus) est ta référence pour rechercher n'importe quelle commande.
 
-Happy coding!
+Bon codage !

@@ -1,41 +1,41 @@
-# Handling lists #
+# Gestion des listes #
 
-> ⚠ *Traduction en cours — le contenu ci-dessous est encore en anglais.*
+> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
 
-A list in ~ec~ is a text string in the JSON format, which is a way of representing data structures. For a list this is a set of elements, though there are other ways data can be organized, which we'll come to in another step.
+Une liste en ~ec~ est une chaîne de texte au format JSON, qui est une façon de représenter des structures de données. Pour une liste, il s'agit d'un ensemble d'éléments, bien qu'il existe d'autres manières d'organiser les données, que nous verrons dans une autre étape.
 
-In this example we'll set up a shopping list, then we'll sort it into alphabetical order. The simplest form of the list is where each item is just a name. Click this button to load the example code into the editor:
+Dans cet exemple, nous mettrons en place une liste de courses, puis nous la trierons par ordre alphabétique. La forme la plus simple de la liste est celle où chaque article est simplement un nom. Clique sur ce bouton pour charger le code d'exemple dans l'éditeur :
 
 ~copy~
 
-At the start of the script are the variables we will use. Of particular note are OriginalList and DisplayList. The first of these is the list as entered, with the items in no particular order. The second is the same list after it has been prepared for display.
+Au début du script se trouvent les variables que nous utiliserons. À noter en particulier ListeOriginale et ListeAffichage. La première est la liste telle qu'elle est entrée, avec les éléments dans aucun ordre particulier. La seconde est la même liste après qu'elle a été préparée pour l'affichage.
 
-At lines 16-25 we create our original list. We start by emptying the ~code:OriginalList~ variable, then we add the items one by one.
+Aux lignes 16-25, nous créons notre liste originale. Nous commençons par vider la variable ~code:ListeOriginale~, puis nous ajoutons les articles un par un.
 
-Then we build the user interface; a panel to hold the list and 2 buttons underneath. No prizes here for styling, of course. The 2 buttons each have actions attached to them, to be performed when they are clicked. The ~code:Unsorted~ button simply jumps to a label further down, to save repeating the same code. To display the list we copy the original list to the display list and call the ~code:Display~ subroutine, which adds each item in turn to the panel.
+Ensuite nous construisons l'interface utilisateur ; un panneau pour contenir la liste et 2 boutons en dessous. Pas de prix pour le style, bien sûr. Les 2 boutons ont chacun des actions associées, à exécuter lorsqu'ils sont cliqués. Le bouton ~code:NonTriee~ saute simplement à une étiquette plus bas, pour éviter de répéter le même code. Pour afficher la liste, nous copions la liste originale dans la liste d'affichage et appelons la sous-routine ~code:Affiche~, qui ajoute chaque article à son tour au panneau.
 
-When we click the ~code:Sorted~ button we copy the list but then sort it before displaying. In ~ec~, as in JavaScript itself, no assumptions are made as to how you want the sort to be done. Usually you want an alphabetical sort, but suppose you want the items ordered by the lengths of their names? To allow maximum flexibility, programming languages left you define a comparison function that takes 2 items from the list and compares them. Here the function is called ~code:AlphabeticSort~ and it works like this:
+Lorsque nous cliquons sur le bouton ~code:Triee~, nous copions la liste mais la trions avant de l'afficher. En ~ec~, comme en JavaScript lui-même, aucune hypothèse n'est faite sur la manière dont tu veux que le tri soit effectué. Généralement tu veux un tri alphabétique, mais suppose que tu veuilles les articles classés par longueur de leurs noms ? Pour permettre une flexibilité maximale, les langages de programmation te laissent définir une fonction de comparaison qui prend 2 éléments de la liste et les compare. Ici la fonction s'appelle ~code:TriAlphabetique~ et elle fonctionne ainsi :
 
-The sort command operates by comparing elements in the list until they are in the desired order. It knows when this has happened by examining the results from the user-specified comparator function (~code:AlphabeticSort~). This function will be called several times, each time with a pair of elements, and each time it must return a value that says whether they are in the correct order. The 2 elements are supplied as arguments of the array itself, with special names ~code:a~ and ~code:b~. Our comparison function compares these and places the result into another argument called ~code:v~. The values returned are 1, 0 or -1, depending whether the first argument has a value that is greater, the same as or less than the second argument. Once the list is sorted it is then displayed.
+La commande de tri fonctionne en comparant les éléments de la liste jusqu'à ce qu'ils soient dans l'ordre souhaité. Elle sait quand cela s'est produit en examinant les résultats de la fonction de comparaison spécifiée par l'utilisateur (~code:TriAlphabetique~). Cette fonction sera appelée plusieurs fois, chaque fois avec une paire d'éléments, et chaque fois elle doit retourner une valeur qui indique s'ils sont dans le bon ordre. Les 2 éléments sont fournis comme arguments du tableau lui-même, avec des noms spéciaux ~code:a~ et ~code:b~. Notre fonction de comparaison les compare et place le résultat dans un autre argument appelé ~code:v~. Les valeurs retournées sont 1, 0 ou -1, selon que le premier argument a une valeur supérieure, égale ou inférieure au second argument. Une fois la liste triée, elle est ensuite affichée.
 
-Note that in this case the values are strings, not numbers, so the comparison is alphabetic.
+Note que dans ce cas les valeurs sont des chaînes, pas des nombres, donc la comparaison est alphabétique.
 
-This technique allows you to do whatever sorting you require. Let's now sort by word length. Try replacing lines 65 and 66 with
+Cette technique te permet de faire n'importe quel tri dont tu as besoin. Maintenant trions par longueur de mot. Essaie de remplacer les lignes 65 et 66 par
 
-~pre:if the length of A is greater than the length of B put 1 into Result
-else if the length of A is less than the length of B put -1 into Result~
+~pre:si la longueur de A est supérieur à la longueur de B mets 1 dans Resultat
+sinon si la longueur de A est inférieur à la longueur de B mets -1 dans Resultat~
 
-and see what happens. The list will now be in order of word length. However, there are 4 items with 4 letters and 2 with 6 letters, and these are not sorted alphabetically. To make this happen we need to change line 67 to the following:
+et regarde ce qui se passe. La liste sera maintenant dans l'ordre de la longueur des mots. Cependant, il y a 4 articles avec 4 lettres et 2 avec 6 lettres, et ceux-ci ne sont pas triés alphabétiquement. Pour que cela se produise, nous devons modifier la ligne 67 comme suit :
 
-~pre:else
-begin
-    if A is greater than B put 1 into Result
-    else if A is less than B put -1 into Result
-    else put 0 into Result
-end~
+~pre:sinon
+début
+    si A est supérieur à B mets 1 dans Resultat
+    sinon si A est inférieur à B mets -1 dans Resultat
+    sinon mets 0 dans Resultat
+fin~
 
-Here we've added a second comparison, this time on the actual values as before, that only happens if the two items have the same length.
+Ici nous avons ajouté une seconde comparaison, cette fois sur les valeurs réelles comme avant, qui ne se produit que si les deux articles ont la même longueur.
 
-In the next step we'll look at some more advanced sorting.
+À l'étape suivante, nous verrons un tri plus avancé.
 
-~next:Advanced sorting~
+~next:Tri avancé~

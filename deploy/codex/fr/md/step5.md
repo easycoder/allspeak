@@ -1,36 +1,36 @@
-# Styling and CSS #
+# Styles et CSS #
 
-> ⚠ *Traduction en cours — le contenu ci-dessous est encore en anglais.*
+> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
 
-The previous step gave us a line of text at the top of the screen, but it's crammed up against the left-hand edge in rather an unattractive way. We can deal with this by giving it some styling. Here's the same script, with some styling added:
+L'étape précédente nous a donné une ligne de texte en haut de l'écran, mais elle est collée contre le bord gauche d'une manière assez peu esthétique. On peut remédier à cela en lui ajoutant un peu de style. Voici le même script, avec quelques styles ajoutés :
 
 ~step~
 ~copy~
 
-As before click  to run the script.
+Comme précédemment, clique  pour exécuter le script.
 
-That looks a lot better; the text is bigger, it's in the middle of the panel and it's a nice shade of blue. How was this done?
+C'est beaucoup mieux ; le texte est plus grand, il est au centre du panneau et d'une jolie nuance de bleu. Comment cela a-t-il été fait ?
 
-On the web, the content of your page - _what you see_ - is determined by HTML. This includes both the visible text and images, but also the block structure that make up your page. Paragraphs and other components defined in your AllSpeak scripts translate directly to corresponding forms to go in the web page. The type names are identical although the syntax is very different.
+Sur le web, le contenu de ta page — _ce que tu vois_ — est déterminé par le HTML. Cela inclut à la fois le texte visible et les images, mais aussi la structure en blocs qui compose ta page. Les paragraphes et les autres composants définis dans tes scripts AllSpeak se traduisent directement en formes correspondantes à placer dans la page web. Les noms des types sont identiques même si la syntaxe est très différente.
 
-Styling, on the other hand, governs how the page looks, and this is controlled by CSS, which stands for _Cascading Style Sheets_. Keeping these two things separate lets us change the appearance without having to change the content. You may not appreciate just how useful this technique is until you work with it for a while.
+Le style, en revanche, régit l'apparence de la page, et il est contrôlé par les CSS, ce qui signifie _Cascading Style Sheets_ (Feuilles de style en cascade). Garder ces deux choses séparées nous permet de modifier l'apparence sans avoir à changer le contenu. Tu ne mesureras peut-être pas à quel point cette technique est utile avant de l'avoir pratiquée un moment.
 
-CSS lets you control virtually any aspect of how a thing looks. Such as:
+Les CSS te permettent de contrôler pratiquement n'importe quel aspect de l'apparence d'un élément. Par exemple :
 
-- size
-- color
-- margins and padding
-- borders
-- backgrounds
-- positioning
-- visibility
+- taille
+- couleur
+- marges et rembourrage (padding)
+- bordures
+- arrière-plans
+- positionnement
+- visibilité
 
-and so on. In our example we've used the following:
+et ainsi de suite. Dans notre exemple, nous avons utilisé ceci :
 
 ~code:text-align:center;color:blue;font-size:1.4em~
 
-which has 3 parts. The first part sets the text to be center-aligned in the paragraph; the second part sets the color of the text and the final part sets the font size to be 1.4 times that of the current default value, whatever that might be. A 'em' comes from the world of typesetting and represents the size of a letter 'm' in the current font and style.
+qui comporte 3 parties. La première partie définit que le texte doit être centré dans le paragraphe ; la deuxième partie définit la couleur du texte et la dernière partie définit la taille de la police à 1,4 fois celle de la valeur par défaut actuelle, quelle qu'elle soit. Un 'em' vient du monde de la typographie et représente la taille de la lettre 'm' dans la police et le style actuels.
 
-CSS styles are just strings of text and we use them in ~ec~ exactly as described in the extensive documentation available online and in books, so we won't go into any details here. All the styles we use in our examples are very well documented. So for example, if you want to find out what the text-align style does, just Google "css text-align".
+Les styles CSS ne sont que des chaînes de texte et nous les utilisons dans ~ec~ exactement comme décrit dans la documentation étendue disponible en ligne et dans les livres, nous n'entrerons donc pas dans les détails ici. Tous les styles que nous utilisons dans nos exemples sont très bien documentés. Ainsi par exemple, si tu veux savoir ce que fait le style text-align, il suffit de chercher "css text-align" sur Google.
 
-~next:Adding images~
+~next:Ajouter des images~

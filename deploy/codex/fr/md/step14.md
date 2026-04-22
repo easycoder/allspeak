@@ -1,26 +1,26 @@
-# Advanced sorting #
+# Tri avancé #
 
-> ⚠ *Traduction en cours — le contenu ci-dessous est encore en anglais.*
+> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
 
-The previous example was simple, but sometimes the elements of a list comprise a number of values. For a shopping list you might have the price, the stock ID and so on. Here we'll modify our list to add prices, then sort by price as well as alphabetically.
+L'exemple précédent était simple, mais parfois les éléments d'une liste comportent plusieurs valeurs. Pour une liste de courses, tu pourrais avoir le prix, l'identifiant du produit, etc. Ici, nous allons modifier notre liste pour y ajouter des prix, puis trier par prix ainsi que par ordre alphabétique.
 
 ~copy~
 
-The list now has the same items, but each one contains 2 values; the name of the item and its price (in pence, cents or whatever; AllSpeak doesn't handle floating-point values). At the start of the previous step I mentioned that the JSON format can handle things other than lists; here we have a property map; a set of values each having a key to say what it is - here name or price - and the value itself. Each of the items is separately added to a list, so the overall structure is a list of items each having 2 properties.
+La liste contient désormais les mêmes articles, mais chacun comprend 2 valeurs : le nom de l'article et son prix (en centimes ou autre unité ; AllSpeak ne gère pas les valeurs à virgule flottante). Au début de l'étape précédente, j'ai mentionné que le format JSON peut gérer autre chose que des listes ; ici nous avons une carte de propriétés : un ensemble de valeurs ayant chacune une clé qui indique ce qu'elle est — ici name ou price — et la valeur elle-même. Chaque article est ajouté séparément à une liste, donc la structure globale est une liste d'articles ayant chacun 2 propriétés.
 
-Everything else is the same as the previous example - apart from the comparator function, which now has to dive into the properties to find the price and do the comparison on that. I've renamed the function to make that clear.
+Tout le reste est identique à l'exemple précédent — à part la fonction de comparaison, qui doit maintenant plonger dans les propriétés pour trouver le prix et effectuer la comparaison sur celui-ci. J'ai renommé la fonction pour que cela soit clair.
 
-As before there's a small gotcha for you, in that milk and sugar have the same price but sugar displays first because it comes first in the list. We can make these 2 items appear in alphabetic order by changing line 98 to
+Comme auparavant, il y a un petit piège pour toi : le lait et le sucre ont le même prix mais le sucre s'affiche en premier parce qu'il apparaît en premier dans la liste. Nous pouvons faire apparaître ces 2 articles dans l'ordre alphabétique en modifiant la ligne 98 en
 
-~pre:else
-begin
-    if property `name` of A is greater than property `name` of B
-        put 1 into Result
-    else if property `name` of A is less than property `name` of B
-        put -1 into Result
-    else put 0 into Result
-end~
+~pre:sinon
+début
+    si propriété `name` de A est supérieur à propriété `name` de B
+        mets 1 dans Resultat
+    sinon si propriété `name` de A est inférieur à propriété `name` de B
+        mets -1 dans Resultat
+    sinon mets 0 dans Resultat
+fin~
 
-The next page will show you how to extract just some of the elements of a list.
+La page suivante te montrera comment extraire seulement certains des éléments d'une liste.
 
-~next:Filtering lists~
+~next:Filtrer les listes~

@@ -1,19 +1,19 @@
-# Using Google Maps #
+# Utiliser Google Maps #
 
-> ⚠ *Traduction en cours — le contenu ci-dessous est encore en anglais.*
+> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
 
-One of the strengths of ~ec~ is the way it can be extended using plugins. These are JavaScript code modules that provide extra language features to users of the system. AllSpeak comes with a number of these, available on demand, so I'll demonstrate how to use one of the more interesting ones.
+L'un des points forts d'~ec~ est la manière dont il peut être étendu via des plugins. Ce sont des modules de code JavaScript qui offrent des fonctionnalités linguistiques supplémentaires aux utilisateurs du système. AllSpeak est livré avec plusieurs d'entre eux, disponibles à la demande, alors je vais te montrer comment utiliser l'un des plus intéressants.
 
-Google Maps are one of the most spectacular features to be found on any website. They provide a vast range of features and require very little effort to include on the page. That said, it takes some effort to learn how to do it, and we've taken away that effort by building our own ~ec~ plugin to handle maps for you. Currently it's a little basic but we hope to add more features as time goes by. Click here to load the map script:
+Les cartes Google sont l'une des fonctionnalités les plus spectaculaires que l'on puisse trouver sur un site web. Elles offrent une vaste gamme de fonctions et demandent très peu d'efforts pour être intégrées à la page. Ceci dit, il faut quand même un peu de travail pour apprendre à le faire, et nous avons éliminé ce travail en construisant notre propre plugin ~ec~ pour gérer les cartes à ta place. Pour l'instant c'est un peu basique, mais nous espérons ajouter davantage de fonctionnalités au fil du temps. Clique ici pour charger le script de la carte :
 
 ~copy~
 
-The script builds a page using the full space available, then divides it into a ~code:Controls~ bar and the main map panel itself. The ~code:Controls~ bar only has a title but there's space to put whatever buttons you might need to control the operation of your map.
+Le script construit une page en utilisant tout l'espace disponible, puis la divise en une barre ~code:Controls~ et le panneau principal de la carte lui-même. La barre ~code:Controls~ ne comporte qu'un titre mais il y a de la place pour placer les boutons dont tu pourrais avoir besoin pour contrôler le fonctionnement de ta carte.
 
-In the variable list you'll see ~code:gmap Map~. This is part of the new functionality available with the plugin loaded, as are the commands later that make reference to the ~code:Map~.
+Dans la liste des variables, tu verras ~code:gmap Map~. Cela fait partie des nouvelles fonctionnalités disponibles avec le plugin chargé, tout comme les commandes ultérieures qui font référence à la ~code:Map~.
 
-The map itself requires a div to place it in, then you can create the map using a very small set of commands. The first thing to add to the map is an 'API key' provided by Google to authorize the use of a map on this website. The script fetches this key from the server using ~code:rest get~, so it isn't hardcoded into the script itself. You can get your own API key by registering as a Google developer and requesting your key on the appropriate page. (Unfortunately it's beyond the scope of these notes to describe how to do it.)
+La carte elle-même nécessite un div où la placer, puis tu peux créer la carte avec un très petit ensemble de commandes. La première chose à ajouter à la carte est une "clé API" fournie par Google pour autoriser l'utilisation d'une carte sur ce site web. Le script récupère cette clé depuis le serveur en utilisant ~code:rest get~, elle n'est donc pas codée en dur dans le script lui-même. Tu peux obtenir ta propre clé API en t'inscrivant comme développeur Google et en demandant ta clé sur la page appropriée. (Malheureusement, décrire comment faire dépasse le cadre de ces notes.)
 
-There are only 3 items of information needed to set up a map; ~code:latitude~, ~code:longitude~ and ~code:zoom~. Experiment with each of these to discover how they work; try to get a map displaying your own home.
+Il ne faut que 3 informations pour configurer une carte : ~code:latitude~, ~code:longitude~ et ~code:zoom~. Expérimente avec chacune d'elles pour découvrir comment elles fonctionnent ; essaie d'obtenir une carte qui montre ta propre maison.
 
-~next:Pick, Drag and Drop~
+~next:Sélectionner, glisser et déposer~

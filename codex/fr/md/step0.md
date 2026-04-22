@@ -2,26 +2,26 @@
 
 > 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
 
-Welcome to the ~ec~ **_Codex_**, a comprehensive free resource where you can learn to code using English-like scripts and use the skills you gain to build and manage websites of any complexity. (Experienced developers: See the note at the foot of this page.)
+Bienvenue dans le ~ec~ **_Codex_**, une ressource gratuite et complète où tu peux apprendre à coder en utilisant des scripts proches du langage courant et mettre à profit les compétences acquises pour construire et gérer des sites web de toute complexité. (Développeurs expérimentés : voir la note au bas de cette page.)
 
-If you are using AI-assisted development, `codex.as` is a valuable training resource not only for what it can do but also for how it is structured.
+Si tu utilises le développement assisté par IA, `codex.as` est une ressource d'apprentissage précieuse, non seulement pour ce qu'il peut faire, mais aussi pour la façon dont il est structuré.
 
-We all have coding skills. Without them we wouldn't be able to follow simple instructions such as how to cook a meal or do simple car maintenance. Just look at a recipe; it's a bit like a computer program written in a kind of simplified English. That's not surprising, because computers also follow instructions; in fact, that's all they can do. A computer program is just a set of instructions, though often a lot more complex than the ones we find in everyday life. And a coder is someone who has learned how to read and write these instructions.
+Nous avons tous des compétences en programmation. Sans elles, nous ne pourrions pas suivre des instructions simples comme celles pour préparer un repas ou effectuer un entretien automobile de base. Il suffit de regarder une recette ; elle ressemble un peu à un programme informatique écrit dans une sorte d'anglais simplifié. Ce n'est pas surprenant, car les ordinateurs suivent aussi des instructions ; en fait, c'est tout ce qu'ils savent faire. Un programme informatique n'est qu'un ensemble d'instructions, bien que souvent beaucoup plus complexe que celles que nous rencontrons dans la vie quotidienne. Et un codeur est quelqu'un qui a appris à lire et à écrire ces instructions.
 
-Coding is about learning a particular way of thinking, then using that skill to solve problems, and this website is a place to learn that skill. It's suitable for anyone from pre-teens upwards.
+Coder consiste à apprendre une manière particulière de penser, puis à utiliser cette compétence pour résoudre des problèmes, et ce site est un endroit pour apprendre cette compétence. Il convient à tous, des préadolescents aux adultes.
 
-This tutorial takes you through the basics of coding, using simple example scripts you can write in our editor then run directly, all without leaving this page. It's designed to work on a smartphone as well as on a desktop computer. Well, it's a bit harder on a small screen but you can do it, though it's preferable to use a PC or at least a tablet.
+Ce tutoriel te fait découvrir les bases de la programmation, à l'aide de scripts d'exemple simples que tu peux écrire dans notre éditeur puis exécuter directement, le tout sans quitter cette page. Il est conçu pour fonctionner aussi bien sur un smartphone que sur un ordinateur de bureau. Bon, c'est un peu plus difficile sur un petit écran mais c'est faisable, même s'il est préférable d'utiliser un PC ou au moins une tablette.
 
-You'll be coding with a scripting language that's much quicker to learn than those used by professional programmers. Just as with recipes, it's possible to write computer code in a form that looks a lot like English. Many beginners think they should start with one of the mainstream computer languages - C, Java, Python and so on - because that will get them more quickly to their goal of making money from coding. Unfortunately, there is no short cut to becoming a professional programmer; it takes years of studying code written by others in a variety of languages, writing your own code, making mistakes, fixing them and learning from experts. The sooner you learn the basics, the sooner you'll be able to get onto all the more complex stuff.
+Tu vas coder avec un langage de script bien plus rapide à apprendre que ceux utilisés par les programmeurs professionnels. Tout comme pour les recettes, il est possible d'écrire du code informatique dans une forme qui ressemble beaucoup au langage courant. Beaucoup de débutants pensent qu'ils devraient commencer par l'un des langages informatiques grand public — C, Java, Python, etc. — parce que cela les rapprochera plus vite de leur objectif de gagner de l'argent en codant. Malheureusement, il n'y a pas de raccourci pour devenir programmeur professionnel ; cela demande des années à étudier le code écrit par d'autres dans divers langages, à écrire son propre code, à faire des erreurs, à les corriger et à apprendre des experts. Plus tôt tu apprends les bases, plus tôt tu pourras passer à des choses plus complexes.
 
-We'll try to make it as simple as possible by making no assumptions about your level of experience. And we try to make it fun by having examples that do interesting things.
+Nous essaierons de rendre cela aussi simple que possible en ne faisant aucune hypothèse sur ton niveau d'expérience. Et nous essayons de le rendre amusant en proposant des exemples qui font des choses intéressantes.
 
-So let's take our first step into the world of coding. Click this link to continue.
+Alors faisons notre premier pas dans le monde de la programmation. Clique sur ce lien pour continuer.
 
-~next:Hello world~
+~next:Bonjour tout le monde~
 
-Note to developers: Throw away your preconceptions; this is unlike anything else. See our ~link:background:Background~ page.
+Note aux développeurs : mets de côté tes préjugés ; ce n'est comparable à rien d'autre. Consulte notre page ~link:background:Informations générales~.
 
-~ec~ is more than an easy language for beginners. It's also at the heart of AI-driven coding. It enables complex applications to be written without the need to learn advanced programming languages. It's more important that you understand the needs of your project. By doing the coding in ~ec~ it will be far easier to relate the code to the needs of the problem domain. This is in stark contrast to "vibe coding", which presents major obstacles to anyone not highy experienced in the coding language chosen.
+~ec~ est plus qu'un langage facile pour débutants. Il est aussi au cœur du développement piloté par IA. Il permet d'écrire des applications complexes sans avoir besoin d'apprendre des langages de programmation avancés. Il est plus important que tu comprennes les besoins de ton projet. En faisant le code en ~ec~, il sera bien plus facile de relier le code aux besoins du domaine du problème. Cela contraste fortement avec le « vibe coding », qui présente des obstacles majeurs à toute personne peu expérimentée dans le langage de programmation choisi.
 
-For more information, go to [Programming with AI](https://allspeak.ai/primer.html).
+Pour plus d'informations, rends-toi sur [Programmer avec l'IA](https://allspeak.ai/primer.html).

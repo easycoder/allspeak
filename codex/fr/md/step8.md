@@ -1,25 +1,25 @@
-# A bouncy rectangle #
+# Un rectangle qui rebondit #
 
-> ⚠ *Traduction en cours — le contenu ci-dessous est encore en anglais.*
+> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
 
-Here's another simple animation example. This time we'll draw a rectangle whose height varies according to a sine calculation. Don't worry about the mathematics; I'll explain. Here's the code; copy it to the editor then run it so you'll know what it does.
+Voici un autre exemple simple d'animation. Cette fois, nous allons dessiner un rectangle dont la hauteur varie selon un calcul de sinus. Ne t'inquiète pas pour les mathématiques ; je vais t'expliquer. Voici le code ; copie-le dans l'éditeur puis exécute-le pour savoir ce qu'il fait.
 
 ~copy~
 
-The gray rectangle starts off being half the height of the enclosing container, then it grows and shrinks, finally returning to its original size.
+Le rectangle gris commence par avoir une hauteur égale à la moitié du conteneur, puis il grandit et rétrécit, pour finalement revenir à sa taille d'origine.
 
-We start off by creating the container, giving it a width that's 90% of the enclosing panel. Without the margin style this would cause it to sit hard up against the left of the panel. You'll have to read up on The CSS style ~code:margin~ to get the full syntax details, but in short, using auto for the left and right margins forces them to divide up the free space between them so the box sits centrally.
+Nous commençons par créer le conteneur, en lui donnant une largeur de 90 % du panneau qui l'entoure. Sans le style margin, cela le ferait coller au bord gauche du panneau. Il te faudra te documenter sur le style CSS ~code:margin~ pour avoir tous les détails de la syntaxe, mais en bref, en utilisant auto pour les marges gauche et droite on les force à se partager l'espace libre entre elles, et le cadre se place ainsi au centre.
 
-The rectangle is set to occupy 9% of the container's width and to have a border and background. The ~code:position~ style is another CSS goodie that's too involved to explain here; basically it allows us to set the position of the top of the element. Without ~code:position~ and ~code:top~ it would just stick to the top of the box. The rectangle is forced to have its top half-way down the container (in the computer world, the top of a container is always zero and bigger values are downwards).
+Le rectangle est configuré pour occuper 9 % de la largeur du conteneur et avoir une bordure et un arrière-plan. Le style ~code:position~ est une autre pépite des CSS trop complexe à expliquer ici ; en gros, il nous permet de fixer la position du haut de l'élément. Sans ~code:position~ et ~code:top~, il resterait simplement collé en haut du cadre. Le rectangle est contraint d'avoir son bord supérieur à mi-hauteur du conteneur (dans le monde informatique, le haut d'un conteneur est toujours zéro et les plus grandes valeurs vont vers le bas).
 
-Don't be put off by the apparent complexity of CSS. It's well worth spending some time reading up on it, but in the end you just have to try things out. The great thing about using the ~ec~ editor is you can experiment until you succeed in making it work.
+Ne te laisse pas décourager par la complexité apparente des CSS. Cela vaut vraiment la peine d'y consacrer un peu de temps, mais au bout du compte il faut simplement essayer les choses. Ce qui est génial avec l'éditeur ~ec~, c'est que tu peux expérimenter jusqu'à ce que tu réussisses à faire fonctionner les choses.
 
-So far, we have a gray rectangle in a larger box. The next command is ~code:wait 2 seconds~, which does just that. You can use ~code:wait~ to pause a script for any number of ~code:millis~ (milliseconds), ~code:ticks~ (100ths of a second), ~code:seconds~ or ~code:minutes~. In all cases the final ~code:s~ is optional.
+Jusqu'ici, nous avons un rectangle gris dans un cadre plus grand. La commande suivante est ~code:attends 2 secondes~, qui fait exactement cela. Tu peux utiliser ~code:attends~ pour mettre un script en pause pendant n'importe quel nombre de ~code:millis~ (millisecondes), ~code:ticks~ (centièmes de seconde), ~code:seconds~ (secondes) ou ~code:minutes~ (minutes). Dans tous les cas, le ~code:s~ final est optionnel.
 
-Now for the animation itself. We use a variable ~code:Angle~ to count from 0 to 360. This is the number of degrees in a circle. If you're not mathematically inclined, try to visualize a clock with a second hand going around it. It's a rather odd second hand that stretches right across the clock from one edge to the other. If you were to look at the clock edge-on you wouldn't see the rotary movement; the second hand would just appear to get longer and shorter as it journeys around the dial. The mathematical sine function tells us the apparent length of the second hand at any point in its progression around the dial. In our example the diameter of the clock is 200 pixels (so the radius is 100 pixels) and the apparent length, seen end-on, varies from 0 to 200 pixels. (Exactly the same principle applies to the length of the day as the seasons change. So you see, maths can be useful.)
+Maintenant, passons à l'animation elle-même. Nous utilisons une variable ~code:Angle~ pour compter de 0 à 360. C'est le nombre de degrés dans un cercle. Si tu n'es pas porté sur les mathématiques, essaie de visualiser une horloge avec une aiguille des secondes qui tourne. C'est une aiguille des secondes un peu particulière qui s'étend à travers toute l'horloge d'un bord à l'autre. Si tu regardais l'horloge sur la tranche, tu ne verrais pas le mouvement rotatif ; l'aiguille des secondes semblerait simplement s'allonger et se raccourcir au fur et à mesure de sa progression autour du cadran. La fonction mathématique sinus nous donne la longueur apparente de l'aiguille en tout point de sa progression autour du cadran. Dans notre exemple, le diamètre de l'horloge est de 200 pixels (donc le rayon est de 100 pixels) et la longueur apparente, vue de la tranche, varie de 0 à 200 pixels. (Le même principe s'applique exactement à la durée du jour quand les saisons changent. Tu vois, les maths peuvent être utiles.)
 
-The calculation ~code:sin Angle radius 100~ takes care of all this so I'll say no more about it. We use the resulting ~code:Height~ value to compute the new top of the rectangle and its new height.
+Le calcul ~code:sin Angle radius 100~ s'occupe de tout cela, donc je n'en dirai pas plus. Nous utilisons la valeur ~code:Height~ qui en résulte pour calculer la nouvelle position du haut du rectangle et sa nouvelle hauteur.
 
-There are a couple of calculations done in the CSS styles. The top of the rectangle is the 50% point as before but with the sine value subtracted from it. Similarly, the height of the rectangle is basically 100 pixels but with the sine value added.
+Il y a quelques calculs effectués dans les styles CSS. Le haut du rectangle est le point 50 % comme précédemment mais avec la valeur du sinus soustraite. De même, la hauteur du rectangle est essentiellement 100 pixels mais avec la valeur du sinus ajoutée.
 
-~next:The Mexican Wave~
+~next:L'Ola~

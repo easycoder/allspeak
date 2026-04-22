@@ -1,14 +1,14 @@
-# String handling #
+# Manipulation de chaînes #
 
-> ⚠ *Traduction en cours — le contenu ci-dessous est encore en anglais.*
+> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
 
-As well as numbers there are strings. ~ec~ has a useful set of string handling commands that are needed when processing textual data received from the Internet. I'll show you some of the simpler ones, but be aware there are more powerful commands that must be left for a later tutorial.
+En plus des nombres, il y a les chaînes de caractères. ~ec~ dispose d'un ensemble utile de commandes de manipulation de chaînes, nécessaires lors du traitement de données textuelles reçues d'Internet. Je vais t'en montrer quelques-unes parmi les plus simples, mais sache qu'il existe des commandes plus puissantes qu'il faudra laisser pour un tutoriel ultérieur.
 
-Copy this code to the editor:
+Copie ce code dans l'éditeur :
 
 ~step~
 ~copy~
 
-In the **Values** section of the **Core** package in our Programmers Reference (click the book icon at the top of this panel) you'll find a number of other functions that deal with strings. Try experimenting with a few of them.
+Dans la section **Values** du paquet **Core** de notre Manuel de Référence du Programmeur (clique sur l'icône du livre en haut de ce panneau) tu trouveras plusieurs autres fonctions qui traitent les chaînes. Essaie d'expérimenter avec quelques-unes d'entre elles.
 
-~next:Introducing the DOM~
+~next:Introduction au DOM~
