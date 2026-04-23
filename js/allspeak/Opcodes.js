@@ -43,6 +43,8 @@ const AllSpeak_Opcodes = {
 		case `multiply`:  return `MULTIPLY`;
 		case `divide`:    return `DIVIDE`;
 		case `negate`:    return `NEGATE`;
+		case `increment`: return `INCREMENT`;
+		case `decrement`: return `DECREMENT`;
 
 		// Assignment
 		case `put`:       return `PUT`;

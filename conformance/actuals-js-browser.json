@@ -1,54 +1,65 @@
 {
   "EC-0001": {
-    "logs": [
-      "hello"
-    ],
-    "error": null
+    "logs": [],
+    "error": {
+      "category": "compile",
+      "message": "Compile error in 'undefined':\n   1 ! EC-0001: Basic assignment and output\n   2 \n   3 variable Value\nI don't understand 'variable' at line 4.\n"
+    }
   },
   "EC-0002": {
-    "logs": [
-      "18"
-    ],
-    "error": null
+    "logs": [],
+    "error": {
+      "category": "compile",
+      "message": "Compile error in 'undefined':\n   1 ! EC-0002: Arithmetic chain\n   2 \n   3 variable N\nI don't understand 'variable' at line 4.\n"
+    }
   },
   "EC-0003": {
-    "logs": [
-      "GT"
-    ],
-    "error": null
+    "logs": [],
+    "error": {
+      "category": "compile",
+      "message": "Compile error in 'undefined':\n   1 ! EC-0003: Condition branching without else\n   2 \n   3 variable A\nI don't understand 'variable' at line 4.\n"
+    }
   },
   "EC-0004": {
-    "logs": [
-      "15"
-    ],
-    "error": null
+    "logs": [],
+    "error": {
+      "category": "compile",
+      "message": "Compile error in 'undefined':\n   1 ! EC-0004: While loop sum\n   2 \n   3 variable N\nI don't understand 'variable' at line 4.\n"
+    }
   },
   "EC-0005": {
-    "logs": [
-      "green"
-    ],
-    "error": null
+    "logs": [],
+    "error": {
+      "category": "compile",
+      "message": "Compile error in 'undefined':\n   1 ! EC-0005: Array index access\n   2 \n   3 variable Items\nI don't understand 'variable' at line 4.\n"
+    }
   },
   "EC-0006": {
-    "logs": [
-      "AND works",
-      "OR works",
-      "Precedence correct"
-    ],
-    "error": null
+    "logs": [],
+    "error": {
+      "category": "compile",
+      "message": "Compile error in 'undefined':\n   1 ! EC-0006: AND/OR compound conditions\n   2 \n   3 variable A\nI don't understand 'variable' at line 4.\n"
+    }
   },
   "EC-0007": {
     "logs": [],
     "error": {
       "category": "compile",
-      "message": "Compile error in 'undefined':\n   1 ! EC-0007: Includes membership in condition\n   2 \n   3 string Sentence\nUnknown symbol or keyword 'string' at line 4\n"
+      "message": "Compile error in 'undefined':\n   1 ! EC-0007: Includes membership in condition\n   2 \n   3 string Sentence\nI don't understand 'string' at line 4.\n"
     }
   },
   "EC-0008": {
-    "logs": [
-      "u",
-      "e"
-    ],
-    "error": null
+    "logs": [],
+    "error": {
+      "category": "compile",
+      "message": "Compile error in 'undefined':\n   1 ! EC-0008: Character extraction from values\n   2 \n   3 variable Text\nI don't understand 'variable' at line 4.\n"
+    }
+  },
+  "EC-0009": {
+    "logs": [],
+    "error": {
+      "category": "compile",
+      "message": "Compile error in 'undefined':\n   1 ! EC-0009: starts with / ends with string conditions\n   2 \n   3 string S\nI don't understand 'string' at line 4.\n"
+    }
   }
 }

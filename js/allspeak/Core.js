@@ -443,6 +443,44 @@ const AllSpeak_Core = {
 		}
 	},
 
+	Decrement: {
+
+		compile: compiler => {
+			const lino = compiler.getLino();
+			if (compiler.nextIsSymbol()) {
+				const target = compiler.getToken();
+				compiler.next();
+				compiler.addCommand({
+					domain: `core`,
+					keyword: `decrement`,
+					lino,
+					target
+				});
+				return true;
+			}
+			return false;
+		},
+
+		run: program => {
+			const command = program[program.pc];
+			const target = program.getSymbolRecord(command.target);
+			if (target.isVHolder) {
+				const value = target.value[target.index];
+				if (!value.numeric && isNaN(value.content)) {
+					program.nonNumericValueError(command.lino);
+				}
+				target.value[target.index] = {
+					type: `constant`,
+					numeric: true,
+					content: parseInt(value.content) - 1
+				};
+			} else {
+				program.variableDoesNotHoldAValueError(command.lino, target.name);
+			}
+			return command.pc + 1;
+		}
+	},
+
 	Divide: {
 
 		compile: compiler => {
@@ -921,6 +959,44 @@ const AllSpeak_Core = {
 
 		run: program => {
 			const command = program[program.pc];
+			return command.pc + 1;
+		}
+	},
+
+	Increment: {
+
+		compile: compiler => {
+			const lino = compiler.getLino();
+			if (compiler.nextIsSymbol()) {
+				const target = compiler.getToken();
+				compiler.next();
+				compiler.addCommand({
+					domain: `core`,
+					keyword: `increment`,
+					lino,
+					target
+				});
+				return true;
+			}
+			return false;
+		},
+
+		run: program => {
+			const command = program[program.pc];
+			const target = program.getSymbolRecord(command.target);
+			if (target.isVHolder) {
+				const value = target.value[target.index];
+				if (!value.numeric && isNaN(value.content)) {
+					program.nonNumericValueError(command.lino);
+				}
+				target.value[target.index] = {
+					type: `constant`,
+					numeric: true,
+					content: parseInt(value.content) + 1
+				};
+			} else {
+				program.variableDoesNotHoldAValueError(command.lino, target.name);
+			}
 			return command.pc + 1;
 		}
 	},
@@ -2599,6 +2675,8 @@ const AllSpeak_Core = {
 			MULTIPLY: this.Multiply,
 			DIVIDE: this.Divide,
 			NEGATE: this.Negate,
+			INCREMENT: this.Increment,
+			DECREMENT: this.Decrement,
 			PUT: this.Put,
 			SET_VAR_TYPE: this.Set,
 			SET_ARRAY: this.Set,

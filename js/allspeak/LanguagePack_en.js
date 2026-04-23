@@ -189,6 +189,12 @@ var AllSpeak_LanguagePack_en = {
         "decode {variable}"
       ]
     },
+    "DECREMENT": {
+      "keyword": "decrement",
+      "patterns": [
+        "decrement {variable}"
+      ]
+    },
     "DISABLE_ELEMENT": {
       "keyword": "disable",
       "patterns": [
@@ -339,6 +345,12 @@ var AllSpeak_LanguagePack_en = {
       "keyword": "import",
       "patterns": [
         "import {symbols}"
+      ]
+    },
+    "INCREMENT": {
+      "keyword": "increment",
+      "patterns": [
+        "increment {variable}"
       ]
     },
     "INDEX": {
@@ -1265,6 +1277,8 @@ var AllSpeak_LanguagePack_en = {
     "send": "send",
     "multiply": "multiply",
     "negate": "negate",
+    "increment": "increment",
+    "decrement": "decrement",
     "play": "play",
     "pop": "pop",
     "print": "print",

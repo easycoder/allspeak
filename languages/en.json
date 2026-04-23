@@ -187,6 +187,12 @@
         "decode {variable}"
       ]
     },
+    "DECREMENT": {
+      "keyword": "decrement",
+      "patterns": [
+        "decrement {variable}"
+      ]
+    },
     "DISABLE_ELEMENT": {
       "keyword": "disable",
       "patterns": [
@@ -337,6 +343,12 @@
       "keyword": "import",
       "patterns": [
         "import {symbols}"
+      ]
+    },
+    "INCREMENT": {
+      "keyword": "increment",
+      "patterns": [
+        "increment {variable}"
       ]
     },
     "INDEX": {
@@ -1251,6 +1263,8 @@
     "send": "send",
     "multiply": "multiply",
     "negate": "negate",
+    "increment": "increment",
+    "decrement": "decrement",
     "play": "play",
     "pop": "pop",
     "print": "print",
