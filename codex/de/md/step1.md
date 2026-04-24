@@ -1,7 +1,5 @@
 # Erster Schritt: Hallo, Welt! #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Wir beginnen mit einigen ganz grundlegenden Dingen und stellen Ihnen nach und nach immer mehr vom ~ec~-System vor. Sie können jederzeit unterbrechen und später zurückkehren (auf demselben Computer und im selben Browser); das System merkt sich, wo Sie waren. Über diesem Text befinden sich Navigationsschaltflächen, mit denen Sie zum vorherigen Schritt des Tutorials zurückkehren oder zum nächsten weitergehen können. Dann fangen wir an.
 
 Auf der linken Seite sehen Sie ein leeres Feld mit nur einer Zeilennummer '1'. (Auf einem Smartphone müssen Sie die Schaltfläche ~icon:cycle:20px:Cycle screens~ (Wechseln) antippen, um zum Code-Bereich zu gelangen.) Hier werden Sie Ihren Programmcode eingeben. Darüber befinden sich Schaltflächen, mit denen Sie Ihren Code speichern, zuvor gespeicherten Code laden und das, was gerade auf dem Bildschirm zu sehen ist, ausführen können.

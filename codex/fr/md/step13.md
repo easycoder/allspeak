@@ -1,7 +1,5 @@
 # Gestion des listes #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 Une liste en ~ec~ est une chaîne de texte au format JSON, qui est une façon de représenter des structures de données. Pour une liste, il s'agit d'un ensemble d'éléments, bien qu'il existe d'autres manières d'organiser les données, que nous verrons dans une autre étape.
 
 Dans cet exemple, nous mettrons en place une liste de courses, puis nous la trierons par ordre alphabétique. La forme la plus simple de la liste est celle où chaque article est simplement un nom. Clique sur ce bouton pour charger le code d'exemple dans l'éditeur :

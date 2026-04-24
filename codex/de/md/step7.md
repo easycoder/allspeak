@@ -1,7 +1,5 @@
 # Einfache Animation #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Dies ist ein weiteres Werkzeug im Werkzeugkasten des Programmierers. Obwohl man es leicht übertreiben kann, erweckt das richtige Maß an Bewegung eine Webseite zum Leben und lenkt die Aufmerksamkeit des Nutzers auf die wichtigsten Stellen.
 
 Dieses Beispiel zeichnet 3 farbige Kreise und schaltet sie in rascher Folge ein und aus. Ich habe dieses Beispiel gewählt, um einige nützliche Programmiertechniken aufzuzeigen und etwas mehr CSS einzuführen.

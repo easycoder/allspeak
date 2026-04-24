@@ -1,7 +1,5 @@
 # Programmieren kann Spaß machen! #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Willkommen zum ~ec~ **_Codex_**, einer umfassenden, kostenlosen Ressource, in der Sie mit Skripten, die natürlicher Sprache ähneln, programmieren lernen und die erworbenen Fähigkeiten nutzen können, um Websites beliebiger Komplexität zu erstellen und zu verwalten. (Erfahrene Entwickler: Beachten Sie den Hinweis am Ende dieser Seite.)
 
 Wenn Sie KI-gestützte Entwicklung nutzen, ist `codex.as` nicht nur wegen seiner Fähigkeiten, sondern auch wegen seiner Struktur eine wertvolle Trainingsressource.

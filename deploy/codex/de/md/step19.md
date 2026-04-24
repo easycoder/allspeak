@@ -1,7 +1,5 @@
 # Schwenken und Zoomen #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Wenn Fernsehsendungen eine Serie von Bildern zeigen, wenden sie häufig etwas an, das man den „Ken-Burns-Effekt" nennt (benannt nach dem amerikanischen Dokumentarfilmer, der diese Technik bekannt gemacht hat). Dabei wird jedes Bild langsam geschwenkt und/oder gezoomt, bevor es in das nächste übergeblendet wird, wodurch ein Gefühl von Bewegung entsteht. Der Effekt wurde ausgiebig von dem amerikanischen Dokumentarfilmer verwendet, nach dem er benannt ist.
 
 In diesem Tutorial-Schritt behandeln wir nur das Schwenken und Zoomen; die Überblendung kann bis später warten.

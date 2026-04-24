@@ -1,7 +1,5 @@
 # Grundrechenarten #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 ~ec~ ist für das Web entworfen: um Anwendungen zu bauen, die im Browser Dinge tun. Die Browser-Welt ist in erster Linie visuell geprägt, mit vielen Bildern und Texten, aber ein bisschen Grundrechnen wird immer gebraucht, also schreiben wir ein paar Skripte, die zeigen, was es gibt.
 
 In den meisten Programmiersprachen sieht es aus wie die Algebra aus der Schule, wenn Sie Zahlen addieren möchten:

@@ -1,7 +1,5 @@
 # Animation simple #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 Voici un autre outil dans la boîte à outils du programmeur. Bien qu'il soit facile d'en abuser, la juste dose de mouvement donne vie à une page web et attire l'attention de l'utilisateur sur ses éléments clés.
 
 Cet exemple dessine 3 cercles colorés et les allume et les éteint en succession rapide. J'ai choisi cet exemple pour mettre en évidence un certain nombre de techniques de programmation utiles et introduire un peu plus de CSS.

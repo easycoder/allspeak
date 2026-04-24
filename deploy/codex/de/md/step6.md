@@ -1,7 +1,5 @@
 # Bilder hinzufügen #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Webseiten sind oft sehr visuell, mit vielen Bildern, daher zeige ich Ihnen, bevor wir mit klassischeren Programmierthemen fortfahren, wie man eine Seite mit einem Bild und einer Überschrift erstellt.
 
 Wenn Sie sich den HTML-Code einer Webseite ansehen, sehen Sie nie irgendwelche Bilder; es ist nur ein Textdokument. Wie kommen die Bilder also auf die Seite?

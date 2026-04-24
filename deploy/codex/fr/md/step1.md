@@ -1,7 +1,5 @@
 # Premier pas : Bonjour, tout le monde ! #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 Nous commencerons par des choses très simples et te présenterons progressivement de plus en plus de fonctionnalités du système ~ec~. Tu peux t'arrêter à tout moment et revenir plus tard (sur le même ordinateur et le même navigateur) ; le système se souviendra de l'endroit où tu t'étais arrêté. Au-dessus de ce texte se trouvent des boutons de navigation qui te permettent de revenir à l'étape précédente du tutoriel ou de passer à la suivante. Alors allons-y.
 
 Sur la gauche tu peux voir un panneau vide avec juste un numéro de ligne '1'. (Sur un smartphone tu devras appuyer sur le bouton ~icon:cycle:20px:Cycle screens~ (Cycle) pour accéder au panneau Code.) C'est ici que tu mettras le code de ton programme. Au-dessus se trouvent des boutons qui te permettent de sauvegarder ton code, de charger du code précédemment sauvegardé et d'exécuter ce qui se trouve à l'écran pour le moment.

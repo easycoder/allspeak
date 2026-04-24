@@ -1,7 +1,5 @@
 # Der Ken-Burns-Effekt #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 In diesem Tutorial-Schritt vervollständigen wir den Ken-Burns-Effekt, indem wir weitere Bilder und eine Überblendung zwischen ihnen hinzufügen. Jedes der Bilder wird nach seinem eigenen Regelsatz animiert, sodass der Gesamteindruck einer ununterbrochenen Bewegung entsteht. Im Fernsehen vermittelt das den Eindruck, ein Video anzuschauen statt einer Diashow, und deshalb ist der Effekt so beliebt.
 
 ~copy~

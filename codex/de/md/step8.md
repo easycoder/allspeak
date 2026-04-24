@@ -1,7 +1,5 @@
 # Ein springendes Rechteck #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Hier ist ein weiteres einfaches Animationsbeispiel. Diesmal zeichnen wir ein Rechteck, dessen Höhe gemäß einer Sinusberechnung variiert. Keine Sorge wegen der Mathematik; ich erkläre es Ihnen. Hier ist der Code; kopieren Sie ihn in den Editor und führen Sie ihn aus, damit Sie wissen, was er tut.
 
 ~copy~

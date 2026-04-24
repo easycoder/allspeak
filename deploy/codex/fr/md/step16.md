@@ -1,7 +1,5 @@
 # Utiliser Google Maps #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 L'un des points forts d'~ec~ est la manière dont il peut être étendu via des plugins. Ce sont des modules de code JavaScript qui offrent des fonctionnalités linguistiques supplémentaires aux utilisateurs du système. AllSpeak est livré avec plusieurs d'entre eux, disponibles à la demande, alors je vais te montrer comment utiliser l'un des plus intéressants.
 
 Les cartes Google sont l'une des fonctionnalités les plus spectaculaires que l'on puisse trouver sur un site web. Elles offrent une vaste gamme de fonctions et demandent très peu d'efforts pour être intégrées à la page. Ceci dit, il faut quand même un peu de travail pour apprendre à le faire, et nous avons éliminé ce travail en construisant notre propre plugin ~ec~ pour gérer les cartes à ta place. Pour l'instant c'est un peu basique, mais nous espérons ajouter davantage de fonctionnalités au fil du temps. Clique ici pour charger le script de la carte :

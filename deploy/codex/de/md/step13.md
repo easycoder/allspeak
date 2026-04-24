@@ -1,7 +1,5 @@
 # Listen verwalten #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Eine Liste in ~ec~ ist eine Textzeichenkette im JSON-Format, das eine Art und Weise ist, Datenstrukturen darzustellen. Bei einer Liste handelt es sich um eine Menge von Elementen, obwohl es auch andere Möglichkeiten gibt, Daten zu organisieren, auf die wir in einem anderen Schritt eingehen werden.
 
 In diesem Beispiel erstellen wir eine Einkaufsliste und sortieren sie dann in alphabetischer Reihenfolge. Die einfachste Form der Liste ist diejenige, bei der jedes Element nur ein Name ist. Klicken Sie auf diese Schaltfläche, um den Beispielcode in den Editor zu laden:

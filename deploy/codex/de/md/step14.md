@@ -1,7 +1,5 @@
 # Fortgeschrittenes Sortieren #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Das vorherige Beispiel war einfach, aber manchmal bestehen die Elemente einer Liste aus mehreren Werten. Bei einer Einkaufsliste könnten Sie beispielsweise den Preis, die Artikelnummer und so weiter haben. Hier ändern wir unsere Liste, um Preise hinzuzufügen, und sortieren dann sowohl nach Preis als auch alphabetisch.
 
 ~copy~

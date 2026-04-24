@@ -1,7 +1,5 @@
 # L'Ola #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 L'étape précédente dessinait un seul rectangle dont la hauteur suivait une courbe sinusoïdale. Mets-en plusieurs ensemble et fais-les démarrer chacun un peu après le précédent, et tu obtiens une Ola (la « Mexican Wave »). Le code est un peu complexe et je ne te demande pas de le comprendre entièrement, mais j'aimerais que tu voies comment il utilise les tableaux que j'ai introduits il y a quelques étapes. Comme précédemment, le mieux est de copier le code dans l'éditeur puis de l'exécuter, pour voir de quoi il a l'air.
 
 ~copy~

@@ -1,7 +1,5 @@
 # Coder peut être amusant ! #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 Bienvenue dans le ~ec~ **_Codex_**, une ressource gratuite et complète où tu peux apprendre à coder en utilisant des scripts proches du langage courant et mettre à profit les compétences acquises pour construire et gérer des sites web de toute complexité. (Développeurs expérimentés : voir la note au bas de cette page.)
 
 Si tu utilises le développement assisté par IA, `codex.as` est une ressource d'apprentissage précieuse, non seulement pour ce qu'il peut faire, mais aussi pour la façon dont il est structuré.

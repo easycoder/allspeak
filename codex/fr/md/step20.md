@@ -1,7 +1,5 @@
 # L'effet Ken Burns #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 Dans cette étape du tutoriel, nous allons compléter l'effet Ken Burns en ajoutant quelques images supplémentaires ainsi qu'un fondu enchaîné entre elles. Chacune des images s'animera selon son propre jeu de règles, de sorte que l'effet global est celui d'un mouvement continu. À la télévision, cela donne l'impression de regarder une vidéo plutôt qu'un diaporama, et c'est pour cela que l'effet est si populaire.
 
 ~copy~

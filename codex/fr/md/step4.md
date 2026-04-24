@@ -1,7 +1,5 @@
 # Introduction au DOM #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 Toutes les pages web sont composées de composants HTML ; une sorte de concept de poupées russes étendu où des conteneurs contiennent d'autres conteneurs qui contiennent des images ou du texte... et ainsi de suite. Cette structure s'appelle le Document Object Model, ou DOM en abrégé. Dans cette étape, nous créerons une page web avec un seul composant qui contient simplement du texte. Nous ne nous attendons pas à ce que tu connaisses quoi que ce soit sur le DOM ou le HTML ; tout ce dont tu as besoin sera introduit au fur et à mesure.
 
 Il existe différents types de composants qui peuvent contenir du texte. Les en-têtes, les éléments paragraphe, les spans, les champs de texte et les divisions sont parmi les plus courants. Dans cet exemple nous créerons un élément paragraphe et y mettrons une phrase bien connue. Le script ressemble à ceci :

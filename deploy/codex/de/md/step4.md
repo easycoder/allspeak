@@ -1,7 +1,5 @@
 # Einführung in das DOM #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Alle Webseiten sind aus HTML-Komponenten aufgebaut; eine Art erweitertes Matrjoschka-Prinzip, bei dem Behälter andere Behälter enthalten, die wiederum Bilder oder Text enthalten... und so weiter. Diese Struktur heißt Document Object Model, kurz DOM. In diesem Schritt erstellen wir eine Webseite mit einer einzigen Komponente, die nur etwas Text enthält. Wir erwarten nicht, dass Sie etwas über das DOM oder über HTML wissen; alles, was Sie brauchen, wird Schritt für Schritt eingeführt.
 
 Es gibt eine Vielzahl unterschiedlicher Komponenten, die Text enthalten können. Überschriften, Absatzelemente, Spans, Textfelder und Bereiche (Divisions) gehören zu den gängigsten. In diesem Beispiel erstellen wir ein Absatzelement und setzen einen bekannten Satz hinein. Das Skript sieht so aus:

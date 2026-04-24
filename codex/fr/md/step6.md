@@ -1,7 +1,5 @@
 # Ajouter des images #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 Les pages web sont souvent très visuelles, avec beaucoup d'images, donc avant de continuer avec des sujets de programmation plus traditionnels, je vais te montrer comment créer une page avec une image et un titre.
 
 Quand tu regardes le HTML d'une page web, tu ne vois jamais d'images ; ce n'est qu'un document texte. Alors comment les images arrivent-elles sur la page ?

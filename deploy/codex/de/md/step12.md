@@ -1,7 +1,5 @@
 # TicTacToe #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Dieser Tutorial-Schritt ist etwas länger. Es geht um das allgegenwärtige Kinderspiel TicTacToe (in Deutschland auch als „Drei gewinnt" bekannt). Es ist eines der einfachsten Spiele, sowohl zu spielen als auch zu programmieren. Ich entdeckte dasselbe Spiel als erstes Beispiel in einem offiziellen Tutorial für das JavaScript-Framework „React" und war erstaunt, wie komplex es wirkte. Konnte man es nicht einfacher programmieren? Also habe ich es mit ~ec~ neu geschrieben, und das ist das Ergebnis. Das Aussehen wird keine Preise gewinnen; es ist im Grunde dasselbe wie in der React-Version. In beiden Fällen liegt der gesamte Schwerpunkt auf dem Code, aber React ist eine Komponentenarchitektur, die alles auf einer Menge von Objekten aufbaut, die die 9 Felder verwalten und zeichnen, während sich diese ~ec~-Version mehr auf den Spielablauf konzentriert und die Visualisierungskomponenten in den Hintergrund rückt.
 
 ~copy~

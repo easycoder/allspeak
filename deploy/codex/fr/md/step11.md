@@ -1,7 +1,5 @@
 # Interactivité #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 Dans tous les programmes, sauf les plus simples, il existe des moyens par lesquels l'utilisateur peut interagir et contrôler ce qui se passe. Ici je vais te montrer comment faire. Pour notre exemple, nous allons construire un script qui demande à l'utilisateur un nombre puis crée ce nombre de boutons à l'écran. Lorsqu'un bouton est cliqué, son apparence change pour montrer qu'il n'est plus cliquable. Clique sur le bouton pour charger le code :
 
 ~copy~

@@ -1,7 +1,5 @@
 # Panoramique et zoom #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 Quand les programmes télévisés montrent une série d'images, ils appliquent souvent ce qu'on appelle l'« effet Ken Burns » (du nom du documentariste américain qui a été le pionnier de cette technique). Cela fait que chaque image effectue lentement un panoramique et/ou un zoom avant de se fondre dans la suivante, donnant un sens de mouvement. Cet effet a été largement utilisé par le documentariste américain dont il porte le nom.
 
 Dans cette étape du tutoriel, nous ne traiterons que du panoramique et du zoom ; le fondu enchaîné attendra plus tard.

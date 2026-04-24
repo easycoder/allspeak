@@ -1,7 +1,5 @@
 # Listen filtern #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Das Filtern ist dem Sortieren recht ähnlich, doch statt die Reihenfolge der Elemente einer Liste zu ändern, entfernt es unerwünschte Einträge. Die Syntax des Befehls ist sehr ähnlich, und wie beim Sortieren wird eine Funktion zur Ausführung eingesetzt; diesmal nennt man sie Filterfunktion.
 
 Das Beispiel ist dieselbe Einkaufsliste wie zuvor, aber hier wollen wir alle Einträge aus der Liste entfernen, deren Wert unter einem Pfund (bzw. Dollar, Euro usw.) liegt.

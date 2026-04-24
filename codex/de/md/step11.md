@@ -1,7 +1,5 @@
 # Interaktivität #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 In allen Programmen, außer den einfachsten, gibt es Möglichkeiten, wie der Benutzer interagieren und den Ablauf steuern kann. Hier zeige ich Ihnen, wie das geht. Als Beispiel bauen wir ein Skript, das den Benutzer nach einer Zahl fragt und dann diese Anzahl Schaltflächen auf dem Bildschirm erzeugt. Wenn eine Schaltfläche angeklickt wird, ändert sich ihr Erscheinungsbild, um zu zeigen, dass sie nicht mehr anklickbar ist. Klicken Sie auf die Schaltfläche, um den Code zu laden:
 
 ~copy~

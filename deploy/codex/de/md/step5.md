@@ -1,7 +1,5 @@
 # Gestaltung und CSS #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Der vorherige Schritt hat uns eine Textzeile am oberen Bildschirmrand beschert, die jedoch auf eher unschöne Weise an den linken Rand gedrückt ist. Das können wir beheben, indem wir ihr etwas Gestaltung mitgeben. Hier ist derselbe Skript mit einigen Stilen ergänzt:
 
 ~step~

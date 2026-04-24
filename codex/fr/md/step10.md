@@ -1,7 +1,5 @@
 # Le traceur #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 La partie la plus difficile de la programmation, c'est de comprendre pourquoi les choses ne fonctionnent pas comme prévu, et pour beaucoup d'entre nous c'est le cas la plupart du temps. Pour aider à cela, les environnements de développement offrent généralement une fonctionnalité qui permet d'arrêter un programme en cours d'exécution, d'examiner ses variables et de parcourir les instructions une par une. Ton navigateur dispose d'un très bon débogueur mais tout ce qu'il te dira, c'est ce qui se passe à l'intérieur du moteur ~ec~, pas ce que fait ton script. Nous avons donc ajouté une fonctionnalité qui fait ces choses. Elle est un peu basique mais il y a des moments où elle peut beaucoup aider.
 
 Le traceur ~ec~ a besoin que tu lui dises où il peut afficher ses informations, et cela se fait dans ton script lui-même. En revenant au rectangle rebondissant, clique sur le bouton pour obtenir le même script avec du code de traceur ajouté :

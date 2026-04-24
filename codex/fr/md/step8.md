@@ -1,7 +1,5 @@
 # Un rectangle qui rebondit #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 Voici un autre exemple simple d'animation. Cette fois, nous allons dessiner un rectangle dont la hauteur varie selon un calcul de sinus. Ne t'inquiète pas pour les mathématiques ; je vais t'expliquer. Voici le code ; copie-le dans l'éditeur puis exécute-le pour savoir ce qu'il fait.
 
 ~copy~

@@ -1,7 +1,5 @@
 # Arithmétique de base #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 ~ec~ est conçu pour le web, pour construire des applications qui font des choses dans un navigateur. Le monde du navigateur est principalement visuel, avec beaucoup d'images et de texte, mais il y a toujours besoin d'un peu d'arithmétique de base, alors nous allons écrire quelques scripts qui illustrent ce qui est disponible.
 
 Dans la plupart des langages de programmation, si tu veux additionner des nombres, cela ressemblera à l'algèbre que tu as apprise à l'école :

@@ -1,7 +1,5 @@
 # Der Tracer #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Der schwierigste Teil beim Programmieren ist herauszufinden, warum Dinge nicht wie erwartet funktionieren, und für viele von uns ist das die meiste Zeit der Fall. Um dabei zu helfen, haben Entwicklungsumgebungen meist eine Funktion, mit der man ein laufendes Programm anhalten, seine Variablen untersuchen und die Anweisungen eine nach der anderen durchgehen kann. Ihr Browser verfügt über einen sehr guten Debugger, aber er zeigt Ihnen nur, was innerhalb der ~ec~-Engine geschieht, nicht, was Ihr Skript tut. Deshalb haben wir eine Funktion hinzugefügt, die diese Dinge erledigt. Sie ist etwas einfach gehalten, aber es gibt Situationen, in denen sie enorm helfen kann.
 
 Der ~ec~-Tracer benötigt von Ihnen die Angabe, wo er seine Informationen anzeigen kann, und das wird im Skript selbst festgelegt. Zurück zum hüpfenden Rechteck: Klicken Sie auf die Schaltfläche, um dasselbe Skript mit hinzugefügtem Tracer-Code zu erhalten:

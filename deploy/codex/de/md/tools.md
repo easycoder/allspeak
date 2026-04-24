@@ -1,7 +1,5 @@
 # AllSpeak-Werkzeuge und -Techniken #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 ## Plugins ##
 Die Standardsprache ~ec~ umfasst ein breites Spektrum an allgemeinen Programmierkonstrukten, die jede Sprache benötigt: Variablen, Werte, Bedingungen, Zeichenketten, Zahlen und so weiter. Alles Weitere wird von Plugins bereitgestellt. Einige davon, insbesondere Browser-Funktionen, JSON und REST, werden automatisch geladen (obwohl dieses Verhalten bei Bedarf geändert werden kann), und mehrere weitere stehen als optionale Plugins zur Verfügung. Plugins fügen der Sprache Befehle hinzu und müssen geladen werden, bevor ein Skript, das diese Schlüsselwörter verwendet, kompiliert werden kann.
 

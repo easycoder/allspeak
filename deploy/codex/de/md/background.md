@@ -1,7 +1,5 @@
 # Hintergrundinformationen #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Dies ist der **Codex** von ~ec~, eine umfassende kostenlose Ressource, die sich an zwei Gruppen von Menschen richtet:
 
 **Anfänger** können das Programmieren mit Skripten lernen, die der natürlichen Sprache ähneln — ohne Vorkenntnisse, ohne Hosting einrichten oder Software herunterladen zu müssen. Der **Codex** enthält ein umfassendes Tutorial mit vielen lauffähigen Beispielen.

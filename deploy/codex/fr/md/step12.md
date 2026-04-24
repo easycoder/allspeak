@@ -1,7 +1,5 @@
 # TicTacToe #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 Cette étape du tutoriel est un peu plus longue. Il s'agit de l'omniprésent jeu pour enfants TicTacToe (en France connu sous le nom de Morpion). C'est l'un des jeux les plus simples à jouer, et aussi à implémenter en code. J'ai découvert le même jeu présenté comme premier exemple dans un tutoriel officiel du framework JavaScript « React » et j'ai été frappé par sa complexité apparente. Ne pourrait-il pas être codé plus simplement ? Je l'ai donc réécrit en utilisant ~ec~ et voici le résultat. L'apparence ne gagnera aucun prix ; elle est essentiellement identique à la version React. Dans les deux cas, l'accent est mis sur le code, mais React est une architecture à composants donc tout y est basé sur un ensemble d'objets qui gèrent et dessinent les 9 cases, alors que cette version ~ec~ se concentre davantage sur la logique du jeu et relègue les composants de visualisation au second plan.
 
 ~copy~

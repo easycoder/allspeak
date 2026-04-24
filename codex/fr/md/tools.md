@@ -1,7 +1,5 @@
 # Outils et techniques AllSpeak #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 ## Plugins ##
 Le langage ~ec~ standard inclut un large éventail de constructions de programmation générales dont tout langage a besoin : variables, valeurs, conditionnelles, chaînes de caractères, nombres, etc. Tout le reste est fourni par des plugins. Certains d'entre eux, notamment les fonctionnalités du navigateur, JSON et REST, sont chargés automatiquement (bien que ce comportement puisse être modifié si nécessaire) et plusieurs autres sont disponibles en tant que plugins optionnels. Les plugins ajoutent des commandes au langage et doivent être chargés avant que tout script utilisant ces mots-clés ne puisse être compilé.
 

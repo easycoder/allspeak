@@ -1,7 +1,5 @@
 # Styles et CSS #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 L'étape précédente nous a donné une ligne de texte en haut de l'écran, mais elle est collée contre le bord gauche d'une manière assez peu esthétique. On peut remédier à cela en lui ajoutant un peu de style. Voici le même script, avec quelques styles ajoutés :
 
 ~step~

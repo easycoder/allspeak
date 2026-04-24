@@ -1,7 +1,5 @@
 # Die Welle #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Im vorherigen Schritt haben wir ein einzelnes Rechteck gezeichnet, dessen Höhe einer Sinuskurve folgte. Stellt man mehrere davon zusammen und lässt sie jeweils ein wenig nach dem vorherigen starten, entsteht eine Welle (im Stadion auch „La Ola" genannt). Der Code dafür ist etwas komplex, und ich verlange nicht, dass Sie ihn vollständig verstehen, aber ich möchte Ihnen zeigen, wie er die Arrays verwendet, die ich ein paar Schritte zuvor eingeführt habe. Wie zuvor ist es am besten, wenn Sie den Code in den Editor kopieren und dann ausführen, damit Sie sehen, wie er aussieht.
 
 ~copy~

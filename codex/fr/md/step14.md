@@ -1,7 +1,5 @@
 # Tri avancé #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 L'exemple précédent était simple, mais parfois les éléments d'une liste comportent plusieurs valeurs. Pour une liste de courses, tu pourrais avoir le prix, l'identifiant du produit, etc. Ici, nous allons modifier notre liste pour y ajouter des prix, puis trier par prix ainsi que par ordre alphabétique.
 
 ~copy~

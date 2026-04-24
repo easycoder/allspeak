@@ -1,7 +1,5 @@
 # Sélectionner, glisser et déposer #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 Les interfaces graphiques interactives offrent fréquemment à l'utilisateur la possibilité de déplacer des éléments à l'écran, comme alternative au copier-coller. Sous le capot, l'implémentation peut être plutôt complexe car il y a généralement beaucoup de choses à considérer ; des choses spécifiques à l'application particulière.
 
 Dans ~ec~, la fonctionnalité de base glisser-déposer fournit une base solide sur laquelle construire des fonctionnalités bien plus complexes. L'exemple présenté ici est aussi simple que possible ; sur la page suivante il y a un exemple plus complexe.

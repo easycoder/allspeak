@@ -1,7 +1,5 @@
 # Auswählen, Ziehen und Ablegen #
 
-> 📝 *Diese deutsche Übersetzung von AllSpeak ist ein laufendes Projekt, mit KI-Unterstützung erstellt. Wenn Ihnen holprige Formulierungen oder Fehler auffallen, schreiben Sie uns gern an [info@allspeak.ai](mailto:info@allspeak.ai) — Ihre Korrekturvorschläge helfen, die Übersetzung für künftige Nutzer zu verfeinern.*
-
 Interaktive grafische Oberflächen bieten dem Benutzer häufig die Möglichkeit, Elemente auf dem Bildschirm zu verschieben, als Alternative zum Kopieren und Einfügen. Hinter den Kulissen kann die Implementierung recht komplex sein, da in der Regel viele Dinge zu berücksichtigen sind, die spezifisch für die jeweilige Anwendung sind.
 
 In ~ec~ bildet die grundlegende Drag-and-Drop-Funktion eine solide Basis, auf der Sie viel komplexere Funktionalitäten aufbauen können. Das Beispiel, das wir hier zeigen, ist ungefähr so einfach, wie es nur sein kann; auf der nächsten Seite folgt ein komplexeres Beispiel.

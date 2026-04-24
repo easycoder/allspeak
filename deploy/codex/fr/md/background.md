@@ -1,7 +1,5 @@
 # Informations générales #
 
-> 📝 *Cette traduction française d'AllSpeak est un travail en cours, produit avec l'aide d'une IA. Si vous remarquez des formulations maladroites ou des erreurs, écrivez-nous à [info@allspeak.ai](mailto:info@allspeak.ai) — vos suggestions de relecture aideront à affiner la traduction pour les futurs utilisateurs.*
-
 Ceci est le **Codex** d'~ec~, une ressource gratuite et complète destinée à deux groupes de personnes :
 
 Les **débutants** peuvent apprendre à coder en utilisant des scripts rédigés dans un langage proche du naturel, sans aucune expérience préalable, sans avoir besoin de configurer un hébergement ni de télécharger de logiciel. Le **Codex** comprend un tutoriel complet avec de nombreux exemples fonctionnels.
