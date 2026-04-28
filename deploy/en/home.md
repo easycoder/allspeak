@@ -17,18 +17,10 @@ they just express them differently.</p>
 <li>Create animations and visual effects</li>
 </ul>
 
-<h3>Example</h3>
-
-<pre style="background:#1a2633;padding:1em;border-radius:8px;color:#a0d0f0;overflow-x:auto">
-  variable Greeting
-  put `Hello, world!` into Greeting
-  log Greeting
-</pre>
-
 <h2>Frequently asked questions</h2>
 
 <h3>What is AllSpeak?</h3>
-<p>AllSpeak is a high-level scripting language designed to be written by AI and read by humans, in any of several human languages — currently English, italiano, français and Deutsch. The same engine runs all of them, so non-English speakers can code in their own language without losing access to AI assistance.</p>
+<p>AllSpeak is a high-level scripting language designed to be written by AI and read by humans, in any of several human languages — currently English, French, German and Italian. The same engine runs all of them, so non-English speakers can code in their own language without losing access to AI assistance.</p>
 
 <h3>What does AllSpeak code look like?</h3>
 <p>It reads close to natural language and avoids mathematical symbols where possible:</p>
@@ -51,17 +43,17 @@ they just express them differently.</p>
 <p>That's the case AllSpeak is designed to prevent. Scripts read close to natural language — <code>set the content of Heading to `Welcome`</code> does what it says. If a specific construct is still unfamiliar, your AI agent has a quick reference loaded and can explain it inline.</p>
 
 <h3>Is AllSpeak free?</h3>
-<p>Yes. AllSpeak is open source under the Apache 2.0 license. The full source is at <a href="https://github.com/easycoder/allspeak.ai">github.com/easycoder/allspeak.ai</a>.</p>
+<p>Yes. AllSpeak is open source under the Apache 2.0 license. The full source is at <a href="https://github.com/easycoder/allspeak.ai" style="color:#00d4ff;text-decoration:none">github.com/easycoder/allspeak.ai</a>.</p>
 
 <h3>How does AllSpeak relate to JavaScript and Python?</h3>
 <p>AllSpeak runs on either a JavaScript runtime (in the browser) or a Python runtime (on the command line). It's not a replacement for those languages — it's a higher-level layer above them. Plugins are written in JavaScript or Python and AllSpeak gives them a script-friendly vocabulary in any human language.</p>
 
 <h3>Where do I start?</h3>
-<p>Work through the <a href="primer.html">Primer</a> for a guided introduction, or grab a starter pack to drive an AI coding assistant.</p>
+<p>Work through the <a href="primer.html" style="color:#00d4ff;text-decoration:none">Primer</a> for a guided introduction, or grab a starter pack to drive an AI coding assistant.</p>
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"What is AllSpeak?","acceptedAnswer":{"@type":"Answer","text":"AllSpeak is a high-level scripting language designed to be written by AI and read by humans, in any of several human languages — currently English, italiano, français and Deutsch. The same engine runs all of them, so non-English speakers can code in their own language without losing access to AI assistance."}},
+{"@type":"Question","name":"What is AllSpeak?","acceptedAnswer":{"@type":"Answer","text":"AllSpeak is a high-level scripting language designed to be written by AI and read by humans, in any of several human languages — currently English, French, German and Italian. The same engine runs all of them, so non-English speakers can code in their own language without losing access to AI assistance."}},
 {"@type":"Question","name":"What does AllSpeak code look like?","acceptedAnswer":{"@type":"Answer","text":"AllSpeak code reads close to natural language and avoids mathematical symbols where possible. Three lines of valid AllSpeak: variable Greeting; put `Hello, AllSpeak!` into Greeting; log Greeting."}},
 {"@type":"Question","name":"How is AllSpeak used?","acceptedAnswer":{"@type":"Answer","text":"You write prompts to an AI assistant in your own language, and the AI produces AllSpeak code in that same language. Because the code is readable, you can verify what the AI did before running it. AllSpeak runs in the browser via a single script tag, or from the command line via pip install allspeak-ai."}},
 {"@type":"Question","name":"Is AllSpeak better than mainstream coding tools?","acceptedAnswer":{"@type":"Answer","text":"For a wide range of tasks, yes — though not because the runtime is more capable than JavaScript or Python. The code AI produces in AllSpeak is dramatically more readable, so a domain expert can verify what was written. With mainstream languages, you're often trusting AI output you can't easily check."}},
