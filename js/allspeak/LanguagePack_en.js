@@ -1,4 +1,4 @@
-// English language pack for AllSpeak — auto-generated from languages/en.json
+// English language pack for AllSpeak — JS is source of truth; sync-language-packs writes allspeak-py/allspeak/languages/en.json from this
 // eslint-disable-next-line no-unused-vars
 var AllSpeak_LanguagePack_en = {
   "meta": {

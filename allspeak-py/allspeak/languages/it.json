@@ -194,6 +194,12 @@
         "decodifica {variable}"
       ]
     },
+    "DECREMENT": {
+      "keyword": "decrementa",
+      "patterns": [
+        "decrementa {variable}"
+      ]
+    },
     "DISABLE_ELEMENT": {
       "keyword": "disabilita",
       "patterns": [
@@ -344,6 +350,12 @@
       "keyword": "importa",
       "patterns": [
         "importa {symbols}"
+      ]
+    },
+    "INCREMENT": {
+      "keyword": "incrementa",
+      "patterns": [
+        "incrementa {variable}"
       ]
     },
     "INDEX": {
@@ -1062,7 +1074,12 @@
     "arg": "arg",
     "payload": "payload",
     "ready": "pronto",
-    "format": "formato",
+    "format": "formato|formatta",
+    "forward": "avanti",
+    "topic": "argomento",
+    "error": "errore",
+    "sender": "mittente",
+    "encoding": "codifica",
     "module": "modulo",
     "variable": "variabile",
     "callback": "callback",
@@ -1193,6 +1210,8 @@
     "send": "invia",
     "multiply": "moltiplica",
     "negate": "nega",
+    "increment": "incrementa",
+    "decrement": "decrementa",
     "play": "riproduci",
     "pop": "estrai",
     "print": "stampa",
@@ -1214,7 +1233,7 @@
     "upload": "carica",
     "wait": "attendi",
     "while": "mentre",
-    "close": "chiudi",
+    "close": "chiudi|chiusura",
     "binary": "binario",
     "directory": "cartella",
     "exist": "esiste",
@@ -1262,7 +1281,7 @@
     "subscribe": "sottoscrivi",
     "qos": "qos",
     "token": "token",
-    "connect": "connetti",
+    "connect": "connetti|connessione",
     "layout": "layout",
     "panel": "pannello",
     "dialog": "dialogo",

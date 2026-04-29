@@ -24,8 +24,8 @@ Each `starter/<lang>/CLAUDE.md` carries a hand-translated subset of the language
 ### 6. Localized error messages — coverage check pending
 Each pack has a handful of translated error strings (`"syntaxError"`, `"runtimeError"`, …) but full coverage hasn't been verified. Some runtime error paths probably still emit English. Worth a sweep when next we touch error reporting.
 
-### 7. `LanguagePack_<lang>.js` vs `languages/<lang>.json` source-of-truth unclear
-The JS pack header says "auto-generated from languages/<lang>.json", but no generator script is checked in (or none I've found). Hand-edits to the JS likely leave the JSON stale. Confirm whether anything still reads the JSON, then either delete it or wire up the generator.
+### 7. (resolved 2026-04-29) JS is source of truth; `sync-language-packs` keeps JSON in sync
+JS `LanguagePack_*.js` files are now the canonical source. The standalone `sync-language-packs` script extracts the JSON object from each JS pack and writes it to `allspeak-py/allspeak/languages/<lang>.json` for the Python runtime. The misleading "auto-generated from languages/<lang>.json" header comment was updated to reflect the new direction. The unused root `/languages/` mirror (which was incomplete — only EN+IT) was removed. Run `./sync-language-packs` after editing any `js/allspeak/LanguagePack_*.js` to keep Python parity.
 
 ### 8. Python runtime i18n is incomplete (separate workstream)
 Hardcoded English literals, accent issues, word-order mismatches. Out of scope for JS pack work but tracked here so it isn't forgotten. Catalogue lives in the auto-memory note `project_python_i18n_gaps.md`.

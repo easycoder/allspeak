@@ -1,4 +1,4 @@
-// French language pack for AllSpeak — auto-generated from languages/fr.json
+// French language pack for AllSpeak — JS is source of truth; sync-language-packs writes allspeak-py/allspeak/languages/fr.json from this
 // eslint-disable-next-line no-unused-vars
 var AllSpeak_LanguagePack_fr = {
   "meta": {

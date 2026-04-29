@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+"""sync-language-packs: extract JSON from each js/allspeak/LanguagePack_<lang>.js
+and write it to allspeak-py/allspeak/languages/<lang>.json.
+
+The JS files are the source of truth — multilingual fixes land there first
+(via Edit on the source object literal). This script keeps the Python-side
+JSON in sync, so scripts run through the `allspeak` CLI see the same
+vocabulary as the browser runtime.
+
+Run after editing any js/allspeak/LanguagePack_*.js file.
+"""
+
+import json
+import os
+import re
+import sys
+
+REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
+JS_DIR = os.path.join(REPO_ROOT, 'js', 'allspeak')
+JSON_DIR = os.path.join(REPO_ROOT, 'allspeak-py', 'allspeak', 'languages')
+
+
+def extract_pack(js_path):
+    """Pull the JS object literal out of a LanguagePack_<lang>.js file."""
+    with open(js_path) as f:
+        text = f.read()
+    m = re.search(r'=\s*(\{[\s\S]*\})\s*;?\s*$', text)
+    if not m:
+        raise SystemExit(f'Cannot extract JSON object from {js_path}')
+    return json.loads(m.group(1))
+
+
+def main():
+    if not os.path.isdir(JSON_DIR):
+        raise SystemExit(f'Output directory not found: {JSON_DIR}')
+
+    synced = 0
+    for fname in sorted(os.listdir(JS_DIR)):
+        m = re.match(r'^LanguagePack_(\w+)\.js$', fname)
+        if not m:
+            continue
+        lang = m.group(1)
+        js_path = os.path.join(JS_DIR, fname)
+        json_path = os.path.join(JSON_DIR, f'{lang}.json')
+        data = extract_pack(js_path)
+        with open(json_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+            f.write('\n')
+        print(f'  synced: allspeak-py/allspeak/languages/{lang}.json')
+        synced += 1
+
+    print(f'Done. {synced} language pack(s) synced.')
+
+
+if __name__ == '__main__':
+    main()
