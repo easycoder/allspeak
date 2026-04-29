@@ -73,6 +73,9 @@ The 2026-04-06 EasyCoder→AllSpeak global rename caught file paths, package nam
 
 ## Resolved
 
+### 2026-04-29 — `on failure` recovery clause added as alternative to `or`
+Adds an explicit recovery-handler form that mirrors event-handler vocabulary (`on click`, `on mqtt connect`, ...). Semantics identical to `or` (always continues after the handler runs); difference is readability — `on failure` clearly signals "recovery, then continue" where `or` can read as alternation. Both forms supported across both runtimes; both single-statement and `begin ... end` block forms work. Implementation: new `compileFailureClause` helper in JS Compile.js consolidating the 9 inline `or`-clause sites; Python `processOr` extended in 3 places (core, email plugin, sql plugin); new `failure` canonical in all 4 language packs (`failure` / `fallimento` / `échec` / `fehlschlag`). Test in `/tmp/test-onfailure.as`-style scripts. Surface forms: `on failure`, `su fallimento`, `sur échec`, `bei fehlschlag`.
+
 ### 2026-04-27 — JS gmap plugin missing single-marker remove, marker IDs, structured bounds
 `js/plugins/gmap.js` extended: added `set the id of Marker to V` (stores per-marker arbitrary string, accessible from click handler via `the id of Marker`); single-marker `remove marker X from Map` (was multi-only); structured bounds via `the north|south|east|west edge of Map` (returns scalar) and `the edges of Map` (returns JSON dict `{north,south,east,west}`). The pre-existing `remove markers from Map` and `set color of Marker` were already in place; `on move Map` / `on zoom Map` already wired in `setupMap`. Both `js/plugins/gmap.js` and `dist/plugins/gmap.js` refreshed.
 

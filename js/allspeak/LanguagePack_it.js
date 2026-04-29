@@ -1078,6 +1078,7 @@ var AllSpeak_LanguagePack_it = {
     "ready": "pronto",
     "format": "formato|formatta",
     "forward": "avanti",
+    "failure": "fallimento",
     "topic": "argomento",
     "error": "errore",
     "sender": "mittente",

@@ -1074,6 +1074,7 @@ var AllSpeak_LanguagePack_de = {
     "ready": "bereit",
     "format": "format|formatiere",
     "forward": "vor",
+    "failure": "fehlschlag",
     "topic": "thema",
     "error": "fehler",
     "sender": "absender",

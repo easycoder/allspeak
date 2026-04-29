@@ -172,8 +172,7 @@ const AllSpeak_Core = {
 							select: symbolRecord.name,
 							onError: 0
 						});
-						if (compiler.isWord(`or`)) {
-							compiler.next();
+						if (compiler.consumeFailureClause()) {
 							compiler.getCommandAt(pc).onError = compiler.getPc() + 1;
 							compiler.completeHandler();
 						}
@@ -731,8 +730,7 @@ const AllSpeak_Core = {
 						func,
 						onError: 0
 					});
-					if (compiler.isWord(`or`)) {
-						compiler.next();
+					if (compiler.consumeFailureClause()) {
 						compiler.getCommandAt(pc).onError = compiler.getPc() + 1;
 						compiler.completeHandler();
 					}
@@ -1020,8 +1018,7 @@ const AllSpeak_Core = {
 						value,
 						onError: 0
 					});
-					if (compiler.isWord(`or`)) {
-						compiler.next();
+					if (compiler.consumeFailureClause()) {
 						compiler.getCommandAt(pc).onError = compiler.getPc() + 1;
 						compiler.completeHandler();
 					}
@@ -2135,8 +2132,7 @@ const AllSpeak_Core = {
 						func,
 						onError: 0
 					});
-					if (compiler.isWord(`or`)) {
-						compiler.next();
+					if (compiler.consumeFailureClause()) {
 						compiler.getCommandAt(pc).onError = compiler.getPc() + 1;
 						compiler.completeHandler();
 					}

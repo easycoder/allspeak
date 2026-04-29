@@ -15,20 +15,33 @@ class Email(Handler):
 
     def processOr(self, command, orHere):
         self.add(command)
-        if language.reverse_word(self.peek()) == 'or':
+        peek = language.reverse_word(self.peek())
+        matched = False
+        if peek == 'or':
             self.nextToken()
+            matched = True
+        elif peek == 'on':
+            mark = self.compiler.index
             self.nextToken()
-            cmd = {}
-            cmd['lino'] = command['lino']
-            cmd['domain'] = 'core'
-            cmd['keyword'] = 'gotoPC'
-            cmd['goto'] = 0
-            cmd['debug'] = False
-            skip = self.getCodeSize()
-            self.add(cmd)
-            self.getCommandAt(orHere)['or'] = self.getCodeSize()
-            self.compileOne()
-            self.getCommandAt(skip)['goto'] = self.getCodeSize()
+            if language.reverse_word(self.peek()) == 'failure':
+                self.nextToken()
+                matched = True
+            else:
+                self.compiler.index = mark
+        if not matched:
+            return
+        self.nextToken()
+        cmd = {}
+        cmd['lino'] = command['lino']
+        cmd['domain'] = 'core'
+        cmd['keyword'] = 'gotoPC'
+        cmd['goto'] = 0
+        cmd['debug'] = False
+        skip = self.getCodeSize()
+        self.add(cmd)
+        self.getCommandAt(orHere)['or'] = self.getCodeSize()
+        self.compileOne()
+        self.getCommandAt(skip)['goto'] = self.getCodeSize()
 
     #############################################################################
     # Keyword handlers

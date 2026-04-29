@@ -48,23 +48,38 @@ class Core(Handler):
     
     def processOr(self, command, orHere):
         self.add(command)
-        if language.reverse_word(self.peek()) == 'or':
+        # Accept either 'or' (terse) or 'on failure' (explicit recovery clause).
+        # Both attach a recovery handler that runs on failure and continues.
+        peek = language.reverse_word(self.peek())
+        matched = False
+        if peek == 'or':
             self.nextToken()
-            self.nextToken()
-            # Add a 'goto' to skip the 'or'
-            cmd = {}
-            cmd['lino'] = command['lino']
-            cmd['domain'] = 'core'
-            cmd['keyword'] = 'gotoPC'
-            cmd['goto'] = 0
-            cmd['debug'] = False
-            skip = self.getCodeSize()
-            self.add(cmd)
-            # Process the 'or'
-            self.getCommandAt(orHere)['or'] = self.getCodeSize()
-            self.compileOne()
-            # Fixup the skip
-            self.getCommandAt(skip)['goto'] = self.getCodeSize()
+            matched = True
+        elif peek == 'on':
+            mark = self.compiler.index
+            self.nextToken()  # consume 'on'
+            if language.reverse_word(self.peek()) == 'failure':
+                self.nextToken()  # consume 'failure'
+                matched = True
+            else:
+                self.compiler.index = mark
+        if not matched:
+            return
+        self.nextToken()  # advance to first token of handler body
+        # Add a 'goto' to skip the recovery handler on success
+        cmd = {}
+        cmd['lino'] = command['lino']
+        cmd['domain'] = 'core'
+        cmd['keyword'] = 'gotoPC'
+        cmd['goto'] = 0
+        cmd['debug'] = False
+        skip = self.getCodeSize()
+        self.add(cmd)
+        # Process the handler body
+        self.getCommandAt(orHere)['or'] = self.getCodeSize()
+        self.compileOne()
+        # Fixup the skip
+        self.getCommandAt(skip)['goto'] = self.getCodeSize()
 
     #############################################################################
     # Keyword handlers

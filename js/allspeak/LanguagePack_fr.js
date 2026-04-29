@@ -1078,6 +1078,7 @@ var AllSpeak_LanguagePack_fr = {
     "ready": "prêt|pret",
     "format": "format|formate",
     "forward": "avant",
+    "failure": "échec|echec",
     "error": "erreur",
     "sender": "expéditeur|expediteur",
     "encoding": "encodage",

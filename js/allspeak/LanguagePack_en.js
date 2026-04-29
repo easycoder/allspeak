@@ -1147,6 +1147,7 @@ var AllSpeak_LanguagePack_en = {
     "payload": "payload",
     "ready": "ready",
     "format": "format",
+    "failure": "failure",
     "module": "module",
     "variable": "variable",
     "callback": "callback",

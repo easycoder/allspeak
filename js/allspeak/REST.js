@@ -62,8 +62,7 @@ const AllSpeak_REST = {
 								url,
 								onError: null
 							});
-							if (compiler.isWord(`or`)) {
-								compiler.next();
+							if (compiler.consumeFailureClause()) {
 								compiler.getCommandAt(fixup).onError = compiler.getPc() + 1;
 								compiler.completeHandler();
 							} 
@@ -122,8 +121,7 @@ const AllSpeak_REST = {
 					onError: compiler.getPc() + 2
 				});
 				onError = null;
-				if (compiler.isWord(`or`)) {
-					compiler.next();
+				if (compiler.consumeFailureClause()) {
 					// onError = compiler.getPc() + 1;
 					compiler.completeHandler();
 				}

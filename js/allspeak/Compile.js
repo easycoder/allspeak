@@ -205,6 +205,29 @@ const AllSpeak_Compiler = {
 		this.rewindTo(index);
 	},
 
+	// Consume an error-recovery clause introducer, accepting either the
+	// terse 'or' form or the explicit 'on failure' form. Both attach a
+	// recovery handler that runs on failure and continues execution after.
+	// Returns true iff a clause was found and consumed; advances the index
+	// past the introducer in that case. Caller is then expected to record
+	// the onError PC and call completeHandler().
+	consumeFailureClause: function() {
+		if (this.isWord(`or`)) {
+			this.next();
+			return true;
+		}
+		if (this.isWord(`on`)) {
+			const mark = this.getIndex();
+			this.next();
+			if (this.isWord(`failure`)) {
+				this.next();
+				return true;
+			}
+			this.rewindTo(mark);
+		}
+		return false;
+	},
+
 	completeHandler: function() {
 		const lino = this.getLino();
 		// Add a 'goto' to skip the action

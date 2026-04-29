@@ -115,8 +115,7 @@ const AllSpeak_Browser = {
 						}
 						else cssId = compiler.getValue();
 						let onError = 0;
-						if (compiler.isWord(`or`)) {
-							compiler.next();
+						if (compiler.consumeFailureClause()) {
 							onError = compiler.getPc() + 1;
 							compiler.completeHandler();
 						}
@@ -557,8 +556,7 @@ const AllSpeak_Browser = {
 								parent: parentRecord.name,
 								onError: 0
 							});
-							if (compiler.isWord(`or`)) {
-								compiler.next();
+							if (compiler.consumeFailureClause()) {
 								compiler.getCommandAt(pc).onError = compiler.getPc() + 1;
 								compiler.completeHandler();
 							}

@@ -1072,6 +1072,7 @@
     "ready": "bereit",
     "format": "format|formatiere",
     "forward": "vor",
+    "failure": "fehlschlag",
     "topic": "thema",
     "error": "fehler",
     "sender": "absender",

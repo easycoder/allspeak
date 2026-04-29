@@ -24,8 +24,7 @@ const AllSpeak_JSON = {
 
 	// Helper to add or-handling after a json command
 	addOrHandling: (compiler, pc) => {
-		if (compiler.isWord(`or`)) {
-			compiler.next();
+		if (compiler.consumeFailureClause()) {
 			compiler.getCommandAt(pc).onError = compiler.getPc() + 1;
 			compiler.completeHandler();
 		}
