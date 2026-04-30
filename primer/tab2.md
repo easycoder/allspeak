@@ -1,55 +1,23 @@
 # Example task (step-by-step)
 
-The task is to build a GUI implementation of TicTacToe. Once you have set up your system (see the Start Here tab), submit these prompts one by one to your AI agent.
+Build a TicTacToe game. Once you have set up your system (see the Start Here tab), submit these prompts one by one to your AI agent. The four stages — Foundation, Mechanics, Analysis, Strategy — recur in many projects, so the pattern is worth learning.
 
-These prompts are reliable, copy/paste-safe milestones. Add new prompts below as the tutorial evolves.
+## Prompt 1: Foundation — Build the board
 
-## Prompt 1: Build the TicTacToe board shell
+Create a TicTacToe game with a 3x3 grid of cells. The board should be centred on the screen, taking up about half the width. Each cell should be square with a visible border.
 
-Create a 3 by 3 matrix of cells. 
-Each cell is square and all are the same size. 
-The matrix occupies the centre 50% of the screen width. 
-The matrix is positioned at the top of the screen. 
-Each cell has a 1-pixel black border and a 2-pixel margin between it and its neighbours and the screen edges.
+## Prompt 2: Mechanics — Add turn-based play
 
-The programming strategy is as follows:
+There are two players: the human and the computer. The starting player is chosen randomly. When it's the human's turn, tapping an empty cell claims it (shown in green). When it's the computer's turn, it pauses briefly to "think" then claims a cell (shown in red). Claimed cells can't be tapped again.
 
-In tictactoe.json, define a main div with the id 'board'. Use canonical Webson format: `"#element": "div"` for the element type and `"@id": "board"` for the ID. Place style properties directly on the object — do not use a nested `"style"` key, and do not use `"type"` or `"items"` (those belong to a different Webson dialect).
+## Prompt 3: Analysis — Detect a winner
 
-Create a set of 9 child divs, each one being a cell of width/height such as to conform with the above. Each one will have an ID of the form 'cell-{Row}-{Col}' where {Row} is the row index and {Col} the column index.
+After each move, check whether any row, column or diagonal is entirely one colour. If so, announce the winner. If all cells are filled with no winner, announce a draw.
 
-In tictactoe.as, add the following code, which declares variables:
+## Prompt 4: Strategy — Try to win
 
-   div Board 
-   div Cell 
-   variable Row 
-   variable Col 
-   variable N 
+The computer currently picks cells at random. Give it a basic strategy: block the human from completing a line, and prefer moves that work towards completing its own line.
 
-Attach Board to the 'board' element.
+## What to look for
 
-Declare Cell as having 9 elements.
-
-Set N to 0. 
-Write a double loop that iterates Row from 0-2 and within that iterates Col from 0 to 2. 
-At each inner step: 
- - use AllSpeak array syntax to access the Nth element of Cell
- - attach Cell to the one whose ID matches the current Row and Col
- - add 1 to N.
-
-## Prompt 2: Add human/computer turn logic
-
-There are 2 players: the human and the computer. Play proceeds as follows:
-
-The player to start is decided randomly. When it's the turn of the human, the system waits for an empty cell to be tapped. It then gives the cell a light green background. Play then passes to the computer and taps will be ignored.
-When it's the turn of the computer, add a pause of 2 seconds to simulate thinking time, then choose an empty cell, giving it a light red background.
-
-Once a cell has a background it does not respond to taps. Play then passes to the human, with taps re-enabled.
-Play continues until the board is full or until a complete row, column or diagonal (3 cells in each case) are all the same color. The winner is the player who owns that color.
-Please add this logic.
-
-## Prompt 3: Improve computer move strategy
-
-This is too easy for the human because the computer is choosing cells at random. Please add a basic strategy that chooses cells which lead to a complete row, column or diagonal.
-Also add some explanatory comments to tictactoe.as, for the benefit of human novices.
-
+After each prompt, review what the AI created. You should be able to read the AllSpeak code and understand what it does — that's the point. If something isn't right, tell the AI what to fix in plain language.

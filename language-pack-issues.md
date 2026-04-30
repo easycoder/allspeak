@@ -12,8 +12,8 @@ Detecting more requires scanning every `compiler.isWord()` / `nextIsWord()` / `s
 ### 2. `patterns` arrays are documentation-only
 The compiler dispatches by `keyword` alone; literal words after the keyword in a pattern are not enforced — the runtime accepts whatever the handler reads via `isWord()`. Means a pattern can silently drift from runtime expectations until a user happens to rely on the declared form. The While patch (item closed 2026-04-21) works around this for one specific case. A proper fix would route compilation through the patterns array — bigger refactor.
 
-### 3. Browser condition `element X has focus` — `has` collides in FR
-`has` would need to be in the words map, but `a` (the natural French translation of `has`) collides with the `a` HTML anchor tag keyword. Not yet resolved.
+### 3. (resolved 2026-04-29 — never actually a problem) `has` and the `a` anchor keyword
+The earlier worry was that adding FR `has → a` would collide with the `a` HTML anchor element keyword. Investigation showed the worry was unfounded: the FR pack already has `a` as a form for three canonicals (`than`, `to`, `a` itself); IT has two (`to`, `a`). Multi-canonical-sharing-a-form is the established pattern. Each `compiler.isWord(canonical)` call is context-specific, and the `a` element keyword is dispatched via DECLARE_ELEMENT pattern matching, not via reverse-lookup. Adding `has` mappings (FR `a`, IT `ha`, DE `hat`, EN `has`) would work like the existing entries. Closed without runtime change.
 
 ### 4. Plugin-declared elements not available in headless compile checks
 `gmap` (gmap plugin), `animation` (svg plugin) fail when plugins aren't loaded — affects English and translated scripts identically. Testing-infrastructure limitation, not a translation issue: step16 / step19 / step20 fail the same way in EN and FR harness runs.
