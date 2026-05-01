@@ -24,7 +24,7 @@ jobs:
       - name: Prepare deploy/ directory
         run: |
           rsync -a --delete dist/ deploy/dist/
-          cp code/asedit.as code/asedit.json code/allspeak.as code/edit.html code/code-version deploy/code/
+          cp code/asedit.as code/asedit.json code/server.as code/edit.html code/code-version deploy/code/
           bash code/zip.sh
 
       - name: Set up SSH
