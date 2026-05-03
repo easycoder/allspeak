@@ -1,5 +1,7 @@
 # AllSpeak
 
+This project is primarily hosted on GitHub. An automatic mirror is maintained at https://codeberg.org/allspeak/allspeak for users who prefer non-corporate infrastructure. Issues and pull requests should be filed on GitHub.
+
 **AllSpeak is a high-level scripting language designed for an age where AI writes most of the code.** Scripts read like a natural human sentence — *"set the content of Heading to `Welcome`"* — so the human can verify what the AI produced without learning a programming language. The same script can be written in any of several human languages and run on a single shared, language-neutral runtime.
 
 Currently shipping language packs for **English, Italian, French, and German** (with `language` directives `en`, `it`, `français`, `deutsch`). Adding a new language is a JSON-pack contribution, not an engine change.
